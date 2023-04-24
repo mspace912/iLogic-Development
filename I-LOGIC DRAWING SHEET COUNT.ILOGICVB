@@ -1,0 +1,28 @@
+RangeStart = InputBox("Enter first sheet in range", "Sheet Range", "1")
+RangeEnd = InputBox("Enter last sheet in range", "Sheet Range", "1")
+On Error Goto Skip
+booleanParam = InputRadioBox(" ", "Excluded", "Included", booleanParam, Title := "Sheet Count")
+
+Dim oDocAsDrawingDocument
+oDoc=ThisApplication.ActiveDocument
+
+Dim oTitleBlockAsTitleBlock
+Dim oTextBoxAsTextBox
+Dim oBorderAsBorder
+Dim oSheetAsSheet
+
+Counter = 0
+
+For Each oSheet In oDoc.Sheets 
+	Counter = Counter + 1
+	oTitleBlock = oSheet.TitleBlock
+	oBorder = oSheet.Border
+
+	If Counter >=RangeStart And Counter <= RangeEnd
+		sSheetName = (oSheet.Name)
+		ThisDrawing.Sheet(sSheetName).Sheet.ExcludeFromCount = booleanParam
+	End If
+
+Next
+
+Skip:

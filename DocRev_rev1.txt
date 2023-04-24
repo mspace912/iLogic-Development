@@ -1,0 +1,126 @@
+'OpenDrawing Rule
+
+'Saves Assembly before opening Drawing to allow BOM to update.
+'iLogicVb.RunRule("Save")
+
+ThisDoc.Save
+
+
+'Opens Drawing
+Drawing = ThisDoc.PathAndFileName(False) & ".idw"
+ThisDoc.Launch(Drawing)
+InventorVb.DocumentUpdate()
+
+
+'----------------start of save pdf -----------------------
+
+' Get the PDF translator Add-In.
+Dim PDFAddIn As TranslatorAddIn
+PDFAddIn = ThisApplication.ApplicationAddIns.ItemById("{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}")
+'Set a reference to the active document (the document to be published).
+Dim oDocument As Document
+oDocument = ThisApplication.ActiveDocument
+Dim oContext As TranslationContext
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+' Create a NameValueMap object
+Dim oOptions As NameValueMap
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+' Create a DataMedium object
+Dim oDataMedium As DataMedium
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+
+' Sets directory for file save
+Dim PSDDirectory As String
+PDFDirectory = ThisDoc.Path & "\PDF"
+' Sets save name as iProperties value
+Dim SaveName As String
+SaveName = iProperties.Value("Project", "Part Number")
+
+If Len(Dir(PDFDirectory, vbDirectory)) = 0 Then
+	MkDir (PDFDirectory)
+End If
+
+' Check whether the translator has 'SaveCopyAs' options
+If PDFAddIn.HasSaveCopyAsOptions(oDataMedium, oContext, oOptions) Then
+oOptions.Value("All_Color_AS_Black") = 1
+oOptions.Value("Remove_Line_Weights") = 1
+oOptions.Value("Vector_Resolution") = 400
+oOptions.Value("Sheet_Range") = Inventor.PrintRangeEnum.kPrintAllSheets
+'oOptions.Value("Custom_Begin_Sheet") = 2
+'oOptions.Value("Custom_End_Sheet") = 4
+End If
+
+
+oFileName = ThisDoc.FileName(False) 'without extension
+oRevNum = iProperties.Value("Project", "Revision Number")
+oDesc = iProperties.Value("Project", "Description")
+oDataMedium.FileName = PDFDirectory & "\" & oFileName & " Rev" & oRevNum & " " & oDesc & ".PDF"
+
+'Publish document.
+PDFAddIn.SaveCopyAs(oDocument, oContext, oOptions, oDataMedium)
+'Launch the PDF file in whatever application Windows is set to open this document type with
+i = MessageBox.Show("Preview the PDF file?", "PDF Preview",MessageBoxButtons.YesNo,MessageBoxIcon.Question)
+If i = vbYes Then ThisDoc.Launch(oDataMedium.FileName)
+
+'----------------end of save pdf -----------------------
+
+
+'----------------start of save dxf -----------------------
+
+' Get the DXF translator Add-In.
+Dim DXFAddIn As TranslatorAddIn
+DXFAddIn = ThisApplication.ApplicationAddIns.ItemById("{C24E3AC4-122E-11D5-8E91-0010B541CD80}")
+'Set a reference to the active document (the document to be published).
+Dim oDocumentdxf As Document
+oDocumentdxf = ThisApplication.ActiveDocument
+Dim oContextdxf As TranslationContext
+oContextdxf = ThisApplication.TransientObjects.CreateTranslationContext
+oContextdxf.Type = IOMechanismEnum.kFileBrowseIOMechanism
+' Create a NameValueMap object
+Dim oOptionsdxf As NameValueMap
+oOptionsdxf = ThisApplication.TransientObjects.CreateNameValueMap
+' Create a DataMedium object
+Dim oDataMediumdxf As DataMedium
+oDataMediumdxf = ThisApplication.TransientObjects.CreateDataMedium
+
+' Sets directory for file save
+Dim DXFDirectory As String
+'DXFDirectory = "\\ServerName\Shared\DXF Folder\"
+DXFDirectory = ThisDoc.Path & "\DXF"
+' Sets save name as iProperties value
+Dim SaveNamedxf As String
+SaveNamedxf = iProperties.Value("Project", "Part Number")
+
+If Len(Dir(DXFDirectory, vbDirectory)) = 0 Then
+	MkDir (DXFDirectory)
+End If
+
+' Check whether the translator has 'SaveCopyAs' options
+If DXFAddIn.HasSaveCopyAsOptions(oDocumentdxf, oContextdxf, oOptionsdxf) Then
+Dim strIniFile As String
+strIniFile = "Z:\Cad Setup\Inventor\Preferences\dxf.ini"
+' Create the name-value that specifies the ini file to use.
+oOptionsdxf.Value("Export_Acad_IniFile") = strIniFile
+End If
+'Set the destination file name
+'oDataMediumdxf.FileName = ThisDoc.PathAndFileName(False) 
+'oDataMediumdxf.FileName = DXFDirectory & SaveNamedxf & ".dxf"
+
+oFileName = ThisDoc.FileName(False) 'without extension
+oRevNum = iProperties.Value("Project", "Revision Number")
+oDesc = iProperties.Value("Project", "Description")
+oDataMediumdxf.FileName = DXFDirectory & "\" & oFileName & " Rev" & oRevNum & " " & oDesc & ".dxf"
+
+'Publish document.
+DXFAddIn.SaveCopyAs(oDocumentdxf, oContextdxf, oOptionsdxf, oDataMediumdxf)
+'Launch the dxf file in whatever application Windows is set to open this document type with
+i = MessageBox.Show("Preview the DXF file?", "DXF Preview",MessageBoxButtons.YesNo,MessageBoxIcon.Question)
+If i = vbYes Then ThisDoc.Launch(oDataMediumdxf.FileName)
+
+
+'----------------end of save dxf -----------------------
+
+
+'close drawing document
+oDocument.Close(True)

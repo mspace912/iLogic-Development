@@ -1,0 +1,23 @@
+﻿
+'change Custom iProperty Name to desired Custom iProperty Name
+Dim propertyName1 As String = "FinishMaterial"
+
+'define custom property collection
+oCustomPropertySet = ThisDoc.Document.PropertySets.Item("Inventor User Defined Properties")
+
+
+
+Try
+'set property value
+oProp = oCustomPropertySet.Item(propertyName1)
+Catch
+' Assume error means not found so create it
+oCustomPropertySet.Add("", propertyName1)
+End Try
+
+'set custom property value; Change Custom iProperty Name to desired Custom iProperty Name;
+'change UniqueFxName to the name of your User Defined Parameter
+iProperties.Value("Custom", "FinishMaterial") = Parameter("Finish")
+'processes update when rule is run so save doesn't have to occur to see change
+iLogicVb.UpdateWhenDone = True 
+

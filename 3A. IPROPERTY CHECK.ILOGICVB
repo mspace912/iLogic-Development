@@ -1,0 +1,29 @@
+﻿Filetype = Right(ThisDoc.FileName(True),3) 'without extension
+EmptyProperties = 0
+
+If Len(iProperties.Value("Project", "Part Number")) = 0 Then
+	EmptyProperties = EmptyProperties + 1
+End If
+
+If Len(iProperties.Value("Project", "Description")) = 0 Then
+	EmptyProperties = EmptyProperties + 1
+End If
+
+'If Len(iProperties.Value("Custom", "Job Number")) = 0 Then
+'	EmptyProperties = EmptyProperties + 1
+'End If
+
+'If Len(iProperties.Value("Custom", "Customer")) = 0 Then
+'	EmptyProperties = EmptyProperties + 1
+'End If
+
+If EmptyProperties > 0 Then
+	'___Use windows voice command____________
+'	Dim objSPVoice,colVoices
+'	objSPVoice = CreateObject("SAPI.SpVoice")
+'	objSPVoice.Speak ("Not all iProperties have been filled out")
+	
+	i = MessageBox.Show("Not all iProperties have been fiiled out.  Please enter the appropriate information.", "iProperties Missing", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+	
+'	iLogicForm.ShowGlobal("iProperties Editor")
+End If

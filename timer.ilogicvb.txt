@@ -1,0 +1,10 @@
+Dim RunTimer As System.Diagnostics.Stopwatch = New System.Diagnostics.Stopwatch
+RunTimer.Start
+System.Threading.Thread.Sleep(1000)
+Logger.Info("Elapsed Time: " + RunTimer.Elapsed.ToString())
+System.Threading.Thread.Sleep(1000)
+Logger.Info("Elapsed Time: " + RunTimer.Elapsed.ToString())
+System.Threading.Thread.Sleep(1000)
+Logger.Info("Elapsed Time: " + RunTimer.Elapsed.ToString())
+System.Threading.Thread.Sleep(1000)
+Logger.Info("Elapsed Time: " + RunTimer.Elapsed.ToString())

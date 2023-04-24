@@ -1,0 +1,7 @@
+﻿'Sets LengthExtents and WidthExtents Parameters to the Sheet Metal Extents 
+LengthExtents = SheetMetal.FlatExtentsLength
+WidthExtents = SheetMetal.FlatExtentsWidth
+
+'just testing github push request
+
+

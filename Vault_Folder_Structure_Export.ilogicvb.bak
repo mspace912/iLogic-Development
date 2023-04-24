@@ -1,0 +1,37 @@
+AddReference "C:\Program Files\Autodesk\Vault Server 2024\ADMS Console\Autodesk.Connectivity.WebServices.dll"
+Imports AWS = Autodesk.Connectivity.WebServices
+AddReference "C:\Program Files\Autodesk\Vault Server 2024\ADMS Console\Autodesk.DataManagement.Client.Framework.Vault.dll"
+Imports VDF = Autodesk.DataManagement.Client.Framework
+AddReference "C:\Program Files\Autodesk\Vault Server 2024\ADMS Console\Connectivity.Application.VaultBase.dll"
+Imports VB = Connectivity.Application.VaultBase
+Sub Main()
+                'get active vaultconnection
+                Dim mVltCon As VDF.Vault.Currency.Connections.Connection = VB.ConnectionManager.Instance.Connection
+
+                'check if user is logged in
+                If mVltCon Is Nothing OrElse mVltCon.UserName Is Nothing OrElse mVltCon.UserName = "" Then
+                                MessageBox.Show("Not Logged In to Vault! - Login first and repeat executing this rule.")
+                                Exit Sub
+                End If
+
+                'get vault root folder
+                Dim root As VDF.Vault.Currency.Entities.Folder = mVltCon.FolderManager.RootFolder
+                'get full list of folders, using recurse parameter. Downselect to the folder name
+                Dim vaultPaths As IEnumerable(Of String) = mVltCon.FolderManager.GetChildFolders(root, True, False).Select(Function(c) c.FullName)
+                'modify vault paths into windows local paths
+                Dim localPaths As IEnumerable(Of String) = vaultPaths.Select(Function(c) c.Replace("$/", "C:\Dan\").Replace("/", "\"))
+
+                Dim errs As New ArrayList
+                'make directories if not existing
+                For Each dr As String In localPaths
+                                Try
+                                                If Not System.IO.Directory.Exists(dr) Then
+                                                                System.IO.Directory.CreateDirectory(dr)
+                                                End If
+                                Catch
+                                                errs.Add("Could not make folder: " & dr)
+                                End Try
+                Next
+                'show errors if any
+                If errs.Count > 0 Then MsgBox(String.Join(vbCrLf, errs.ToArray))
+End Sub

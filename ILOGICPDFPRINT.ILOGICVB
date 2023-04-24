@@ -1,0 +1,17 @@
+﻿
+question = MessageBox.Show("Do you want to create PDF?", "Printing PDF",MessageBoxButtons.YesNo)
+
+
+If question = vbYes Then
+
+ThisDoc.Document.SaveAs(ThisDoc.ChangeExtension (".pdf"), True)
+printmessage = "PDF was Created in  " & ThisDoc.Path
+MessageBox.Show(printmessage, "Printed")
+
+
+ElseIf question = vbNo Then
+
+MessageBox.Show("PDF was not Created", "No Printed")
+
+
+End If 

@@ -1,0 +1,38 @@
+﻿Dim openDoc As Document
+openDoc = ThisDoc.Document
+Dim docFile As Document
+If openDoc.DocumentType = 12291 Then
+    ASSYCOST = 0.00
+	For Each docFile In openDoc.AllReferencedDocuments
+        Dim FNamePos As Long
+        Dim docFName As String
+        
+        FNamePos = InStrRev(docFile.FullFileName, "\", -1)
+        docFName = Mid(docFile.FullFileName, FNamePos + 1, Len(docFile.FullFileName) - FNamePos)
+        
+        If docFile.IsModifiable = True Then
+            Dim assemblyDoc As AssemblyDocument
+            Dim assemblyDef As AssemblyComponentDefinition
+            Dim partQty As ComponentOccurrencesEnumerator
+            
+            assemblyDoc = openDoc
+            assemblyDef = assemblyDoc.ComponentDefinition
+            partQty = assemblyDef.Occurrences.AllReferencedOccurrences(docFile)
+            If IsNumeric(partQty.Count) = True Then
+            
+                If IsNumeric(iProperties.Value(docFName, "Status", "Status")) = False Then
+                    iProperties.Value(docFName, "Status", "Status") = 0
+                End If
+                
+'                If partQty.Count <> iProperties.Value(docFName, "Status", "Status") Then
+                    iProperties.Value(docFName, "Status", "Status") = partQty.Count
+'                End If
+				ASSYCOST = ASSYCOST + (partQty.Count * iProperties.Value(docFName, "Project", "Cost Center"))
+				ASSYCOST = Round(ASSYCOST, 2)
+               iProperties.Value("Project", "Cost Center")=ASSYCOST
+            End If
+        End If
+    Next
+Else
+MessageBox.Show("You must have a valid Assembly document open before using this code!", "File Type Mismatch!", MessageBoxButtons.OK)
+End If 

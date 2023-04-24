@@ -1,0 +1,73 @@
+﻿'------start of DXF-------
+' Get the DXF translator Add-In.
+oPath = ThisDoc.Path
+PN = iProperties.Value("Project", "Part Number")
+
+Dim DXFAddIn As TranslatorAddIn
+DXFAddIn = ThisApplication.ApplicationAddIns.ItemById("{C24E3AC4-122E-11D5-8E91-0010B541CD80}")
+'Set a reference to the active document (the document to be published).
+Dim oDocument As Document
+oDocument = ThisApplication.ActiveDocument
+Dim oContext As TranslationContext
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+' Create a NameValueMap object
+Dim oOptions As NameValueMap
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+' Create a DataMedium object
+Dim oDataMedium As DataMedium
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+' Check whether the translator has 'SaveCopyAs' options
+If DXFAddIn.HasSaveCopyAsOptions(oDocument, oContext, oOptions) Then
+Dim strIniFile As String
+strIniFile = "C:\temp\dxfout.ini"
+' Create the name-value that specifies the ini file to use.
+oOptions.Value("Export_Acad_IniFile") = strIniFile
+End If
+'Set the destination file name
+oDataMedium.FileName = oPath & "\" & PN &  ".dxf"
+
+'Publish document.
+DXFAddIn.SaveCopyAs(oDocument, oContext, oOptions, oDataMedium)
+ 
+'------start of PDF-------
+oPath = ThisDoc.Path
+PN = iProperties.Value("Project", "Part Number")
+oFileName = ThisDoc.FileName(False) 'without extension
+oRevNum = iProperties.Value("Project", "Revision Number")
+oPDFAddIn = ThisApplication.ApplicationAddIns.ItemById _
+("{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}")
+oDocument = ThisApplication.ActiveDocument
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium 
+
+
+'If oPDFAddIn.HasSaveCopyAsOptions(oDataMedium, oContext, oOptions) Then
+'	oOptions.Value("All_Color_AS_Black") = 1
+'	oOptions.Value("Remove_Line_Weights") = 1
+'	oOptions.Value("Vector_Resolution") = 400
+'	oOptions.Value("Sheet_Range") = Inventor.PrintRangeEnum.kPrintAllSheets
+'	'oOptions.Value("Custom_Begin_Sheet") = 2
+'	'oOptions.Value("Custom_End_Sheet") = 4
+'End If 
+
+
+'get PDF target folder path
+oFolder = Left(oPath, InStrRev(oPath, "\")) & "PDF"
+
+
+'Check for the PDF folder and create it if it does not exist
+If Not System.IO.Directory.Exists(oFolder) Then
+    System.IO.Directory.CreateDirectory(oFolder)
+End If
+
+
+ 'Set the PDF target file name
+oDataMedium.FileName = oPath & "\" & PN &  ".pdf"
+
+
+'Publish document
+oPDFAddIn.SaveCopyAs(oDocument, oContext, oOptions, oDataMedium) 
+'------end of iLogic-------

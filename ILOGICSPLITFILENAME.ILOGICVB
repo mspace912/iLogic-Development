@@ -1,0 +1,7 @@
+ 
+'This line gets the first 6 characters of the file name and puts them into the Part Number Property
+iProperties.Value("Project", "Part Number") = Ucase(Left(ThisDoc.FileName(False), 6))
+
+'This line gets the rest of the file name, starting at the 8th characters, minus the extension
+'and puts it into the Description Property
+iProperties.Value("Project", "Description") = Ucase(Mid(ThisDoc.FileName(False), 8))

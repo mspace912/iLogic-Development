@@ -1,0 +1,25 @@
+﻿Parameter("CORNERRADIUS") = 0.01 in
+Parameter("LEGRADIUS") = 0.01 in
+Parameter.UpdateAfterChange = True
+Select Case iProperties.Material
+
+Case "ALM-169"
+iProperties.Value("Project", "Description")= "ALUM-H CHANNEL-ANOD-1x3/8x1/16 wall x12ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.391 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE03") = 1.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+Parameter ("LEGRADIUS") = .03125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 12ft length" , "Note")
+
+Case Else
+iProperties.Value("Project", "Description")="need description"
+Parameter.UpdateAfterChange = True
+MessageBox.Show("not an extruded h channel, description not updated" , "Warning")
+End Select

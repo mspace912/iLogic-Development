@@ -1,0 +1,3481 @@
+﻿Parameter("RAWBOARD") = 30 ft^2
+Parameter("GLUEVAR") = 1
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .0625
+Parameter.UpdateAfterChange = True
+Select Case iProperties.Material
+
+Case "ALM-001"	
+iProperties.Value("Project", "Description")="ALUM-SHT-1/8x48x96"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-002"	
+iProperties.Value("Project", "Description")="ALUM-SHT-3/8x48x96"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3543
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-003"	
+iProperties.Value("Project", "Description")="ALUM-SHT-1/4x48x96"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-041"	
+iProperties.Value("Project", "Description")="ALUM-SHT-1/4X48X144"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 45 ft^2
+MessageBox.Show("calculating as 4x12 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-044"	
+iProperties.Value("Project", "Description")="ALUMALITE SHT-1/4X48X96-SILVER-DS"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-065"
+iProperties.Value("Project", "Description")="E-PANEL 3MM-WHT/WHT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-066"	
+iProperties.Value("Project", "Description")="E-PANEL 3MM-MILL ALUM/WHT 4X8"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-067"
+iProperties.Value("Project", "Description")="E-PANEL 3MM-MILL WHT/WHT 5X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 46.875 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-072"	
+iProperties.Value("Project", "Description")="ALUM-SHT-1/2x24x48"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 7.5 ft^2
+MessageBox.Show("calculating as 2x4 sheet" , "Note")
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-085"
+iProperties.Value("Project", "Description")="ALM-SHT-1/4X48X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4X10 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-107"
+iProperties.Value("Project", "Description")="ALM-SHT-PERF-.032X48X96-HOLES.187x.312"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .032
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-124"	
+iProperties.Value("Project", "Description")="ALUM-SHT-1/16x48x144"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 45 ft^2
+MessageBox.Show("calculating as 4X12 sheet" , "Note")
+Parameter("THICKNESS") = .063
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-142"	
+iProperties.Value("Project", "Description")="ALUM SHT 1/4X48X96 3003 ALLOY"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "ALM-160"
+iProperties.Value("Project", "Description")="ALM-SHT-1/4X60X96"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.75 ft^2
+MessageBox.Show("calculating as 5X8 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "DELR-003"	
+iProperties.Value("Project", "Description")="24in X 24in X 2in THK BLACK ACETAL DELRIN"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 4 ft^2
+MessageBox.Show("calculating as 4X12 sheet" , "Note")
+Parameter("THICKNESS") = 2.0
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "HOMA-001"
+iProperties.Value("Project", "Description")="HOMOSOTE  - 1/2 X 48 X 96"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-001"
+iProperties.Value("Project", "Description")="3/4x49x97 MDF"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-002"
+iProperties.Value("Project", "Description")="1x49x97 MDF"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-003"
+iProperties.Value("Project", "Description")="18MMX60X144-MDF-ULTRA LIGHT"
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .708
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-004"
+iProperties.Value("Project", "Description")="1/4x49x97 MDF"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .25
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-005"
+iProperties.Value("Project", "Description")="1/2x49x97 MDF"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-006"
+iProperties.Value("Project", "Description")="3/4x61x121 MDF"
+Parameter("RAWBOARD") = 51.25 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-007"
+iProperties.Value("Project", "Description")="1/2x49x121 MDF"
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "MDF-008"
+iProperties.Value("Project", "Description")="3/4x49x121 MDF"
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-001"
+iProperties.Value("Project", "Description")="2mmx48x96-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .0787
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-002"
+iProperties.Value("Project", "Description")="1/8x48x96-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-003"
+iProperties.Value("Project", "Description")="1/4x48x96-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-004"
+iProperties.Value("Project", "Description")="3/8x48x96-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3543
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-005"
+iProperties.Value("Project", "Description")="1/2x48x96-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .4724
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-006"
+iProperties.Value("Project", "Description")="2mmx48x96-CLEAR-PETG"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .0787
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-007"
+iProperties.Value("Project", "Description")="1/8x48x96-CLEAR-PETG"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-008"
+iProperties.Value("Project", "Description")="3/16x48x96-CLEAR-PETG"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1771
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-009"
+iProperties.Value("Project", "Description")="1/4x48x96-CLEAR-PETG"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-010"
+iProperties.Value("Project", "Description")="1/8x48x96-MILK-2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-011"
+iProperties.Value("Project", "Description")="1/4x48x96-MILK-2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-012"
+iProperties.Value("Project", "Description")="1/4x60x120-MILK-2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 46.875 ft^2
+MessageBox.Show("calculating as 5x10 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-013"
+iProperties.Value("Project", "Description")="1/8x48x96-FROSTED-SINGLE SIDED"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-014"
+iProperties.Value("Project", "Description")="1/4x48x96-FROSTED-SINGLE SIDED"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-015"
+iProperties.Value("Project", "Description")="1/8x48x96-FROSTED-DOUBLE SIDED"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-016"
+iProperties.Value("Project", "Description")="1/4x48x96-FROSTED-DOUBLE SIDED"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-017"
+iProperties.Value("Project", "Description")="3/8X48X96-FROSTED-DOUBLE SIDED"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3543
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-018"
+iProperties.Value("Project", "Description")="1/8x48x120-MILK-2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-019"
+iProperties.Value("Project", "Description")="1/8x48x144-CLEAR PLEXI"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 45 ft^2
+MessageBox.Show("calculating as 4x12 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-020"
+iProperties.Value("Project", "Description")="1/2x48x144-MILK-2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 45 ft^2
+MessageBox.Show("calculating as 4x12 sheet" , "Note")
+Parameter("THICKNESS") = .4724
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-021"
+iProperties.Value("Project", "Description")="1/4x48x120-MILK-2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-022"
+iProperties.Value("Project", "Description")="HDPE-3/4 X 48 X 96 POLYETHYLENE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-023"
+iProperties.Value("Project", "Description")="1/8 X 48 X 120 GREEN PLEXI"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-024"
+iProperties.Value("Project", "Description")="1/8 X 45 X 96 PURPLE PLEXI"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-025"
+iProperties.Value("Project", "Description")="1x48x96-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .9449
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-026"
+iProperties.Value("Project", "Description")="1/4x48x96-WHITE PLEXI"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-027"
+iProperties.Value("Project", "Description")="1/4x48x96-WHITE PLEXI-OPAQUE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-028"
+iProperties.Value("Project", "Description")="3/8X48-96-FROSTED-SINGLE SIDED (P95)"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3543
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-029"
+iProperties.Value("Project", "Description")="1/2x48x96-WHITE PLEXI-OPAQUE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .4724
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-030"
+iProperties.Value("Project", "Description")="1x48x96-WHITE PLEXI-OPAQUE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .9449
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-031"
+iProperties.Value("Project", "Description")="1/4x48x96 GREEN EDGE CLEAR PLEXI"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-032"
+iProperties.Value("Project", "Description")="1/4x48x96-BLACK PLEXI"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-033"
+iProperties.Value("Project", "Description")="1/8x48x144-MILK-2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-035"
+iProperties.Value("Project", "Description")="1/4x60x120-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-036"
+iProperties.Value("Project", "Description")="1/8 X 48 X 96-RED 2415 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-037"
+iProperties.Value("Project", "Description")="1/4x48x96-CLEAR-SCRATCH RESISTNT ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-038"
+iProperties.Value("Project", "Description")="1/4 X 48 X 96-BRONZE 2412 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-039"
+iProperties.Value("Project", "Description")="3/8x50x120-CLEAR"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4X10 sheet" , "Note")
+Parameter("THICKNESS") = .3543
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-040"
+iProperties.Value("Project", "Description")="1/4x48x96-BLUE ACRYLIC-2050"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-042"
+iProperties.Value("Project", "Description")="1/2X48X96 BLACK ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .4724
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-044"
+iProperties.Value("Project", "Description")="1/4 X 48 X 96-BRONZE 2370 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-045"
+iProperties.Value("Project", "Description")="HDPE-3/4X48X96-POLYETHYLENE-BLACK"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-046"
+iProperties.Value("Project", "Description")=".375 X 48 X 96-MILK-2447-TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3543
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-048"
+iProperties.Value("Project", "Description")="1/8x48x96-BLACK ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-049"
+iProperties.Value("Project", "Description")="1/4 X 48 X 96-SMOKE ACRYLIC 2064"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+
+Case "PLX-050"
+iProperties.Value("Project", "Description")="1/8x48x96-YELLOW-2037"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-051"
+iProperties.Value("Project", "Description")="1/8x48x96-RED-2157"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-052"
+iProperties.Value("Project", "Description")="3/4 X 49 X 96 - MILK -2447 TRANSLUCENT"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-054"
+iProperties.Value("Project", "Description")="1/8x48x96-WHITE-OPAQUE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-055"
+iProperties.Value("Project", "Description")="1/8x48x96-GRAY SMOKE ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-060"
+iProperties.Value("Project", "Description")="1/4X48X96-LD BLUE ACRYLIC 2114"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-062"
+iProperties.Value("Project", "Description")="1/4X48X72-LD GREEN FLUORESCENT ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-063"
+iProperties.Value("Project", "Description")="1/4X48X72-LD PINK FLUORESCENT ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-064"
+iProperties.Value("Project", "Description")="1/4X48X72-LD BLUE FLUORESCENT ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-065"
+iProperties.Value("Project", "Description")="1/4X48X72-LD YELLOW FLUORESCENT ACRYLIC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLX-067"
+iProperties.Value("Project", "Description")="3/4x48x96-MATTE WHITE-KING DURASTYLE HDPE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-001"
+iProperties.Value("Project", "Description")="3/4x48x96-(C2 Grade) BIRCH-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-002"
+iProperties.Value("Project", "Description")="3/4x48x96-(C2 Grade) BIRCH-IMP"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .6875
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-003"
+iProperties.Value("Project", "Description")="3/4x48x120-(C2 Grade) BIRCH-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-004"
+iProperties.Value("Project", "Description")="3/4x48x120-(C2 Grade) BIRCH-IMP"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .6875
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-005"
+iProperties.Value("Project", "Description")="1/2x48x96-(C2 Grade) BIRCH-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-006"
+iProperties.Value("Project", "Description")="1/2x48x96-(C2 Grade) BIRCH-IMP"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .4375
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-007"
+iProperties.Value("Project", "Description")="1/4x48x96-(C2 Grade) BIRCH-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .25
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-008"
+iProperties.Value("Project", "Description")="1/4x48x96-(C2 Grade) BIRCH-IMP"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1875
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-009"
+iProperties.Value("Project", "Description")="3/4x48x96-CDX-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .6875
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-010"
+iProperties.Value("Project", "Description")="3/4x48x96-CDX-IMP - OBSOLETE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-011"
+iProperties.Value("Project", "Description")="3/4x48x120-CDX-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-012"
+iProperties.Value("Project", "Description")="3/4x48x120-CDX-IMP - OBSOLETE"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-013"
+iProperties.Value("Project", "Description")="1/2x48x96-CDX-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-014"
+iProperties.Value("Project", "Description")="1/2x48x96-CDX-IMP - OBSOLETE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .4375
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-015"
+iProperties.Value("Project", "Description")="3/8x48x96-CDX-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .375
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-016"
+iProperties.Value("Project", "Description")="3/8x48x96-CDX-IMP"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-017"
+iProperties.Value("Project", "Description")="1/4x48x96-LUAN"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1875
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-018"
+iProperties.Value("Project", "Description")="3/8x48x96-BENDING-8ft GRAIN"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-019"
+iProperties.Value("Project", "Description")="3/8x48x96-BENDING-4ft GRAIN"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-020"
+iProperties.Value("Project", "Description")="1/8x48x96-BENDING-8ft GRAIN"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .3125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-021"
+iProperties.Value("Project", "Description")="1/8x48x96-BENDING-4ft GRAIN"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-022"
+iProperties.Value("Project", "Description")="3/16x48x96-MASONITE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1875
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-023"
+iProperties.Value("Project", "Description")="1/4X48X120-LUAN"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .25
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-024"
+iProperties.Value("Project", "Description")="3/4x48x96-(B2 Grade) BIRCH-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-025"
+iProperties.Value("Project", "Description")="3/8x48x96-LUAN"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .375
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-026"
+iProperties.Value("Project", "Description")="3/4 BLACK MELAMINE-DBL SIDED-CHIPBD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-027"
+iProperties.Value("Project", "Description")="1/4 BLACK MELAMINE-DBL SIDED-CHIPBD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .25
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-028"
+iProperties.Value("Project", "Description")="3/4 DARK GREY MELAMINE-DBL SIDED-CHPBD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-029"
+iProperties.Value("Project", "Description")="1X48X96-FLAKEBOARD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-030"
+iProperties.Value("Project", "Description")="3/4 LT GREY MELAMINE-DBL SIDED-CHPBD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-031"
+iProperties.Value("Project", "Description")="3/4X48X96-PARTICLEBOARD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-032"
+iProperties.Value("Project", "Description")="1x48x96-BIRCH-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-033"
+iProperties.Value("Project", "Description")="3/4X48X120-(AC-GRADE) FIR-DOM"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-034"
+iProperties.Value("Project", "Description")="TRICEL TRIPANEL-3/4X48X120 HONEYCOMB PNL"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-036"
+iProperties.Value("Project", "Description")="1/2 WHITE MELAMINE-DBL SIDED-CHIPBD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-037"
+iProperties.Value("Project", "Description")="3/4 WHITE MELAMINE-DBL SIDED-CHIPBD"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .765
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-038"
+iProperties.Value("Project", "Description")="1-1/8x5x8-MELAMINE-MAPLE-DBL SIDED"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 38.5 ft^2
+MessageBox.Show("calculating as 61x97 sheet" , "Note")
+Parameter("THICKNESS") = 1.125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-039"
+iProperties.Value("Project", "Description")="1-1/8X49X97-PARTICLEBOARD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 38.5 ft^2
+MessageBox.Show("calculating as 49x97 sheet" , "Note")
+Parameter("THICKNESS") = 1.125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-040"
+iProperties.Value("Project", "Description")="1-1/8X30X144-PARTICLEBOARD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 38 ft^2
+MessageBox.Show("calculating as 30x144 sheet" , "Note")
+Parameter("THICKNESS") = 1.125
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PLY-041"
+iProperties.Value("Project", "Description")="3/4X96x48 KERFKORE TIMBERFLEX"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 38 ft^2
+Parameter("THICKNESS") = 0.75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+
+Case "POLY-001"
+iProperties.Value("Project", "Description")="VISQUEEN-CLEAR-11x210-4MIL"
+Parameter.UpdateAfterChange = True
+
+Case "POLY-002"
+iProperties.Value("Project", "Description")="VISQUEEN-MESH REIMFORCED-20'x100-6ML"
+Parameter.UpdateAfterChange = True
+
+Case "PVC-001"
+iProperties.Value("Project", "Description")="3/4x48x96-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .7087
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-002"
+iProperties.Value("Project", "Description")="1/2x48x96-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .4724
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-003"
+iProperties.Value("Project", "Description")="1/4x48x120-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-004"
+iProperties.Value("Project", "Description")="1/4x48x96-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-005"
+iProperties.Value("Project", "Description")="1/8x60x120-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5x10 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-006"
+iProperties.Value("Project", "Description")="1/8x48x120-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-007"
+iProperties.Value("Project", "Description")="1/8x48x96-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-008"
+iProperties.Value("Project", "Description")="2mmx48x96-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .0787
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-009"
+iProperties.Value("Project", "Description")="3/4x48x96-BLACK-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .748
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-010"
+iProperties.Value("Project", "Description")="1/2x48x96-BLACK-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .4724
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-011"
+iProperties.Value("Project", "Description")="1/4x48x120-BLACK-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-012"
+iProperties.Value("Project", "Description")="1/4x48x96-BLACK-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-013"
+iProperties.Value("Project", "Description")="1/8x48x120-BLACK-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-014"
+iProperties.Value("Project", "Description")="1/8x48x96-BLACK-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-015"
+iProperties.Value("Project", "Description")="1/8x48x96-LIGHT GRAY-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-016"
+iProperties.Value("Project", "Description")="1/4x48x96-LIGHT GRAY-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-017"
+iProperties.Value("Project", "Description")="1/8x48x96-DARK GRAY-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-018"
+iProperties.Value("Project", "Description")="1/4x48x96-DARK GRAY-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-019"
+iProperties.Value("Project", "Description")="1/8x48x96-BLUE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-020"
+iProperties.Value("Project", "Description")="1/4x48x96-BLUE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-021"
+iProperties.Value("Project", "Description")="1/8x48x96-DARK BLUE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-022"
+iProperties.Value("Project", "Description")="1/4x48x96-DARK BLUE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-023"
+iProperties.Value("Project", "Description")="1/8x48x96-BEIGE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-024"
+iProperties.Value("Project", "Description")="1/4x48x96-BEIGE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-025"
+iProperties.Value("Project", "Description")="1/8x48x96-DARK RED-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-026"
+iProperties.Value("Project", "Description")="1/4x48x96-DARK RED-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-027"
+iProperties.Value("Project", "Description")="1/8x48x96-TEAL-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-028"
+iProperties.Value("Project", "Description")="1/4x48x96-TEAL-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-029"
+iProperties.Value("Project", "Description")="1/8x48x96-PURPLE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-030"
+iProperties.Value("Project", "Description")="1/4x48x96-PURPLE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-031"
+iProperties.Value("Project", "Description")="1/8x48x96-GREEN-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-032"
+iProperties.Value("Project", "Description")="1/4x48x96-GREEN-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-033"
+iProperties.Value("Project", "Description")="1/8x48x96-BRIGHT YELLOW-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-034"
+iProperties.Value("Project", "Description")="1/4x48x96-BRIGHT YELLOW-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-035"
+iProperties.Value("Project", "Description")="1/8X60X96-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+Parameter("THICKNESS") = .1181
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-036"
+iProperties.Value("Project", "Description")="WHITE KYDEX T-.060-TEXTURED-GLOSS"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .060
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-039"
+iProperties.Value("Project", "Description")="1/4x48x96 BEIGE CELTEC PVC SHEET"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .2362
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-041"
+iProperties.Value("Project", "Description")="3/8x48x96-WHITE-PVC"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .375
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-043"
+iProperties.Value("Project", "Description")="48x96-FASADE WALL PANEL-DUNES-HORIZONTAL-WHITE"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .375
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "PVC-044"
+iProperties.Value("Project", "Description")="48x96-FASADE WALL PANEL-WAVES-VERTICAL-GALVANIZED STEEL"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .1875
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-009"
+iProperties.Value("Project", "Description")="3x4x8 SIGN FOAM-15lb"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 3.0
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-010"
+iProperties.Value("Project", "Description")="1-1/2x4x8 SIGN FOAM-15lb"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1.5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-011"
+iProperties.Value("Project", "Description")="3/4x4x8 SIGN FOAM-15lb"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.75
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-021"
+iProperties.Value("Project", "Description")="PACKAGING-1inx4'x9'-GREY"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-022"
+iProperties.Value("Project", "Description")="PACKAGING-3inx4'x9'-GREY"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 3
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-024"
+iProperties.Value("Project", "Description")="2x4x8 SIGN FOAM-15lb"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 2.0
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-025"
+iProperties.Value("Project", "Description")="3/8x4x8 SIGN FOAM-15lb"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.375
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-027"
+iProperties.Value("Project", "Description")=".25 CX CLOSED-CELL FOAM - BLACK - 36x60"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .25
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-029"
+iProperties.Value("Project", "Description")="1x4x8 SIGN FOAM-15lb"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1.0
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-030"
+iProperties.Value("Project", "Description")="4x4x8 SIGN FOAM-15lb"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 4.0
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "FOAM-031"
+iProperties.Value("Project", "Description")="STYROFOAM - 1x48x108"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1.0
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 33.75 ft^2
+MessageBox.Show("calculating as 48X108 sheet" , "Note")
+
+Case "FOAM-032"
+iProperties.Value("Project", "Description")="1X4X10 SIGN FOAM-15LB"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1.0
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("Calculating as 4X10 sheet" , "Note")
+
+Case "FOAM-033"
+iProperties.Value("Project", "Description")="1-1/2X4X10 SIGN FOAM-15LB"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 1.5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("Calculating as 4X10 sheet" , "Note")
+
+Case "HPL-0023-VER-4X8"
+iProperties.Value("Project", "Description")="GREEN-NEVAMAR-MATTE-VER"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-006-MILKWHITE-STD-4X8"
+iProperties.Value("Project", "Description")="MILK WHITE -LIRI-MULTILINES-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-0215-PF-51X120"
+iProperties.Value("Project", "Description")="STONE BLUE-ARPA-ERRE FINISH-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0257-PF-51X120"
+iProperties.Value("Project", "Description")="NASSAU BLUE-ARPA-ERRE FINISH-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0500-PF-51X120"
+iProperties.Value("Project", "Description")="ARAGOSTA-ARPA-ERRE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0507-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE BLACK-ERRE-ARPA-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0509-STD-51X120"
+iProperties.Value("Project", "Description")="MIDNIGHT BLK-ARPA-SCALE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0510-PF-51X120"
+iProperties.Value("Project", "Description")="FRENCH ROAST-ARPA-ERRE FINISH-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0561-PF-51x120"
+iProperties.Value("Project", "Description")="ROSSO DEVIL-ARPA-ERRE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0682-51X120"
+iProperties.Value("Project", "Description")="FIESTA ORANGE-ARPA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-0699-STD-4X8"
+iProperties.Value("Project", "Description")="NOW 51X 120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-10776-60-4X8"
+iProperties.Value("Project", "Description")="KENSINGTON MAPLE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-1323-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-136710-PF-4X8"
+iProperties.Value("Project", "Description")="WHITE-PANELYTE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-1396-STD-4X8"
+iProperties.Value("Project", "Description")="GRAY-NEVAMAR-MATRIX-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-1443-STD-4X12"
+iProperties.Value("Project", "Description")="GRAY-PANELYTE-MATRIX-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 45 ft^2
+MessageBox.Show("calculating as 4X12 sheet" , "Note")
+
+Case "HPL-1453-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-1484-MC-4X8"
+iProperties.Value("Project", "Description")="STEEL-FORMICA-MICRO DOT-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-1484-TEX-4X8"
+iProperties.Value("Project", "Description")="STEEL-FORMICA-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-151-STD-4X8"
+iProperties.Value("Project", "Description")="BLACK MAGNETIC CHALKBOARD-CHEMETAL 151"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-1518-PF-51X120"
+iProperties.Value("Project", "Description")="ORANGE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-1573-PF-4X10"
+iProperties.Value("Project", "Description")="PINK-WILSONART-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-158065-PF-51X120"
+iProperties.Value("Project", "Description")="BROWN-ABET-MATTE-PF 51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-1610-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-1672-PF-51X120"
+iProperties.Value("Project", "Description")="LEGNI COLORATI-ABET-SOFT-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-1746-STD-4X8"
+iProperties.Value("Project", "Description")="GRAY-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-1816-58-4X8"
+iProperties.Value("Project", "Description")="FOGDUST-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-1843-45-4X8"
+iProperties.Value("Project", "Description")="MOUNTAIN PASSAGE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-189995-PF-51X120"
+iProperties.Value("Project", "Description")="CREME-ABET-SUEDE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-2012-51X120"
+iProperties.Value("Project", "Description")="ARPA ALU STEEL BRUSHED METAL"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-202055-PF-51X120"
+iProperties.Value("Project", "Description")="LT.GREEN-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-2059-PF-51X120"
+iProperties.Value("Project", "Description")="YELLOW-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-2100-G-VERT-4X8"	
+iProperties.Value("Project", "Description")="TUNGSTEN-LAMINART-GLOSS-VERT-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-2171-STD-4X8"	
+iProperties.Value("Project", "Description")="Double BRUSHED-DECOMETAL-BRUSHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-2200-58-4X8"
+iProperties.Value("Project", "Description")="DRK CHOCOLATE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-2206-PF-51X120"
+iProperties.Value("Project", "Description")="TITANIUM NEBULA-ARPA-ERRE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-2253-PF-4X10"
+iProperties.Value("Project", "Description")="NOIR BLACK-FORMICA-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-2297-42-STD-4X8"
+iProperties.Value("Project", "Description")="TERRIL GREY-FORMICA-CRYSTAL-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-2297-58-STD-4X8"
+iProperties.Value("Project", "Description")="TERRIL GREY-FORMICA-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-2354-PF-51X120"
+iProperties.Value("Project", "Description")="YELLOW-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-243-PF-51X120"
+iProperties.Value("Project", "Description")="243-SOFT-ABET-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-2478-58-4X8"
+iProperties.Value("Project", "Description")="BLUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-2511-51X120"
+iProperties.Value("Project", "Description")="IRR. LT GREY-ARPA-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-271-90-4X8"
+iProperties.Value("Project", "Description")="BLACKSTONE-FORMICA-POLISHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-271-90-5X12"
+iProperties.Value("Project", "Description")="BLACKSTONE-FORMICA-POLISHED-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-2904-STD-4X8"
+iProperties.Value("Project", "Description")="WHITE SUEDE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3001-NAT-4X8"
+iProperties.Value("Project", "Description")="WENGE NATURAL-INTERIOR ARTS 3001-NAT"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3032-58-4X10"
+iProperties.Value("Project", "Description")="PINK-FORMICA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-3041-G-4X8"
+iProperties.Value("Project", "Description")="LAMINART-ZANZIBAR EBONY GLOSS-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3041-VT-STD-4X8"
+iProperties.Value("Project", "Description")="LAMINART-ZANZIBAR EBONY-VTEX-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-307995-PF-50X120"
+iProperties.Value("Project", "Description")="WHITE-ABET-TEXTURED-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-3114-PF-4X8"
+iProperties.Value("Project", "Description")="WHITE-PANELYTE-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3201-PF-4X8"
+iProperties.Value("Project", "Description")="WHITE-PANELYTE-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-321-PF-51X120"
+iProperties.Value("Project", "Description")="PURPLE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-3234-58-4X8"
+iProperties.Value("Project", "Description")="GRASSHOPPER-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-325-PF-51X120"
+iProperties.Value("Project", "Description")="BLACK-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-3276-PF-51X120"
+iProperties.Value("Project", "Description")="FIRECOAT-ARPA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-3276-STD-51X120"
+iProperties.Value("Project", "Description")="FIRECOAT-ARPA-CLIFF-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-333-STD-4X8"
+iProperties.Value("Project", "Description")="FRANKLIN-CHEMETAL-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3360-GLOSS-PF-4X8"
+iProperties.Value("Project", "Description")="YELLOW-PANELYTE-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3360-PF-4X8"
+iProperties.Value("Project", "Description")="YELLOW-PANELYTE-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3453-77-STD-4x8"
+iProperties.Value("Project", "Description")="PARQUET LATTE-HONED-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3453-77-STD-4x10"
+iProperties.Value("Project", "Description")="PARQUET LATTE-HONED-STD-4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-3453-77-STD-5x12"
+iProperties.Value("Project", "Description")="PARQUET LATTE-HONED-STD-5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5x12 sheet" , "Note")
+
+Case "HPL-3505-SP-10-4X8"
+iProperties.Value("Project", "Description")="STORM SOLIDZ-FORMICA-SCULPTED-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3508-58-STD-4x8"
+iProperties.Value("Project", "Description")="TATAMI MAT-FORMICA-MATTE-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3515-58-4X10"
+iProperties.Value("Project", "Description")="COCOA LEATHER-FORMICA-MATTE-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-3515-58-4X8"
+iProperties.Value("Project", "Description")="COCOA LEATHER-FORMICA-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3515-58-5X8"	
+iProperties.Value("Project", "Description")="COCOA LEATHER-FORMICA-MATTE-STD 5X8"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-3518-46-4X8"
+iProperties.Value("Project", "Description")="FLINT CTYSTALL-FORMICA-ETCHING-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3522-58-PF-4X8"
+iProperties.Value("Project", "Description")="PERLATO GRANITE-FORMICA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3692-58-4X8"
+iProperties.Value("Project", "Description")="LABRADOR GRANITE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3695-58-4X8"
+iProperties.Value("Project", "Description")="PAINTED SCREEN-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-3758-PF-4X8"
+iProperties.Value("Project", "Description")="BLUE-PANELYTE-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4083-STD-4X8"
+iProperties.Value("Project", "Description")="SILVER-CHEMETAL-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-412-STD-4X10"
+iProperties.Value("Project", "Description")="WALNUT-OBERFLEX-PEARLSCENT-4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-412-STD-4X8"
+iProperties.Value("Project", "Description")="WALNUT-OBERFLEX-PEARLSCENT-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-413-STD-4X8"
+iProperties.Value("Project", "Description")="LINEAR ALUMINUM-CHEMETAL-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-415-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-4166-STD-4X8"
+iProperties.Value("Project", "Description")="PAMPAS-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4168-STD-4X10"
+iProperties.Value("Project", "Description")="GREY PAMPAS-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-4190-58-4X8"
+iProperties.Value("Project", "Description")="SATIN ALUMINUM-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-423-51X120"
+iProperties.Value("Project", "Description")="VIOLA MADRAS-ABET-MATTE-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-428-SEI-51x120"
+iProperties.Value("Project", "Description")="BLU ELETRICO-ABET-SEI-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-438/1/1-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE-ARPA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-438/1-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE-ARPA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-438-51X120"
+iProperties.Value("Project", "Description")="GREEN (VERDE MARIACI)-ABET-MATTE-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-438-PF-51X120"
+iProperties.Value("Project", "Description")="GRAY-ARPA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-4396-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE CARISMA-ARPA-ERRE FINISH-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-441-51X120"
+iProperties.Value("Project", "Description")="VERDE CEDRO-ABET-MATTE-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-4416-STD-48X96"
+iProperties.Value("Project", "Description")="ARPA-MAKASSAR GIAVA-GLOSS-STD 48X96"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4466-STD-4X8"
+iProperties.Value("Project", "Description")="BLACK ZEBRANO-ARPA-LARIX-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4451-PF-51X120"
+iProperties.Value("Project", "Description")="GREY FINELINE-ARPA-GHIBLI-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-446-51X120"
+iProperties.Value("Project", "Description")="OLIVE GREEN-ABET-MATTE-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-446-STD-4X8"
+iProperties.Value("Project", "Description")="SILVER-CHEMETAL-BRUSHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-449-58-5X12"
+iProperties.Value("Project", "Description")="BLUE-FORMICA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-4512-STD-4X8"
+iProperties.Value("Project", "Description")="KLONDIKE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-459-58-4X8"
+iProperties.Value("Project", "Description")="BRITE WHITE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-459-90-4X8"
+iProperties.Value("Project", "Description")="BRITE WHITE-FORMICA-GLOSS-STD-4x8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-459-90-4X10"
+iProperties.Value("Project", "Description")="BRITE WHITE-FORMICA-GLOSS-STD-4x10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-4598-60-4X8"
+iProperties.Value("Project", "Description")="DESERT OASIS-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-460-51X120"
+iProperties.Value("Project", "Description")="ERBETTA-ABET-MATTE-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-460-58-4X10"
+iProperties.Value("Project", "Description")="IVORY-FORMICA-MATTE-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-460-58-4X8"
+iProperties.Value("Project", "Description")="IVORY-FORMICA-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-461-STD-4X8"
+iProperties.Value("Project", "Description")="SILVER-CHEMETAL-BRUSHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4637-STD-4X10"
+iProperties.Value("Project", "Description")="MONTEREY HAZE-WILSONART-MATTE-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-4637-STD-4X8"
+iProperties.Value("Project", "Description")="MONTEREY HAZE-WILSONART-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-464-58-4X8"
+iProperties.Value("Project", "Description")="GRAY STONE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-47014-TEX-51X120"
+iProperties.Value("Project", "Description")="GRAY-ABET-TEXTURED-PF-obsolete"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-4728-52-4X8"
+iProperties.Value("Project", "Description")="MILANO MAHOGANY-WILSONART-QUARRY-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4744-STD-4X8"
+iProperties.Value("Project", "Description")="PEWTER DEBOSSED-DECOMETAL-BRUSHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4779-60-4X8"
+iProperties.Value("Project", "Description")="PEWTER BRUSH-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4823-60-4X8"
+iProperties.Value("Project", "Description")="ANTIQUE BRUSH-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4823-STD-4X10"
+iProperties.Value("Project", "Description")="ANTIQUE BRUSH-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-4829-07-4X10"
+iProperties.Value("Project", "Description")="SATIN SILVER-WILSONART-GLOSS-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-4830-18-PF-4X8"
+iProperties.Value("Project", "Description")="SATIN STAINLESS-WILSONART-LINEAR-PF-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4830-18-PF-5X10"
+iProperties.Value("Project", "Description")="SATIN STAINLESS-WILSONART-LINEAR-PF-5X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 46.875 ft^2
+MessageBox.Show("calculating as 5x10 sheet" , "Note")
+
+Case "HPL-4860-07-4X8"
+iProperties.Value("Project", "Description")="SILVER ALCHEMY-WILSONART-GLOSS-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-4860-07-PF-4X8"
+iProperties.Value("Project", "Description")="SILVER ALCHEMY-WILSONART-GLOSS-PF-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-499-51X120"
+iProperties.Value("Project", "Description")="BLUE-ABET-MATTE-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-515-58-4X8"
+iProperties.Value("Project", "Description")="GRAPHITE GRAFIX-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-5164-58-4X8"
+iProperties.Value("Project", "Description")="BRUSHED STAINLESS-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-522-42-STD-4X8"
+iProperties.Value("Project", "Description")="BLUE SILK GRAFIX-FORMICA-SPARKLE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-522-50-STD-4X8"
+iProperties.Value("Project", "Description")="BLUE SILK GRAFIX-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-5273-58-STD-4X8"
+iProperties.Value("Project", "Description")="GEO CITADEL-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-5342-58-STD-4X8"
+iProperties.Value("Project", "Description")="EARTH-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-5486-NT-4X8"
+iProperties.Value("Project", "Description")="CLASSIC WALNUT-FORMICA-NATURALLE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-58004-STD-4X8"
+iProperties.Value("Project", "Description")="WHITE-PANELYTE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-5904-43PF-4X8"
+iProperties.Value("Project", "Description")="WILD CHERRY-FORMICA-ARTISAN-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-59783-MATTE-4X8"
+iProperties.Value("Project", "Description")="GRAY-FORMICA-MATTE-STD-obsolete"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-61112-STD-4X8"
+iProperties.Value("Project", "Description")="EBONY SABBIATA-TREE FROG-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6208-43-4X8"
+iProperties.Value("Project", "Description")="GLAMOUR CHERRY-FORMICA-ARTISAN FINISH-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6209-43-4X8"
+iProperties.Value("Project", "Description")="PRESTIGE WALNUT-FORMICA-ARTISAN FINISH-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6211-43-4X8"
+iProperties.Value("Project", "Description")="ELEGANT ROSEWOOD-FORMICA-ARTI-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6212-58-4x8"
+iProperties.Value("Project", "Description")="Wheat Strand-Formica-Matte-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-62204-STD-4X8"
+iProperties.Value("Project", "Description")="GREY OAK-TREE FROG-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-62304-STD-4X8"
+iProperties.Value("Project", "Description")="BLACK OAK-TREE FROG-STRAIGHT GRAIN"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6257-418-STD-4X8"
+iProperties.Value("Project", "Description")="SATIN BRUSHED NAT ALUM-PHEN BCK-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6277-STD-4X8"
+iProperties.Value("Project", "Description")="ALUMASTEEL-WILSONART-BRUSHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6296-419-4X8"
+iProperties.Value("Project", "Description")="SATIN BRUSHED-BLK ALUM-WILSONART"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6902-58-4X8"
+iProperties.Value("Project", "Description")="GRENADINE-FORMICA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6910-58-4X8"
+iProperties.Value("Project", "Description")="ELECTRIC PLASTIQUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-692-58-4X8"
+iProperties.Value("Project", "Description")="FOLKSTONE CELESTA-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6926-NT-4X8"
+iProperties.Value("Project", "Description")="SMOKY WALNUT WOODLINE-FORMICA-NAT-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6927-NT-4X8"
+iProperties.Value("Project", "Description")="WENGE WOODLINE-FORMICA-NATURAL-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6927-20-NT-4X8 VERT"
+iProperties.Value("Project", "Description")="WENGE WOODLINE-FORMICA-NATURAL-VERT"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-6927-NT-4X10"
+iProperties.Value("Project", "Description")="WENGE WOODLINE-FORMICA-NATURAL-STD-4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-6927-NT-5x12"
+iProperties.Value("Project", "Description")="WENGE WOODLINE-FORMICA-NATURAL-STD-5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5x12 sheet" , "Note")
+
+Case "HPL-6934-43-4X10"
+iProperties.Value("Project", "Description")="MOKKA MAHOGANY-FORMICA-ARTISAN-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7008-43-4X8"
+iProperties.Value("Project", "Description")="ACAJOU MAHOGANY-FORMICA-ARTISAN-VER"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-701-4X8"
+iProperties.Value("Project", "Description")="POLISHED ALUMINUM - CHEMETAL - 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7012-58-4X8"
+iProperties.Value("Project", "Description")="AMBER MAPLE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7024-STD-4X8"
+iProperties.Value("Project", "Description")="CHAULK WHITE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-702-4X8"
+iProperties.Value("Project", "Description")="BRUSHED ALUMINUM-CHEMETAL"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7025-58-4X10"
+iProperties.Value("Project", "Description")="YELLOW-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7025-58-4X8"
+iProperties.Value("Project", "Description")="YELLOW-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7025-58-5X12"
+iProperties.Value("Project", "Description")="YELLOW-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-703-4X8"
+iProperties.Value("Project", "Description")="POLISHED BRASS ALUMINUM - CHEMETAL"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7047-58-4X8"
+iProperties.Value("Project", "Description")="WOODGRAIN-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7054-60-4X8"
+iProperties.Value("Project", "Description")="WILD CHERRY-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7061-60-PF-4X8"
+iProperties.Value("Project", "Description")="NATURAL PEAR-WILSONART-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-718-58-5X8"
+iProperties.Value("Project", "Description")="LT.BLUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-719-STD-4X8"
+iProperties.Value("Project", "Description")="SATIN SILVER ALUM-CHEMETAL-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7197-58-4X8"
+iProperties.Value("Project", "Description")="DOVER WHITE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7197-90-4X8"
+iProperties.Value("Project", "Description")="DOVER WHITE-FORMICA-GLOSS-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7197-90-PF-4X8"
+iProperties.Value("Project", "Description")="DOVER WHITE-FORMICA-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7197-90-PF-4X10"
+iProperties.Value("Project", "Description")="DOVER WHITE-FORMICA-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7197-58-5X8"
+iProperties.Value("Project", "Description")="DOVER WHITE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-7200-58-4X8"
+iProperties.Value("Project", "Description")="PURPLE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7200-58-5X12"
+iProperties.Value("Project", "Description")="PURPLE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-7201-58-4X8"
+iProperties.Value("Project", "Description")="BROWN-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7203-2058-4X8"
+iProperties.Value("Project", "Description")="BLUE-FORMICA-MATTE-VER"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7216-58-4X8"
+iProperties.Value("Project", "Description")="SIENNA TERRA-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7223FV-STD-4X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-VELOUR FINISH-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7223-90-STD-4X10"
+iProperties.Value("Project", "Description")="NEW WHITE-FORMICA-GLOSS-STD-COLORCORE"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7249-11-STD-4X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-TEXTURED-STD 4X10-obsolete"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7348-58-4X8"
+iProperties.Value("Project", "Description")="BROWN-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7363-58-4X10"
+iProperties.Value("Project", "Description")="BLUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7363-58-5X12"
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+iProperties.Value("Project", "Description")="BLUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7376-58-4X10"
+iProperties.Value("Project", "Description")="BLACK PEARLWOOD-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7481-58-4X8"
+iProperties.Value("Project", "Description")="NATURAL BIRCH-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7484-58-4X10"
+iProperties.Value("Project", "Description")="CHERRY BIRCH-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7484-58-4X8"
+iProperties.Value("Project", "Description")="CHERRY BIRCH-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7484-58-5X8"
+iProperties.Value("Project", "Description")="CHERRY BIRCH-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-756-58-4X10"
+iProperties.Value("Project", "Description")="NATURAL MAPLE-FORMICA-MATTE-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-756-58-4X8"
+iProperties.Value("Project", "Description")="NATURAL MAPLE-FORMICA-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7583-58-4X10"
+iProperties.Value("Project", "Description")="VICTORIAN MAHOGANY-FORMICA-MATTE-STD-4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-7583-58-4X8"
+iProperties.Value("Project", "Description")="VICTORIAN MAHOGANY-FORMICA-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7583-58-5X10"
+iProperties.Value("Project", "Description")="VICTORIAN MAHOGANY-FORMICA-MATTE-STD-5X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 46.875 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+
+Case "HPL-7583-58-5X12"
+iProperties.Value("Project", "Description")="VICTORIAN MAHOGANY-FORMICA-MATTE-STD-5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-760498-MATTE-4X8"
+iProperties.Value("Project", "Description")="GRAY-FORMICA-MATTE-STD-obsolete"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7698-60-5X10"
+iProperties.Value("Project", "Description")="LOFT OAK-WILSONART-MATTE-STD-5X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 46.875 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+
+Case "HPL-7709-58-STD-4x8"
+iProperties.Value("Project", "Description")="JUTE GAUZE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7727-58-4X8"
+iProperties.Value("Project", "Description")="FRESH PAINT-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7732-58-4X8"
+iProperties.Value("Project", "Description")="BUTTER GRANITE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7740-58-4X8"
+iProperties.Value("Project", "Description")="BUFFED ALUMINUM-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7924-07-4X8"
+iProperties.Value("Project", "Description")="BILTMORE CHERRY-WILSONART-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7924-07-5X12"
+iProperties.Value("Project", "Description")="BILTMORE CHERRY-WILSONART-STD-5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-791-STD-4X8"
+iProperties.Value("Project", "Description")="NATURAL BRUSHED ALUM-CHEMETAL-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7944-01-STD-4X8"
+iProperties.Value("Project", "Description")="MADAGASCAR-WILSONART-GLOSS-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7945-18-PF-5X10"
+iProperties.Value("Project", "Description")="XANADU-WILSONART-LINEARTY-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+
+Case "HPL-7949-18-PF-4X8"
+iProperties.Value("Project", "Description")="ASIAN NIGHT-WILSONART-LINEARTY-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7949-18-PF-5X10"
+iProperties.Value("Project", "Description")="ASIAN NIGHT-WILSONART LINEARITY-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+
+Case "HPL-7952-G-STD-4X8"
+iProperties.Value("Project", "Description")="ATRISAN MAHOGANY-LAMINART-GLOSSY-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-7960-18-PF-4X8"
+iProperties.Value("Project", "Description")="STUDIO TEAK-WILSONART-LINEARITY-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-796-STD-4X8"
+iProperties.Value("Project", "Description")="STAINLESS STEEL ALUMINUM-CHEMETAL"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-796-4X10"
+iProperties.Value("Project", "Description")="STAINLESS STEEL ALUMINUM-CHEMETAL"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4X10 sheet" , "Note")
+
+Case "HPL-8010-48X120"
+iProperties.Value("Project", "Description")="CARBON-LAMINART-MATTE-48X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-801SEI-PF-51X120"
+iProperties.Value("Project", "Description")="AZZURO BLUE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-823-LUC2-51X120"
+iProperties.Value("Project", "Description")="ROSSO TANGO-ABET-LUC2-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-827-STD-4X8"
+iProperties.Value("Project", "Description")="WHITE ONYX-FORMICA-SPARKLE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-837-58-4X8"
+iProperties.Value("Project", "Description")="GRAPHITE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-839-58-4X8"
+iProperties.Value("Project", "Description")="Stop RED-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-845-51X120"
+iProperties.Value("Project", "Description")="GREEN-ABET-MATTE-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-845-58-4X8"
+iProperties.Value("Project", "Description")="SPECTRUM RED-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-849-SEI-51x120"
+iProperties.Value("Project", "Description")="BLU PAVONE-ABET-SEI-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-851-58-STD-4X8"
+iProperties.Value("Project", "Description")="SPECTRUM BLUE-FORMICA-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-852-MATTE-51X120"
+iProperties.Value("Project", "Description")="BIG BLEU-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-856-MATTE-51X120"
+iProperties.Value("Project", "Description")="BLUE ACCIAIO-ABET-MATTE-SEI-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-861-51X120"
+iProperties.Value("Project", "Description")="ORANGE-ABET-MATTE-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-88097-STD-4X8"
+iProperties.Value("Project", "Description")="GRAY-PANELYTE-MATTE-STD-obsolete"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-888-51X120"
+iProperties.Value("Project", "Description")="MAGMA-ABET-MATTE-PF-51X120"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-9012-LX-5X12"
+iProperties.Value("Project", "Description")="EBONY-FORMICA-LUXE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-9012-NT-4X10"
+iProperties.Value("Project", "Description")="EBONY-FORMICA-NATURAL-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-9012-NT-4X8"
+iProperties.Value("Project", "Description")="EBONY-FORMICA-NATURAL-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-902-58-4X8"
+iProperties.Value("Project", "Description")="PLATINUM-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-909-2058-VER-4X8"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-MATTE-VER 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-909-42-4X10"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-SPARKLE-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-909-42-4X8"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-SPARKLE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-909-42-PF-4X8"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-SPARKLE-PF-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-909-42-5X12"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-SPARKLE-STD 5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-909-58-4X8"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-909-58-5X12"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-MATTE-STD 5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-909-90-4X8"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-POLISHED-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-909-90-4X10"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-POLISHED-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-909-90-5X12"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-POLISHED-STD 5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5x12 sheet" , "Note")
+
+Case "HPL-909-MC-4X8"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-MICRO DOT-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-909-SP-4X8"
+iProperties.Value("Project", "Description")="BLACK-FORMICA-SCULPTED-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-912-58-4X8"
+iProperties.Value("Project", "Description")="STORM-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-912-58-5X8"
+iProperties.Value("Project", "Description")="STORM-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-914-MTL BACK-4X8"
+iProperties.Value("Project", "Description")="CROSS HATCH ALUM-CHEMETAL-METAL BACK"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-914-58-4X8"
+iProperties.Value("Project", "Description")="MARINE BLUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-914-58-STD-4X10"
+iProperties.Value("Project", "Description")="MARINE BLUE-FORMICA-MATTE-STD-4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-9156-T-4X8"
+iProperties.Value("Project", "Description")="PACIFIC BLUE-LAMINART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-917-STD-4X8"
+iProperties.Value("Project", "Description")="BRUSHED BLACK ALUM-CHEMETAL-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-920-58-4X8"
+iProperties.Value("Project", "Description")="ALMOND-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-923-58-4X10"
+iProperties.Value("Project", "Description")="SURF-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-923-58-4X8"
+iProperties.Value("Project", "Description")="SURF-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-923-58-5X12"
+iProperties.Value("Project", "Description")="SURF-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-923-PF-4X8"
+iProperties.Value("Project", "Description")="SURF-FORMICA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-927-58-4X8"
+iProperties.Value("Project", "Description")="FOLKSTONE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-928-58-4X8"
+iProperties.Value("Project", "Description")="MOUSE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-928-58-PF-4X8"
+iProperties.Value("Project", "Description")="MOUSE-FORMICA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-935-PF-51X120"
+iProperties.Value("Project", "Description")="BLUE-ABET-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 51X120 sheet" , "Note")
+
+Case "HPL-949-42-4X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-SPARKLE-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-949-42-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-SPARKLE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-949-42-5X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-SPARKLE-STD 5X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 5x10 sheet" , "Note")
+
+Case "HPL-949-58-4X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-MATTE-STD 4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-949-58-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-MATTE-STD 4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-949-58-1/8X4X8 COMPACT"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-MATTE-COMPACT 1/8X4X8"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .125
+
+Case "HPL-949-58-5X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-MATTE-STD 5X8"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-949-58-5X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-MATTE-STD 5X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39.84375 ft^2
+MessageBox.Show("calculating as 5x120 sheet" , "Note")
+
+Case "HPL-949-90-PF-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-GLOSS-PF-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-949-90-STD-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-GLOSS-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-949-90-CC-4X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-GLOSS-COLORCORE-4X10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-949-PF-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-SPARKLE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-949-SP-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-SCULPTED-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-949-VER-4X10"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-GLOSS-VER"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-949-VER-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-MATTE-VER"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-953-58-PF-4X8"
+iProperties.Value("Project", "Description")="WHITE-FORMICA-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-960D05-STD-4X10"
+iProperties.Value("Project", "Description")="BLUE-LAMINART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-961-58-4X8"
+iProperties.Value("Project", "Description")="FOG-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-966-58-5X10"
+iProperties.Value("Project", "Description")="BURGUNDY-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-967-58-4X8"
+iProperties.Value("Project", "Description")="HUNTER GREEN-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-969-58-4X8"
+iProperties.Value("Project", "Description")="NAVY BLUE-FORMICA-MATTE-VER"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-969-58-5X8"
+iProperties.Value("Project", "Description")="NAVY BLUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-969-STD-4X8"
+iProperties.Value("Project", "Description")="NAVY BLUE-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AG021-4X8"
+iProperties.Value("Project", "Description")="SABLE-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AG232N-4X8"
+iProperties.Value("Project", "Description")="ETCHED PLATINUM-PIONITE-SUEDE-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AG281-PF-4X8"
+iProperties.Value("Project", "Description")="STORM CIRRUS-PIONITE-SUEDE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AG281-STD-4X8"
+iProperties.Value("Project", "Description")="STORM CIRRUS-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AG291-SUEDE-STD-4X8"
+iProperties.Value("Project", "Description")="PIONITE-GRAY SANTOS-SUEDE-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-ARPA ARAGOSTA 0500 4X8"
+iProperties.Value("Project", "Description")="ARAGOSTA 0500"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AT111-STD-4X8"
+iProperties.Value("Project", "Description")="CARAMEL CREPE-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AT291-STD-4X8"
+iProperties.Value("Project", "Description")="CHAMOMILE FIBER-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AT6001-STD-4X8"
+iProperties.Value("Project", "Description")="BLACK-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AW785-VER-4X8"
+iProperties.Value("Project", "Description")="WHITE SPECTRUM-PIONITE-SUEDE-VER"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-AY102-STD-4X8"
+iProperties.Value("Project", "Description")="CURRY FIBER-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-B086-PF-4X10"
+iProperties.Value("Project", "Description")="BLUE-CARAIBE-LAMINART-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-D20-PF-4X10"
+iProperties.Value("Project", "Description")="GREEN-WILSONART-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-D20-STD-4X8"
+iProperties.Value("Project", "Description")="GREEN-WILSONART-BRUSHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D252-STD-4X8"
+iProperties.Value("Project", "Description")="GRAY-PIONITE-MATRIX-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D25-60-STD-4X8"
+iProperties.Value("Project", "Description")="ATLANTIS-WILSONART-MATTE-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D318-60-4X8"
+iProperties.Value("Project", "Description")="SHADOW BLUE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D321-60-4X8"
+iProperties.Value("Project", "Description")="BRITTANY BLUE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D327-60-4X8"
+iProperties.Value("Project", "Description")="PEPPERDUST-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D354-PF-4X8"
+iProperties.Value("Project", "Description")="DESIGNER WHITE-WILSONART-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D354-STD-4X8"
+iProperties.Value("Project", "Description")="DESIGNER WHITE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D375-PF-4X8"
+iProperties.Value("Project", "Description")="PINK-WILSONART-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D381-18-STD-4X8"
+iProperties.Value("Project", "Description")="WILSONART-FASHION GREY-LINEARITY-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D381-STD-4X10"
+iProperties.Value("Project", "Description")="FASHION GREY-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-D381-STD-4X8"
+iProperties.Value("Project", "Description")="FASHION GREY-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D381-STD-5X10"
+iProperties.Value("Project", "Description")="FASHION GREY-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D412-STD-4X10"
+iProperties.Value("Project", "Description")="PURPLE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-D412-STD-5X10"
+iProperties.Value("Project", "Description")="PURPLE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D412-STD-5X8"
+iProperties.Value("Project", "Description")="PURPLE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-D415-STD-4X8"
+iProperties.Value("Project", "Description")="BLUE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D417-60-4X8"
+iProperties.Value("Project", "Description")="LAPIS BLUE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D443-STD-4X8"
+iProperties.Value("Project", "Description")="GREEN-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D448-STD-4X8"
+iProperties.Value("Project", "Description")="JAUREZ FLOWER-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D456-60-4X8"
+iProperties.Value("Project", "Description")="CAFE CREAM-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D471-STD-4X8"
+iProperties.Value("Project", "Description")="GREEN SILVER-WILSONART-BRUSHED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D473-STD-4X10"
+iProperties.Value("Project", "Description")="BLUE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-D481-60-4X8"
+iProperties.Value("Project", "Description")="TUSCAN OLIVE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D487-07-4X10"
+iProperties.Value("Project", "Description")="PEARL SILVER-WILSONART-GLOSS-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-D487-07-4X8"
+iProperties.Value("Project", "Description")="PEARL SILVER-WILSONART-GLOSS-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D487-PF-4X8"
+iProperties.Value("Project", "Description")="PEARL SILVER-WILSONART-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D487-PF-5X12"
+iProperties.Value("Project", "Description")="PEARL SILVER-WILSONART-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-D487-STD-5X12"
+iProperties.Value("Project", "Description")="PEARL SILVER-WILSONART-GLOSS-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-D91-60-4X8"
+iProperties.Value("Project", "Description")="SLATE GREY-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-D91-60-5X12"
+iProperties.Value("Project", "Description")="SLATE GREY-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-D92-60-STD-4X8"
+iProperties.Value("Project", "Description")="DOVE GREY-WILSONART-MATTE-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-EN438-PF-4X8"
+iProperties.Value("Project", "Description")="GRAY-PIEFFE-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-ES2002-STD-4X8"
+iProperties.Value("Project", "Description")="HONEYTONE ESSENCE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-FL8848-1058-48-4X8"
+iProperties.Value("Project", "Description")="BLACKENED LEGNO-FORMICA-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-FS2001-STD-4X8"
+iProperties.Value("Project", "Description")="CANYON FISSURE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-G482-STD-4X8"
+iProperties.Value("Project", "Description")="GRAY-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-GC7001-PF-4X10"
+iProperties.Value("Project", "Description")="GLACIER-NEVAMAR-MATTE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-H3081-ST22-STD-51X120"
+iProperties.Value("Project", "Description")="HACIENDA BLACK-EGGER-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39 ft^2
+MessageBox.Show("calculating as 51x120 sheet" , "Note")
+
+Case "HPL-H3090-ST22-STD-51X120"
+iProperties.Value("Project", "Description")="DRIFTWOOD-EGGER-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 39 ft^2
+MessageBox.Show("calculating as 51x120 sheet" , "Note")
+
+Case "HPL-H402-STD-4X8"
+iProperties.Value("Project", "Description")="PURPLE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-HLB001-PF-4X8"
+iProperties.Value("Project", "Description")="BLUE SHIMMER-NEVAMAR-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-HP336-4X8"
+iProperties.Value("Project", "Description")="SUNSET-PIONITE-SUEDE-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-HP336-5X10"
+iProperties.Value("Project", "Description")="BRUSHED BLACK ALUM-CHEMETAL-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+
+Case "HPL-HP336-5X12"
+iProperties.Value("Project", "Description")="SUNSET-PIONITE-SUEDE-STD-5X12"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-K382NK-STD-4X8"
+iProperties.Value("Project", "Description")="BLUE-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-L177WM-STD-4X8"
+iProperties.Value("Project", "Description")="GREEN-WILSONART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-L9119-STD-4X10"
+iProperties.Value("Project", "Description")="ORANGE-LAMINART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-L9136-STD-4X10"
+iProperties.Value("Project", "Description")="BLUE-LAMINART-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-ME011-STD-4X8"
+iProperties.Value("Project", "Description")="PYRENEES MARBLE-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MH6001T-STD-4X8"
+iProperties.Value("Project", "Description")="MANHATTAN GLAMOUR-NEVAMAR-TEXTURED"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MHIT0040-PF-4X8"
+iProperties.Value("Project", "Description")="GRAY-NEVAMAR-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MR6004-STD-4X8"
+iProperties.Value("Project", "Description")="STORM GRAY MATRIX-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MR6005-PF-4X8"
+iProperties.Value("Project", "Description")="WINTER GRAY MATRIX-NEVAMAR-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MR6007-STD-4X8"
+iProperties.Value("Project", "Description")="PHANTOM GRAY-NEVAMAR-MATRIX-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MR7001-STD-5X10"
+iProperties.Value("Project", "Description")="STUDIO WHITE MATRIX-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+
+Case "HPL-MTM2001-PF-4X8"
+iProperties.Value("Project", "Description")="OCHRE TEMPERA-NEVAMAR-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MXT002-PF-4X8"
+iProperties.Value("Project", "Description")="STAINLESS METALX-NEVAMAR-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MXT003T-PF-4X8"
+iProperties.Value("Project", "Description")="SILVER ALU METALUX-NEVAMAR-PF-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-MXT003T-STD-4X8"
+iProperties.Value("Project", "Description")="SILVER ALU METALUX-NEVAMAR-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-P297-STD-4X8"
+iProperties.Value("Project", "Description")="TATAMI WASABI-ARBORITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-PFA60-STD-3 X 8"
+iProperties.Value("Project", "Description")="NEGOTIATING In GENEVA-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-PR2001-STD-4X8"
+iProperties.Value("Project", "Description")="PAPIER SOLIEL-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Case "HPL-S0312-4X8"
+
+iProperties.Value("Project", "Description")="BITTERSWEET-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S0312-5X12"
+iProperties.Value("Project", "Description")="BITTERSWEET-PIONITE-SUEDE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-S0320-STD-4X8"
+iProperties.Value("Project", "Description")="COPPER-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S1049-STD-4X8"
+iProperties.Value("Project", "Description")="CARMEN RED-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S1049-STD-5X12"
+iProperties.Value("Project", "Description")="CARMEN RED-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-S1027-STD-4X10"
+iProperties.Value("Project", "Description")="LIBERTY RED-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4X10 sheet" , "Note")
+
+Case "HPL-S3022-STD-4X8"
+iProperties.Value("Project", "Description")="DEEP BLUE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S3022-STD-5X12"
+iProperties.Value("Project", "Description")="DEEP BLUE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-S3022T-VERT-4x8"
+iProperties.Value("Project", "Description")="NEVAMAR-DEEP BLUE - VERTICAL"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S3036-STD-4X8"
+iProperties.Value("Project", "Description")="IMPRESSION BLUE--NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S3048-STD-4X8"
+iProperties.Value("Project", "Description")="PATRIOT BLUE--NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S3048-VER-5X12"
+iProperties.Value("Project", "Description")="PATRIOT BLUE-NEVAMAR-MATTE-VER"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-S4022T-STD-4X8"
+iProperties.Value("Project", "Description")="SUNRAY-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S4025T-STD-4X8"
+iProperties.Value("Project", "Description")="HONEY PLANTATION-NEVAMAR-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S5040-STD-4X8"
+iProperties.Value("Project", "Description")="IMPERIAL GREEN-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S6023-STD-4X10"
+iProperties.Value("Project", "Description")="PLATINUM GRAY-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-S6052-STD-5X8"
+iProperties.Value("Project", "Description")="String-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-S6053-PF-4X10"
+iProperties.Value("Project", "Description")="JET BLACK-NEVAMAR-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-S7031-STD-4X8"
+iProperties.Value("Project", "Description")="FASHION WHITE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S7032-STD-4X8"
+iProperties.Value("Project", "Description")="BONE WHITE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-S7040-STD-4X8"
+iProperties.Value("Project", "Description")="SPA WHITE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SB006-STD-4X8"
+iProperties.Value("Project", "Description")="INDIGO BLUE-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SB006-58-4X10"
+iProperties.Value("Project", "Description")="INDIGO BLUE-PIONITE-SUEDE-4x10"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-SB040-4X8"
+iProperties.Value("Project", "Description")="BLUEBERRY HILL-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SB040-5X12"
+iProperties.Value("Project", "Description")="BLUEBERRY HILL-PIONITE-SUEDE-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-SE101-STD-5X8"
+iProperties.Value("Project", "Description")="BLACK-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 5x8 sheet" , "Note")
+
+Case "HPL-SG211-STD-4X8"
+iProperties.Value("Project", "Description")="INGOT GRAY-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SG214-48X96"
+iProperties.Value("Project", "Description")="BANKERS GRAY-PIONITE-SUEDE-48X96"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SG224-STD-4X8"
+iProperties.Value("Project", "Description")="STONEDUST-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SG240-4X8"
+iProperties.Value("Project", "Description")="MOSS GRAY-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SG240-STD-5X12"
+iProperties.Value("Project", "Description")="MOSS GRAY-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-SG254-STD-4X8"
+iProperties.Value("Project", "Description")="ASH GRAY-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SP-402-N-STD-4X8"
+iProperties.Value("Project", "Description")="PLUM-PIONITE-SUEDE-STD-4X8"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SR505-PF-4X8"
+iProperties.Value("Project", "Description")="NAVAJO RED-PIONITE-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SR534-STD-4X10"
+iProperties.Value("Project", "Description")="SALSA RED-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-SR534-STD-4X8"
+iProperties.Value("Project", "Description")="SALSA RED-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-ST604N-5X12"
+iProperties.Value("Project", "Description")="NUBIAN BROWN-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-ST622-4X8"
+iProperties.Value("Project", "Description")="CARAMEL-PIONITE-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SV0001-STD-4X8"
+iProperties.Value("Project", "Description")="CELESTIAL-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SW806-VER-4X8"
+iProperties.Value("Project", "Description")="CARNATION WHITE-PIONITE-SUEDE-VER"
+Parameter.UpdateAfterChange = True
+Case "HPL-SW811-G-4X10"
+
+Case "HPL-SY914-SUEDE-4X8"
+iProperties.Value("Project", "Description")="PIONITE PRIMARY YELLOW-SUEDE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SW811-G-4X10"
+iProperties.Value("Project", "Description")="WHITE-PIONITE-GLOSS-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-SW811-PF-4X10"
+iProperties.Value("Project", "Description")="WHITE-PIONITE-GLOSS-PF"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+
+Case "HPL-SY913-PF-4X8"
+iProperties.Value("Project", "Description")="FORSYTHIA-PIONITE-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-SY913-STD-4X8"
+iProperties.Value("Project", "Description")="FORSYTHIA-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-VA5002T-4X8"
+iProperties.Value("Project", "Description")="EASY ELEGANCE-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-VENEER-001"
+iProperties.Value("Project", "Description")="CARBALHO-4X8-DAMAGED"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-VENEER-002"
+iProperties.Value("Project", "Description")="TAY (KOTO)-4X8-DAMAGED"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-VR6001-PF-4X8"
+iProperties.Value("Project", "Description")="BLACK-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-W8325T-4X8"
+iProperties.Value("Project", "Description")="SOVEREIGN CHERRY-NEVAMAR-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-W8325T-STD-4X10"
+Parameter("RAWBOARD") = 37.5 ft^2
+MessageBox.Show("calculating as 4x10 sheet" , "Note")
+iProperties.Value("Project", "Description")="SOVEREIGN CHERRY-NEVAMAR-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-W8325T-STD-5X10"
+iProperties.Value("Project", "Description")="SOVEREIGN CHERRY-NEVAMAR-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X10 sheet" , "Note")
+
+Case "HPL-W8351T-PF-4X8"
+iProperties.Value("Project", "Description")="FINE SYCAMORE-NEVAMAR-TEXTURED-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-W8351T-STD-4X8"
+iProperties.Value("Project", "Description")="FINE SYCAMORE-NEVAMAR-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-W8371T-4X8"
+iProperties.Value("Project", "Description")="GRAND ISLE-NEVAMAR-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-W8371T-5X12"
+iProperties.Value("Project", "Description")="GRAND ISLE MAPLE-NEVAMAR-TEXTURED-STD"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-WK0017T-PF-4X8"
+iProperties.Value("Project", "Description")="OLD OAK-NEVAMAR-TEXTURED-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-WK0025T-VERT-48x96"
+iProperties.Value("Project", "Description")="CHAI-NEVAMAR-TEXTURED-VERTICAL-48x96"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-WK0025T-60x144"
+iProperties.Value("Project", "Description")="CHAI-NEVAMAR-TEXTURED-60x144"
+Parameter.UpdateAfterChange = True
+Parameter("RAWBOARD") = 56.25 ft^2
+MessageBox.Show("calculating as 5X12 sheet" , "Note")
+
+Case "HPL-WX041-PF-4X8"
+iProperties.Value("Project", "Description")="ANIGRE-PIONITE-MATTE-PF"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-WX421-STD-4X8"
+iProperties.Value("Project", "Description")="WITCHCRAFT-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-WY351-STD-4X8"
+iProperties.Value("Project", "Description")="JEWEL MAHOGANY-PIONITE-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "HPL-WZ8349-STD-4X8"
+iProperties.Value("Project", "Description")="BROWN-NEVAMAR-MATTE-STD"
+Parameter.UpdateAfterChange = True
+
+Case "STE-013"	
+iProperties.Value("Project", "Description")="STEEL-SHT-1/4x48x96"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .25
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "STE-030"	
+iProperties.Value("Project", "Description")="STEEL-SHT-1/2x48x96"
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = .5
+Parameter.UpdateAfterChange = True
+Parameter("GLUEVAR") = 0
+Parameter.UpdateAfterChange = True
+
+Case "VEL-001"
+iProperties.Value("Project", "Description")= "3/4x25YDS-BLACK-LOOP-W/ADHESIVE"
+MessageBox.Show("Check Box for Linear FT Parameter to be Exported, Uncheck Boxes for Area and Sheet Parameters" , "REMEMBER")
+
+Case "VEL-002"
+iProperties.Value("Project", "Description")= "3/4x25YDS-BLACK-HOOK-W/ADHESIVE"
+MessageBox.Show("Check Box for Linear FT Parameter to be Exported, Uncheck Boxes for Area and Sheet Parameters" , "REMEMBER")
+
+Case "VEL-003"
+iProperties.Value("Project", "Description")= "3/4x25YDS-WHITE-LOOP-W/ADHESIVE"
+MessageBox.Show("Check Box for Linear FT Parameter to be Exported, Uncheck Boxes for Area and Sheet Parameters" , "REMEMBER")
+
+Case "VEL-004"
+iProperties.Value("Project", "Description")= "3/4x25YDS-WHITE-HOOK-W/ADHESIVE"
+MessageBox.Show("Check Box for Linear FT Parameter to be Exported, Uncheck Boxes for Area and Sheet Parameters" , "REMEMBER")
+
+
+Case Else
+iProperties.Value("Project", "Description")="need description"
+Parameter.UpdateAfterChange = True
+MessageBox.Show("not a sheet material, description not updated" , "Warning")
+End Select

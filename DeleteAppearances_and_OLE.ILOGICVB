@@ -1,0 +1,123 @@
+Sub Main()
+	Dim TotalAppearancesDeleted As Integer = 0
+	
+	'Delete appearances in current document
+	Try
+		Dim oDoc As Inventor.Document = ThisApplication.ActiveDocument
+		DeleteOLEs(oDoc)
+		Dim appearance As Inventor.Asset
+		For Each appearance In oDoc.AppearanceAssets
+		   Try
+		   	appearance.Delete
+			TotalAppearancesDeleted = TotalAppearancesDeleted + 1
+		   Catch ex As Exception
+		   End Try     
+		Next
+	Catch
+		Try
+			Dim oDoc2 As Inventor.AssemblyDocument = ThisApplication.ActiveDocument
+			Dim appearance As Inventor.Asset
+			For Each appearance In oDoc2.AppearanceAssets
+			   Try
+			   	appearance.Delete
+				TotalAppearancesDeleted = TotalAppearancesDeleted + 1
+			   Catch
+			   End Try     
+			Next
+		Catch
+		End Try
+	End Try
+			
+
+
+    
+    ' Get all occurrences from component definition for Assembly document
+	Dim oCompDef As Inventor.ComponentDefinition
+    oCompDef = ThisApplication.ActiveDocument.ComponentDefinition
+	Dim oCompOcc As Inventor.ComponentOccurrence
+    For Each oCompOcc In oCompDef.Occurrences
+		
+		Try 
+		        ' Check if it's child occurrence (leaf node)
+		        If oCompOcc.SubOccurrences.Count = 0 Then
+					'Not an assembly - try to delete its appearances
+					Dim CompDoc As Inventor.Document = oCompOcc.Definition.Document
+					DeleteOLEs(CompDoc)
+					For Each appearance In CompDoc.AppearanceAssets
+		       		    Try
+					  	 	appearance.Delete
+					 	Catch
+					    End Try     
+					Next
+		        Else
+					'It's an assembly, process its components
+		            TotalAppearancesDeleted = TotalAppearancesDeleted + processAllSubOcc(oCompOcc) 
+		        End If
+		    
+		Catch
+		End Try
+	Next
+    MessageBox.Show("Deleted a total of : " & TotalAppearancesDeleted.ToString() & " appearances.")
+End Sub
+
+' This function is called for processing sub assembly.  It is called recursively
+' to iterate through the entire assembly tree.
+Private Function processAllSubOcc(ByVal oCompOcc As ComponentOccurrence) As Integer
+    Dim ReturnDeletes As Integer = 0
+	Dim SubAssyDoc As Inventor.Document = oCompOcc.Definition.Document
+	DeleteOLEs(SubAssyDoc)
+	For Each appearance In SubAssyDoc.AppearanceAssets
+	    'Delete the appearances from the currently processing sub assembly   
+	    Try
+	  	 	appearance.Delete
+			ReturnDeletes = ReturnDeletes + 1
+	 	Catch
+		End Try     
+	Next
+	
+    Dim oSubCompOcc As ComponentOccurrence
+    For Each oSubCompOcc In oCompOcc.SubOccurrences
+		Try
+	        ' Check if it's child occurrence (leaf node)
+	        If oSubCompOcc.SubOccurrences.Count = 0 Then
+			  'It's a part, delete its appearances
+	          Dim CompDoc As Inventor.Document = oSubCompOcc.Definition.Document
+			  DeleteOLEs(CompDoc)
+				For Each appearance In CompDoc.AppearanceAssets
+	       
+				    Try
+				  	 	appearance.Delete
+						ReturnDeletes = ReturnDeletes + 1
+				 	Catch
+			  		 End Try     
+				Next
+	        Else		
+				'It's an assembly, process occurrences
+	            ReturnDeletes = ReturnDeletes + processAllSubOcc(oSubCompOcc)
+	        End If
+			Catch
+			End Try
+    Next
+	Return ReturnDeletes
+End Function
+
+Function DeleteOLEs(parentDoc As Object) As Integer
+	Dim NumDeleted As Integer = 0
+	Try
+		Dim oEachOLEDesc As Inventor.ReferencedOLEFileDescriptor
+        For Each oEachOLEDesc In parentDoc.ReferencedOLEFileDescriptors
+			'If oEachOLEDesc.ReferenceStatus = Inventor.ReferenceStatusEnum.kMissingReference Then
+				oEachOLEDesc.Delete
+				NumDeleted = NumDeleted + 1
+				MessageBox.Show("Deleted an OLE")
+	            parentDoc.Dirty = True
+			'End If
+            
+        Next
+	Catch
+	End Try
+
+	Return NumDeleted
+
+End Function
+

@@ -1,0 +1,421 @@
+Select Case iProperties.Material
+
+Case "ALM-027"
+iProperties.Value("Project", "Description")= "ALUM-FLAT STOCK- 1/8x1x12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-028"
+iProperties.Value("Project", "Description")= "ALUM-FLAT STOCK- 1/8x2x12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-029"
+iProperties.Value("Project", "Description")= "ALUM-FLAT STOCK- 3/8x1-1/4x12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.375 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-030"
+iProperties.Value("Project", "Description")= "ALUM-FLAT STOCK- 1/2x1-1/4x12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-043"
+iProperties.Value("Project", "Description")= "ALUM-FLAT STOCK-1/8X1X12FT-SATIN ANODIZE"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-055"
+iProperties.Value("Project", "Description")= "ALUM-SQUARE SOLID-1/2x12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-056"
+iProperties.Value("Project", "Description")= "ALUM-SQUARE SOLID-3/4 x 12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-064"
+iProperties.Value("Project", "Description")= "ALUM-FLAT STOCK- 1/4 x 2in x 12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-071"
+iProperties.Value("Project", "Description")= "ALUM-RECT SOLID-1/2 X 3/4  X 12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-083"
+iProperties.Value("Project", "Description")= "ALUM-FLAT-ARCH-1/2X1/16X6ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 6 ft
+MessageBox.Show("raw material is 6 ft length" , "Note")
+
+Case "ALM-086"
+iProperties.Value("Project", "Description")= "ALUM FLAT STOCK-1/4X1/2X12'-NON-ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-087"
+iProperties.Value("Project", "Description")= "ALUM FLAT STOCK 1/4inX1'X12'-NON-ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-088"
+iProperties.Value("Project", "Description")= "ALUM FLAT STOCK 1/8inX1/2inX12'-NON-ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-089"
+iProperties.Value("Project", "Description")= "ALUM FLAT STOCK-1/8inX3/4inX12'-NON ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-095"
+iProperties.Value("Project", "Description")= "ALUM FLAT STOCK-1/2inX4in NON-ANODIZED"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 4.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-098"
+iProperties.Value("Project", "Description")= "ALUM FLAT STOCK-3/8inX10in"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.375 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 10.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "ALM-099"
+iProperties.Value("Project", "Description")= "ALUM-SQUARE SOLID-1inX1inX12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-103"
+iProperties.Value("Project", "Description")= "ALUM-FLAT STOCK-1/8inX3inX12ft-SATIN ANODIZE"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 3.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-105"
+iProperties.Value("Project", "Description")= "ALUM FLAT STOCK-3/8in X 2 1/2in X 12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.375 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 2.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-108"
+iProperties.Value("Project", "Description")= "ALUM-SQUARE SOLID-1/4in X 12ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = .25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = .25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-140"
+iProperties.Value("Project", "Description")= "ALUM-FLAT-ARCH-1/2X1/16X8ft-ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 8 ft
+MessageBox.Show("raw material is 8 ft length" , "Note")
+
+Case "LUM-018"
+iProperties.Value("Project", "Description")= "8/4 X 4in POPLAR BOARD"
+Parameter.UpdateAfterChange = True
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 2 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 4 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material per board foot" , "Note")
+
+Case "LUM-024"
+iProperties.Value("Project", "Description")= "2x4 LUMBER"
+Parameter.UpdateAfterChange = True
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 3.5 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material per linear foot" , "Note")
+
+Case "LUM-026"
+iProperties.Value("Project", "Description")= "2x6 LUMBER"
+Parameter.UpdateAfterChange = True
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 5.5 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material per linear foot" , "Note")
+
+Case "LUM-044"
+iProperties.Value("Project", "Description")= "4x4 LUMBER"
+Parameter.UpdateAfterChange = True
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 3.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 3.5 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material per linear foot" , "Note")
+
+Case "LUM-045"
+iProperties.Value("Project", "Description")= "2 X 4 TIMBERSTRAND LSL STUD"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 3.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "LUM-046"
+iProperties.Value("Project", "Description")= "HARD MAPLE-8/4x12 WIDE"
+Parameter.UpdateAfterChange = True
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 2 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 12 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material per board foot" , "Note")
+
+Case "STE-006"
+iProperties.Value("Project", "Description")= "STEEL-1/8x1x20ft-Flat Stock"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "LIGH-251"
+iProperties.Value("Project", "Description")= "PRISM-RGB FLEX RIBBON-36W-2.25W PER FT"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = .375 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("roll material is 50 ft length" , "Note")
+
+Case "STE-007"
+iProperties.Value("Project", "Description")= "STEEL-1/8x1-1/2x20ft-Flat Stock"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "STE-008"
+iProperties.Value("Project", "Description")= "STEEL-1/8x2x20ft-Flat Stock"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "STE-009"
+iProperties.Value("Project", "Description")= "STEEL-1/4x1x20ft-Flat Stock"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "STE-010"
+iProperties.Value("Project", "Description")= "STEEL-1/4x2x20ft-Flat Stock"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "STE-012"
+iProperties.Value("Project", "Description")= "STEEL-FLAT STOCK-1/2X120-16 GAUGE"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.0598 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "STE-015"
+iProperties.Value("Project", "Description")= "STEEL-1/4 x 1/2 x 20ft-Flat Stock"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "STE-019"
+iProperties.Value("Project", "Description")= "STEEL-1-1/4X1-1/4X10-BAR STOCK"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 1.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 1.25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "STE-021"
+iProperties.Value("Project", "Description")= "STEEL-FLAT STOCK-1/4inX4inX6ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 4.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 6 ft
+MessageBox.Show("raw material is 6 ft length" , "Note")
+
+Case "STE-027"
+iProperties.Value("Project", "Description")= "STEEL-FLAT STOCK-1/8inX4inX6ft"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 4.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 6 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "VEL-001"
+iProperties.Value("Project", "Description")= "3/4x25YDS-BLACK-LOOP-W/ADHESIVE"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.75 in
+Parameter.UpdateAfterChange = True
+
+Case "VEL-002"
+iProperties.Value("Project", "Description")= "3/4x25YDS-BLACK-HOOK-W/ADHESIVE"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.75 in
+Parameter.UpdateAfterChange = True
+
+Case "VEL-003"
+iProperties.Value("Project", "Description")= "3/4x25YDS-WHITE-LOOP-W/ADHESIVE"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.75 in
+Parameter.UpdateAfterChange = True
+
+Case "VEL-004"
+iProperties.Value("Project", "Description")= "3/4x25YDS-WHITE-HOOK-W/ADHESIVE"
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALWID") = 0.0625 in
+Parameter.UpdateAfterChange = True
+Parameter("MATERIALLEN") = 0.75 in
+Parameter.UpdateAfterChange = True
+
+Case Else
+iProperties.Value("Project", "Description")="need description"
+Parameter.UpdateAfterChange = True
+
+MessageBox.Show("not rectangular SOLID material, description not updated" , "Warning")
+
+End Select

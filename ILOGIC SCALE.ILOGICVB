@@ -1,0 +1,18 @@
+﻿'This code is just to change the scale
+On Error Goto 100
+
+Scale=ActiveSheet.View("VIEW1").ScaleString
+
+iProperties.Value("Custom", "Scale")=Scale
+
+Goto 200
+
+100:
+
+iProperties.Value("Custom", "Scale")="NTS"
+
+200:
+
+InventorVb.DocumentUpdate()
+
+

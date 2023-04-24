@@ -1,0 +1,3 @@
+﻿jpgName = ThisDoc.PathAndFileName(False) & ".JPG"
+ThisDoc.Document.SaveAs(jpgName , True)
+

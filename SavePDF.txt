@@ -1,0 +1,48 @@
+' Get the PDF translator Add-In.
+Dim PDFAddIn As TranslatorAddIn
+PDFAddIn = ThisApplication.ApplicationAddIns.ItemById("{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}")
+'Set a reference to the active document (the document to be published).
+Dim oDocument As Document
+oDocument = ThisApplication.ActiveDocument
+Dim oContext As TranslationContext
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+' Create a NameValueMap object
+Dim oOptions As NameValueMap
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+' Create a DataMedium object
+Dim oDataMedium As DataMedium
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+
+' Sets directory for file save
+Dim PSDDirectory As String
+PDFDirectory = ThisDoc.Path & "\PDF"
+' Sets save name as iProperties value
+Dim SaveName As String
+SaveName = iProperties.Value("Project", "Part Number")
+
+If Len(Dir(PDFDirectory, vbDirectory)) = 0 Then
+	MkDir (PDFDirectory)
+End If
+
+' Check whether the translator has 'SaveCopyAs' options
+If PDFAddIn.HasSaveCopyAsOptions(oDataMedium, oContext, oOptions) Then
+oOptions.Value("All_Color_AS_Black") = 1
+oOptions.Value("Remove_Line_Weights") = 1
+oOptions.Value("Vector_Resolution") = 400
+oOptions.Value("Sheet_Range") = Inventor.PrintRangeEnum.kPrintAllSheets
+'oOptions.Value("Custom_Begin_Sheet") = 2
+'oOptions.Value("Custom_End_Sheet") = 4
+End If
+
+
+oFileName = ThisDoc.FileName(False) 'without extension
+oRevNum = iProperties.Value("Project", "Revision Number")
+oDesc = iProperties.Value("Project", "Description")
+oDataMedium.FileName = PDFDirectory & "\" & oFileName & " Rev" & oRevNum & " " & oDesc & ".PDF"
+
+'Publish document.
+PDFAddIn.SaveCopyAs(oDocument, oContext, oOptions, oDataMedium)
+'Launch the PDF file in whatever application Windows is set to open this document type with
+i = MessageBox.Show("Preview the PDF file?", "PDF Preview",MessageBoxButtons.YesNo,MessageBoxIcon.Question)
+If i = vbYes Then ThisDoc.Launch(oDataMedium.FileName)

@@ -1,0 +1,2 @@
+﻿pdfName = ThisDoc.PathAndFileName(False) & ".PDF"
+ThisDoc.Document.SaveAs(pdfName , True)

@@ -1,0 +1,16 @@
+﻿iTrigger = iTrigger0
+
+doc = ThisDoc.Document
+ 'check file type
+If doc.DocumentType = kPartDocumentObject Then
+iLogicForm.ShowGlobal("Model Properties")
+Else If doc.DocumentType = kAssemblyDocumentObject Then
+iLogicForm.ShowGlobal("Model Properties")
+Else If doc.DocumentType =kDrawingDocumentObject  Then
+iLogicForm.ShowGlobal("Border Properties")
+End If  
+'end of iLogic rule - - - - - - - - - - - - - - - - - -
+
+
+
+

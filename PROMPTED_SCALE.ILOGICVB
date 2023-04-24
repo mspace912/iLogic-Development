@@ -1,0 +1,43 @@
+﻿Sub Main()
+      Dim drawingDoc As DrawingDocument = TryCast(ThisDoc.Document, DrawingDocument)
+
+      For Each sheetX As Sheet In drawingDoc.Sheets
+            If (sheetX.TitleBlock Is Nothing) Then Continue For
+            Dim titleBlockX As TitleBlock = sheetX.TitleBlock
+            Dim scaleTextBox As TextBox = GetScaleTextBox(titleBlockX.Definition)
+            Dim scaleString As String = String.Empty
+'			If iProperties.Value("Custom", "Scale") = "" Then
+'				iProperties.Value("Custom", "Scale")= "NTS"
+'			End If
+            For Each viewX As DrawingView In sheetX.DrawingViews
+                  If (Not String.IsNullOrEmpty(viewX.ScaleString)) Then
+                        scaleString = viewX.ScaleString
+						If iProperties.Value("Custom", "Scale") <> "NTS" Then
+							iProperties.Value("Custom", "Scale")=scalestring
+						Else 
+							scalestring = "NTS"
+					
+						End If
+						
+                        Exit For
+                  End If
+            Next
+       On Error Resume Next
+       titleBlockX.SetPromptResultText(scaleTextBox, scaleString)
+      Next
+	  
+	 InventorVb.DocumentUpdate()
+
+
+End Sub
+
+Function GetScaleTextBox(ByVal titleDef As TitleBlockDefinition) As TextBox
+      For Each defText As TextBox In titleDef.Sketch.TextBoxes
+            If (defText.Text.IndexOf("<Scale>", StringComparison.OrdinalIgnoreCase) >= 0) Then
+                  Return defText
+            End If
+      Next
+      Throw New ArgumentException("No prompted entry string containing <Scale> was found in the title block definition: " & titleDef.Name)
+End Function
+
+

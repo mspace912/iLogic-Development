@@ -1,0 +1,78 @@
+﻿path_and_name = ThisDoc.PathAndFileName(False) ' without extension
+Dim oDoc As Inventor.DrawingDocument
+oDoc = ThisDoc.Document
+oPath = ThisDoc.Path
+
+'specify the drawing sheet
+'oSheet = oDoc.Sheets("BOM:1") ' sheet by name
+
+Counter = 0
+TableCounter = 0
+
+For Each oSheet In oDoc.Sheets
+	lPos = InStr(oSheet.Name, ":")
+	sSheetName = Left(oSheet.Name, lPos - 1)
+	On Error Goto Skip1
+	Counter = Counter + 1
+	
+	If sSheetName = "BOM" Then
+	
+		oSheet = oDoc.Sheets(Counter) ' first sheet
+
+		'check for existing XLS file and delete it if found
+		If Dir(path_and_name & "_BOM MATERIALS" & ".xls") <> "" Then
+			Kill (path_and_name & "_BOM MATERIALS" & ".xls")
+			Else
+		End If
+		
+		For Each oPartslist In oSheet.PartsLists
+		
+			TableCounter = TableCounter + 1
+		
+			' say there is a Partslist on the sheet.
+			'Dim oPartslist As PartsList
+			oPartslist = oSheet.PartsLists(TableCounter)
+			
+			' create a new NameValueMap object
+			oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+			
+			'specify an existing template file
+			'to use For formatting colors, fonts, etc
+			oOptions.Value("Template") = "E:\_VAULT WORKING FOLDER\Templates\PARTSLISTEXPORT.xls"
+			
+			'specify the columns to export         
+			oOptions.Value("ExportedColumns") = "SYTELINE#;QTY"
+			
+			'specify the start cell
+			oOptions.Value("StartingCell") = "A2"
+			
+			'specify the XLS tab name
+			'here the file name is used
+			oOptions.Value("TableName") = "BOM TABLE " & TableCounter 'without extension
+			
+			'choose to include the parts list title row
+			'in this example "Ye Old List of Parts" is written to the StartingCell
+			oOptions.Value("IncludeTitle") =True          
+			
+			'choose to autofit the column width in the xls file
+			oOptions.Value("AutoFitColumnWidth") = False
+				
+			'choose to autofit the column width in the xls file
+			oOptions.Value("ApplyCellFormatting") = True
+			
+			' export the Partslist to Excel with options
+			oPartslist.Export (path_and_name & "_BOM MATERIALS" & ".xls", _
+			PartsListFileFormatEnum.kMicrosoftExcel, oOptions)
+			
+			Next
+		
+		
+		
+	End If
+	
+	Skip1:
+	
+Next
+'i = MessageBox.Show("BOMs exported to " & oPath, "BOMs Exported", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+myparam = InputBox("BOMs exported to", "BOMs Exported", oPath)
+

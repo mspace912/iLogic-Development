@@ -1,0 +1,18 @@
+﻿'Get the Filename of the file without the extension
+FileName = ThisDoc.FileName(False) 'without extension
+
+'Sets the path and filename of where the Exported BOM should be saved
+BOMFile = "C:\BOMs\" & FileName & ".xls"
+
+'Exports the BOM to the desired location
+ThisBOM.Export("Structured", BOMFile, kMicrosoftExcelFormat)
+'kMicrosoftAccessFormat			= Microsoft Access
+'kMicrosoftExcelFormat			= Microsoft Excel
+'kdBASEIIIFormat				= dBASE III
+'kdBASEIVFormat				= dBASE IV
+'kTextFileTabDelimitedFormat		= Text File Tab Delimited
+'kTextFileCommaDelimitedFormat		= Text File Comma Delimited
+'kUnicodeTextFileTabDelimitedFormat	= Unicode Text File Tab Delimited
+'kUnicodeTextFileCommaDelimitedFormat	= Unicode Text File Comma Delimited
+
+

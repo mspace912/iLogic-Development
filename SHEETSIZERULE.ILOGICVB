@@ -1,0 +1,22 @@
+﻿
+If Parameter("SheetSize") = "A" Then
+
+ActiveSheet.ChangeSize("A", MoveBorderItems := True)
+
+ElseIf Parameter("SheetSize") = "B" Then
+ActiveSheet.ChangeSize("B", MoveBorderItems := True)
+
+ElseIf Parameter("SheetSize") = "C" Then
+ActiveSheet.ChangeSize("C", MoveBorderItems := True)
+
+ElseIf Parameter("SheetSize") = "D" Then
+ActiveSheet.ChangeSize("D", MoveBorderItems := True)
+
+ElseIf Parameter("SheetSize") = "E" Then
+ActiveSheet.ChangeSize("E", MoveBorderItems := True)
+
+End If
+
+'zoom all
+ThisApplication.ActiveView.Fit
+

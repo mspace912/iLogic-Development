@@ -1,0 +1,8 @@
+﻿
+If Parameter("ECCN") = iProperties.Value("Custom", "ECCN") Then
+Parameter("ECCN_Check")= "False"
+Else
+Parameter("ECCN_Check")= "True"
+
+End If
+ 

@@ -1,0 +1,28 @@
+﻿    Dim oSourceEventProps, oTargetEventProps, oETPropSet As PropertySet
+    Dim oInternalName As String = "{2C540830-0723-455E-A8E2-891722EB4C3E}"
+	oSourceDoc = ThisDoc.Document
+	Break
+	Try
+		oETPropSet = oSourceDoc.PropertySets.Item(oDefaultName)
+	Catch
+		oETPropSet = oSourceDoc.PropertySets.Item("{2C540830-0723-455E-A8E2-891722EB4C3E}")
+	Catch
+		oETPropSet = oSourceDoc.PropertySets.Item("iLogicEventsRules") 'in case it has been 'un-hidden'
+	Catch
+		'it wasn't found, so create it
+		oETPropSet = oSourceDoc.PropertySets.Add(oDefaultName, oDefaultInternalName)
+	End Try
+	Break
+    If Not oSourceDoc.PropertySets.PropertySetExists(oInternalName, oSourceEventProps) Then
+        MsgBox("Could not find Event Triggers PropertySet in Source document. Exiting rule.", vbCritical, "")
+        Exit Sub
+    End If
+'    If Not oTargetDoc.PropertySets.PropertySetExists(oInternalName, oTargetEventProps) Then
+'        oTargetEventProps = oTargetDoc.PropertySets.Add("_iLogicEventsRules", oInternalName)
+'    End If
+    If oSourceEventProps.Count = 0 Then Exit Sub
+    For Each oSourceProp As Inventor.Property In oSourceEventProps
+'oTargetEventProps.Add(oSourceProp.Value, oSourceProp.Name, oSourceProp.PropId)
+		MessageBox.Show(oSourceEventProps.DisplayName, "Title")
+
+    Next

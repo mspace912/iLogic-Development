@@ -1,0 +1,9 @@
+﻿If Parameter("ECCN") = "EAR99" Then
+iProperties.Value("Custom", "ECCN")="EAR99"
+iProperties.Value("Custom", "Export_Regulated")=""
+ElseIf Parameter("ECCN") <> "EAR99" Then
+iProperties.Value("Custom", "ECCN")="1B001"
+iProperties.Value("Custom", "Export_Regulated")="EXPORT REGULATED"
+End If
+
+iLogicVb.UpdateWhenDone = True

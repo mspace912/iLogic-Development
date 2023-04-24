@@ -1,0 +1,47 @@
+﻿Dim oApp As Application: oApp = ThisApplication
+Dim oDoc As DrawingDocument:  oDoc = oApp.ActiveDocument
+Dim oSheets As Sheets
+Dim oSheet As Sheet
+Dim oViews As DrawingViews
+Dim oView As DrawingView
+Dim strFullDocumentName As String
+Dim strPartDocumentName As String
+Dim strPartListName As String
+
+oSheets = oDoc.Sheets
+
+'get the path and name of the drawing file
+oPath = ThisDoc.Path'(False) ' without extension
+
+'get the path and name of the drawing file
+LPos = InStr(ThisDoc.PathAndFileName, "_CNC")
+path_and_name = Left(ThisDoc.PathAndFileName, LPos - 1)
+
+strPartListName = (path_and_name & ".xls")
+
+GoExcel.Open(strPartListName, "BOM")
+
+Counter = 0
+
+For Each oSheet In oSheets
+
+	oViews = oSheet.DrawingViews
+
+    For Each oView In oViews
+	
+		Counter = Counter + 1
+
+		oModelName = oView.ReferencedDocumentDescriptor.ReferencedDocument.DisplayName
+		
+		GoExcel.Open(strPartListName, "BOM")
+		
+		oPartNumber = GoExcel.CellValue("A" & Counter)
+		
+		oPartQty = GoExcel.CellValue("C" & Counter)
+		
+		oView.Name = ("Part# " & oPartNumber & ", Qty: " & oPartQty)	
+
+    Next
+
+Next
+

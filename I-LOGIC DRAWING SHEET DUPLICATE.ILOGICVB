@@ -1,0 +1,11 @@
+Dim oDrawingDocument1 As DrawingDocument
+Dim oDrawingDocument2 As DrawingDocument
+Dim oSheet As Sheet
+
+oDrawingDocument1 = ThisApplication.ActiveDocument
+oDrawingDocument2 = ThisApplication.Documents.Add(kDrawingDocumentObject, , False)
+oSheet = oDrawingDocument1.ActiveSheet
+oSheet.CopyTo (oDrawingDocument2)
+oSheet = oDrawingDocument2.Sheets.Item(oDrawingDocument2.Sheets.Count)
+oSheet.CopyTo (oDrawingDocument1)
+oDrawingDocument2.Close (True)

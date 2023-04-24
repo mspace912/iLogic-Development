@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Border Properties</Name>
+  <Font>
+    <Size>0</Size>
+    <Bold>false</Bold>
+    <Italic>false</Italic>
+  </Font>
+  <ContentsFont>
+    <FamilyName>Arial</FamilyName>
+    <Size>8.25</Size>
+    <Bold>false</Bold>
+    <Italic>false</Italic>
+  </ContentsFont>
+  <ContentsTextLocation>Left</ContentsTextLocation>
+  <Items>
+    <UiElementSpec xsi:type="PictureControlSpec">
+      <Name>LSI Souiltions</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Top</TextLocation>
+      <Image>
+        <FileName>S:\Engineering\JTriassi\Standards\Borders\Logo LSI Color.png</FileName>
+        <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAAI8AAABJCAYAAAAE0nU6AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAM9SURBVHhe7ZJBbuNADATz/2fs6/KLrBcGCDsuSSM2KWk1XUBd+lADU/76+vP9Y21KHK0dEUdrR8TR2hFpVKDeGc4I3aFVGhWod4YzQndolUYF6h2l+YTuVCaNCtTr0uyDbihJowL1OjQ56JZpaVSgXrWmBrrtLmlUoF6Fpge69bA0KlCvQtMD3XpYGhWoV6Hpg+49JI0K1FM1/dDdN6VRgXqK5ljoGyxKowL1FM2x0DdYlEYF6mU150DfAqVRgXpZzTnQt0BpVKBeVnMO9C1QGhWol7ULeut/tBN670MaFai31y7orbtYDb3xIY0K1NtrB/TOHa2C2h/SqEC9vXZA79zVKqj9Jo0K1NtrB/TOXa2C2m/SqEC9vXZA79zVKqj9Jo0K1NtrB/TO3VWh5ps0KlBvr13QW3dXgXpv0qhAvawd0Dt3VoWaIY0K1Mt6d+g3V6tCzZBGBeplvTv0m6tVoWZIowL1ss4G3aBCBeqFNCpQT3FW6BZZFagX0qhAPcWZoXtkVKBeSKMC9VRnh26yRwXqhTQqUE/VPKHbjKhAvZBGBeqpmid0mxEVqBfSqEC9Cs0Tus2IWagV0qhAvSrNzf88/6BmpbNDN9kyC7VCGlWo2eGs0C22zEKtkEYVanY6I3SHNbNQK6RRhZpHOgP0u9fMQq2QRhVqHukM0O9eMwu1QhoroO6sdkDvrJmFWiGNFVB3Zjugd5bMQq2QxiqoPbPV0BtLZqFWiOPDCqg7s9XQG0tmoVaI48MqqD2r1dAbS2ahVojjwyqoPavV0BtLZqFWiOPDSqg/o9XQG0tmoVaI44uVUH8WO6B3lsxCrRDHFzugd+5sF/TWklmoFeL4orkm9K3WzEKtEMdfmutB32nNLNQKcfyluR70ndbMQq0Qx1+a60Hfac0s1ApxBM11oO+zZRZqhTguaK4BfZsts1ArxHFFcy70TUbMQq0QxwHN8dB3GDULtUIcBzTHQ99h1CzUCnEc1BwD3X6vWagV4rhD0wvdPGMWaoU4JjT10J2zZqFWiKOo0aCbqmahVohjoWYdulmHWagV4lioWYdu1mEWaoU4WjsijtaOiKO1I+Jo7Yg4WjsijtZu+v3zFyyF5cm7v2N8AAAAAElFTkSuQmCC</BitmapByteArray>
+      </Image>
+      <PictureParameterName />
+      <LabelVisible>false</LabelVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="LabelSpec">
+      <Name>Title Block</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>12</Size>
+        <Bold>true</Bold>
+        <Italic>false</Italic>
+      </Font>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+      <Name>SheetSize</Name>
+      <ToolTip />
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <ParameterName>SheetSize</ParameterName>
+      <EditControlType>ComboBox</EditControlType>
+      <AllowCustomValues>false</AllowCustomValues>
+      <MinimumItemsToShow>2</MinimumItemsToShow>
+      <RadioGroupColumnCount>1</RadioGroupColumnCount>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+      <Name>Finish Material</Name>
+      <ToolTip />
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <ParameterName>Finish</ParameterName>
+      <EditControlType>ComboBox</EditControlType>
+      <AllowCustomValues>true</AllowCustomValues>
+      <MinimumItemsToShow>2</MinimumItemsToShow>
+      <RadioGroupColumnCount>1</RadioGroupColumnCount>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="BooleanParameterControlSpec">
+      <Name>Show Model Material</Name>
+      <ToolTip />
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <ParameterName>SHOWMATL</ParameterName>
+      <EditControlType>TrueOrFalse</EditControlType>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>Scale</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>SCALE</PropertyName>
+      <PropertySetName>Custom</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>Part Number</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>true</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>Part Number</PropertyName>
+      <PropertySetName>Project</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>Border Description</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>Description</PropertyName>
+      <PropertySetName>Project</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>Drawn By</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>Designer</PropertyName>
+      <PropertySetName>Project</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="DatePropertyControlSpec">
+      <Name>Drawn By Date</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>Creation Date</PropertyName>
+      <PropertySetName>Project</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="SplitterSpec">
+      <Name>Rev History</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="LabelSpec">
+      <Name>Revision History</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>12</Size>
+        <Bold>true</Bold>
+        <Italic>false</Italic>
+      </Font>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>Revision Number</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>true</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>Revision Number</PropertyName>
+      <PropertySetName>Project</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>DATE REVISED</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>DATE REVISED</PropertyName>
+      <PropertySetName>Custom</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>REV BY</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>REV BY</PropertyName>
+      <PropertySetName>Custom</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>ECO-CCN</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>ECO-CCN</PropertyName>
+      <PropertySetName>Custom</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>EFFECTIVE</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Left</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <PropertyName>EFFECTIVE</PropertyName>
+      <PropertySetName>Custom</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextParameterControlSpec">
+      <Name>DESCRIPTION</Name>
+      <ToolTip />
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <TextLocation>Top</TextLocation>
+      <ReadOnly>false</ReadOnly>
+      <AlwaysReadOnly>false</AlwaysReadOnly>
+      <ParameterName>COMMENTS</ParameterName>
+      <EditControlType>MultilineTextBox</EditControlType>
+      <MinimumLinesToShow>4</MinimumLinesToShow>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="SplitterSpec">
+      <Name>PDF Print</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Row 1</Name>
+      <Font>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <ContentsFont>
+        <FamilyName>Arial</FamilyName>
+        <Size>8.25</Size>
+        <Bold>false</Bold>
+        <Italic>false</Italic>
+      </ContentsFont>
+      <ContentsTextLocation>Left</ContentsTextLocation>
+      <Items>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>Print PDF</Name>
+          <Font>
+            <FamilyName>Arial</FamilyName>
+            <Size>8.25</Size>
+            <Bold>false</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <TextLocation>Left</TextLocation>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>iLogicPDFPrint</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>iLogicPDFPrint.txt</Path>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>Split FileName</Name>
+          <Font>
+            <FamilyName>Arial</FamilyName>
+            <Size>8.25</Size>
+            <Bold>false</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <TextLocation>Left</TextLocation>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>iLogicSplitFileName</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>iLogicSplitFileName.txt</Path>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Office2003</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>OkCancelApply</PredefinedButtons>
+  <Modal>false</Modal>
+  <ItemBordersVisible>false</ItemBordersVisible>
+  <IsLauncherPage>false</IsLauncherPage>
+  <ShowOnPlaceComponent>false</ShowOnPlaceComponent>
+  <Guid>b5cecb1f-83de-4b4f-92eb-262d57b73c07</Guid>
+</FormSpecification>

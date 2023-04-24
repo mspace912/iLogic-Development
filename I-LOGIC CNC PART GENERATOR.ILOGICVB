@@ -1,0 +1,101 @@
+﻿Imports Inventor.ViewOrientationTypeEnum
+Imports Inventor.DrawingViewStyleEnum
+
+'get the path and name of the drawing file
+oPath = ThisDoc.Path'(False) ' without extension
+
+'get the path and name of the drawing file
+LPos = InStr(ThisDoc.PathAndFileName, "_CNC")
+path_and_name = Left(ThisDoc.PathAndFileName, LPos - 1)
+
+
+Dim oDrawingDoc As DrawingDocument  
+Dim oPartDoc As Document
+Dim oSheet As sheet
+Dim oTG As TransientGeometry
+Dim oView1 As DrawingView
+Dim strFullDocumentName As String
+Dim strPartDocumentName As String
+Dim strPartListName As String
+Dim strPartNumber As String
+
+'iLogicVb.RunExternalRule("I-LOGIC EXPORT CNC PARTS LIST")
+
+strPartListName = (path_and_name & ".xls")
+
+'MessageBox.Show(strPartListName, "Title")
+
+GoExcel.Open(strPartListName, "BOM")
+
+If (GoExcel.CellValue("A" & "1") <> "Item") Then
+MessageBox.Show("Incorrect column location detected in Excel file.                                      *Item* should be in Column A. Exiting routine.", "Incorrect XLS Formatting" , MessageBoxButtons.OK, MessageBoxIcon.Warning)
+Goto EndofRoutine
+End If
+
+If (GoExcel.CellValue("C" & "1") <> "QTY") Then
+MessageBox.Show("Incorrect column location detected in Excel file.                                      *QTY* should be in Column C. Exiting routine.", "Incorrect XLS Formatting" , MessageBoxButtons.OK, MessageBoxIcon.Warning)
+Goto EndofRoutine
+End If
+
+If (GoExcel.CellValue("F" & "1") <> "File Path") Then
+MessageBox.Show("Incorrect column location detected in Excel file.                                     *File Path* should be in Column F. Exiting routine.", "Incorrect XLS Formatting" , MessageBoxButtons.OK, MessageBoxIcon.Warning)
+Goto EndofRoutine
+End If
+
+ColumnCounter = 1
+OffsetCounter = 0
+
+'index row 2 through 10000
+For Columns = 1 To 20
+
+	For rowPN = (ColumnCounter+1) To (ColumnCounter + 10)
+	'find first empty cell in column A
+	If (GoExcel.CellValue("F" & rowPN) = "") Then
+		Exit For
+		Else
+	
+				strPartDocumentName = GoExcel.CellValue("F" & rowPN)
+				strPartNumber = (GoExcel.CellValue("A" & rowPN))
+				'MessageBox.Show(strPartNumber, "Title")
+				If strPartNumber = "999" Then
+				Exit For
+				Else
+			
+
+			'On Error Goto Skip1
+				
+				'MessageBox.Show(strPartDocumentName, "Title")
+	
+				strFullDocumentName = ThisApplication.FileManager.GetFullDocumentName(strPartDocumentName, "Master")
+				MessageBox.Show(strFullDocumentName, "Title")
+
+				oPartDoc = ThisApplication.Documents.Open(strFullDocumentName, False)
+	
+				oDrawingDoc = ThisDoc.Document
+	
+				oSheet = oDrawingDoc.Sheets.Item(1)
+	
+				oPoint1 = ThisApplication.TransientGeometry.CreatePoint2d(((ColumnCounter*.125)*8#), (70# -(rowpn*6)+OffsetCounter))
+	
+				oView1 = oSheet.DrawingViews.AddBaseView(oPartDoc, oPoint1, _
+									1/48#, kFrontViewOrientation, kHiddenLineDrawingViewStyle,,,)
+												
+		End If
+		End If
+		'Skip1:
+		'MessageBox.Show("Part not in correct folder, view not created", "Warning")
+		
+	Next
+	
+	OffsetCounter = OffsetCounter + 60
+	ColumnCounter = ColumnCounter + 10
+	
+
+Next
+
+
+'iLogicVb.RunExternalRule("I-LOGIC CNC PART LABELER")
+
+
+EndofRoutine:
+

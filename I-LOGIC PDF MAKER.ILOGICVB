@@ -1,0 +1,69 @@
+﻿Dim oDocAsDrawingDocument
+oDoc=ThisApplication.ActiveDocument
+
+Dim oTitleBlockAsTitleBlock
+Dim oTextBoxAsTextBox
+Dim oSheetAsSheet
+
+oPath = ThisDoc.Path
+oFileName = ThisDoc.FileName(False) 'without extension
+
+oPDFAddIn = ThisApplication.ApplicationAddIns.ItemById _
+("{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}")
+
+oDocument = ThisApplication.ActiveDocument
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+
+
+	oOptions.Value("All_Color_AS_Black") = 0
+	oOptions.Value("Remove_Line_Weights") = 0
+	oOptions.Value("Vector_Resolution") = 150
+	
+'get PDF target folder path
+'oFolder = Left(oPath, InStrRev(oPath, "\")) & "PAGES"
+
+'Check for the PDF folder and create it if it does not exist
+'If Not System.IO.Directory.Exists(oFolder) Then
+'    System.IO.Directory.CreateDirectory(oFolder)
+'End If
+
+SheetCounter = 0
+
+For Each oSheet In oDoc.Sheets
+    oTitleBlock = oSheet.TitleBlock
+	lPos = InStr(oSheet.Name, ":")
+	sSheetName = Left(oSheet.Name, lPos - 1)
+	
+	SheetCounter = SheetCounter + 1
+	
+	oOptions.Value("Sheet_Range") = Inventor.PrintRangeEnum.kPrintSheetRange
+	oOptions.Value("Custom_Begin_Sheet") = SheetCounter
+	oOptions.Value("Custom_End_Sheet") = SheetCounter
+	
+	 'Set the PDF target file name
+	oDataMedium.FileName = oPath & "\" & oFileName & _
+	" " & SheetCounter & " " & sSheetName & ".pdf"
+
+	'Publish document
+	oPDFAddIn.SaveCopyAs(oDocument, oContext, oOptions, oDataMedium)
+	
+Next
+
+oOptions.Value("Sheet_Range") = Inventor.PrintRangeEnum.kPrintSheetRange
+oOptions.Value("Custom_Begin_Sheet") = 1
+oOptions.Value("Custom_End_Sheet") = SheetCounter
+
+'Set the PDF target file name
+oDataMedium.FileName = oPath & "\" & oFileName & _
+" MULTIPAGE" & ".pdf"
+
+'Publish document
+oPDFAddIn.SaveCopyAs(oDocument, oContext, oOptions, oDataMedium)
+
+'i = MessageBox.Show("PDFs exported to " & oPath, "PDFs Exported", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+myparam = InputBox("PDFs exported to", "PDFs Exported", oPath)
+
+

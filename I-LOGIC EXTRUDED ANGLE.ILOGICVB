@@ -1,0 +1,289 @@
+﻿Parameter("CORNERRADIUS") = 0.01 in
+Parameter("LEGRADIUS") = 0.01 in
+Parameter.UpdateAfterChange = True
+Select Case iProperties.Material
+
+Case "ALM-023"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE STRUCTURAL- 1x1x1/8 wall x25ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter ("CORNERRADIUS") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter ("LEGRADIUS") = 0.09375 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 25ft length" , "Note")
+
+Case "ALM-024"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE STRUCTURAL- 2x2x1/4 wall x25ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("CORNERRADIUS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("LEGRADIUS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 25ft length" , "Note")
+
+Case "ALM-025"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE ARCHITECT- 1x1x1/8wall x16ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 16 ft length" , "Note")
+
+Case "ALM-026"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE ARCH- 2x2x1/4 wall x16'or 25ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.25 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 16ft OR 25ft length" , "Note")
+
+Case "ALM-057"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE STRUCTURAL- 1/2x1/2x1/16x16ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 16ft length" , "Note")
+
+Case "ALM-059"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE-ARCH-1.25 x 1.25 x 1/8 W"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.25 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.25 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 16ft length" , "Note")
+
+Case "ALM-070"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE-ARCH-ANODIZED-1.5X1X.125W"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 6ft length" , "Note")
+
+Case "ALM-073"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE ARCHITECTURAL-3X4X1/4WALL"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 3.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 4.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.25 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 25ft length" , "Note")
+
+Case "ALM-078"
+iProperties.Value("Project", "Description")= "ALUM ANGLE 1/2X 1/2X1/16WALL"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+'essageBox.Show("STYLEMARK - raw material is 6 ft length" , "Note")
+
+Case "ALM-084"
+iProperties.Value("Project", "Description")= "ALUM-ARCH-ANGLE-1/2X1/2X1/16WALL-NON-ANO"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 25ft length" , "Note")
+
+Case "ALM-092"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE-ARCH-.375X.75x12FTX.0625WALL"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 0.375 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 25ft length" , "Note")
+
+Case "ALM-116"
+iProperties.Value("Project", "Description")= "ALUM ANGLE-3/4 X 3/4 X 1/16 WALL"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("MAX raw material is 12ft length" , "Note")
+
+Case "ALM-129"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE ARCHITECTURAL-1-1/2x1-1/2x1/8-6063-T5"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("MAX raw material is 12ft length" , "Note")
+
+Case "ALM-130"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE STRUCTURAL- 3x3x1/4 wall x25ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 3.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 3.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("CORNERRADIUS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("LEGRADIUS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 25ft length" , "Note")
+
+Case "ALM-139"
+iProperties.Value("Project", "Description")= "ALUM ANGLE 1/2X 1/2X1/16WALL-ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+'essageBox.Show("STYLEMARK - raw material is 8 ft length" , "Note")
+
+
+Case "ALM-166"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE-2x2x1/8 wallx16ft"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 16ft length" , "Note")
+
+Case "ALM-167"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE-ARCH-1/2x1x1/16WALLx12ft-ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = .5 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+
+Case "ALM-171"
+iProperties.Value("Project", "Description")= "ALUM-ANGLE-ARCH-1/4x1/2x1/16WALLx12ft-ANOD"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = .25 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.05 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "STE-004"
+iProperties.Value("Project", "Description")= "STEEL-1x1x1/8wallx20ft-Angle-Structural"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter ("CORNERRADIUS") = 0.125 in
+Parameter.UpdateAfterChange = True
+Parameter ("LEGRADIUS") = 0.09375 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 20ft length" , "Note")
+
+Case "STE-005"
+iProperties.Value("Project", "Description")= "STEEL-2x2x1/4wallx20ft-Angle-Structural"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("CORNERRADIUS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("LEGRADIUS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 20ft length" , "Note")
+
+Case "STE-022"
+iProperties.Value("Project", "Description")= "STEEL-2x2x1/4wallx20ft-Angle-Structural"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 5.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 3.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("CORNERRADIUS") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter ("LEGRADIUS") = 0.125 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 20ft length" , "Note")
+
+Case "TRIM-001"
+iProperties.Value("Project", "Description")= "3/4x3/4 STYRENE ANGLE-BLK"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.0625 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 12ft length" , "Note")
+
+Case "TRIM-009"
+iProperties.Value("Project", "Description")= "1x1 STYRENE ANGLE-WHITE"
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE01") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("FLANGE02") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("THICKNESS") = 0.1 in
+Parameter.UpdateAfterChange = True
+MessageBox.Show("raw material is 12ft length" , "Note")
+
+Case Else
+iProperties.Value("Project", "Description")="need description"
+Parameter.UpdateAfterChange = True
+MessageBox.Show("not an extruded angle, description not updated" , "Warning")
+End Select

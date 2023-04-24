@@ -1,0 +1,13 @@
+Dim oDoc As Document = ThisDoc.Document
+Dim oCompDef As Inventor.ComponentDefinition = oDoc.ComponentDefinition
+Dim oCompOcc As Inventor.ComponentOccurrence
+For Each oCompOcc in oCompDef.Occurrences
+searchfor = ":"
+firstchr = oCompOcc.Name.IndexOf(searchfor)
+totalchr = Len(oCompOcc.Name) - firstchr + 1
+post1 = Right(oCompOcc.Name, totalchr)
+newBrowserName1 = iProperties.Value(oCompOcc.Name, "Project", "Part Number") & post1
+oCompOcc.Name = newBrowserName1
+newBrowserName2 = iProperties.Value(oCompOcc.Name, "Project", "Part Number") & " ~ " & iProperties.Value(oCompOcc.Name, "Project", "Description") & post1
+oCompOcc.Name = newBrowserName2
+Next

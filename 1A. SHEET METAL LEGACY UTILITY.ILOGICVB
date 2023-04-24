@@ -1,0 +1,8 @@
+﻿'Adds the LengthExtents and WidthExtents Parameters by reading an XML file
+iLogicVb.Automation.ParametersXmlLoad(ThisDoc.Document, “C:\Projects\iLogic Parts\Sheet Metal Extents-params.xml")
+
+'Sets the Description iProperty to Pull the Custom iProperties
+iProperties.Value("Project", "Description") = "=PL <Thickness> x <WidthExtents> x <LengthExtents>"
+
+'Displays a dialog box reminding the user to Export and format parameters and set Event Triggers 
+i = MessageBox.Show("The Extents Parameters have been added.  Please mark them for export and format them appropriately.  Then set the triggers for the Sheet Metal Extents Rule.", "Sheet Metal Legacy Utility", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)

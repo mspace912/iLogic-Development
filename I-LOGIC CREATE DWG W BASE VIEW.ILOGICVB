@@ -1,0 +1,50 @@
+Imports Inventor.ViewOrientationTypeEnum
+Imports Inventor.DrawingViewStyleEnum
+Imports Inventor.PartsListLevelEnum
+
+'get the path and name of the drawing file
+path_and_name = ThisDoc.PathAndFileName(False) ' without extension
+
+Dim oDrawingDoc As DrawingDocument	
+Dim oPartDoc As Document
+Dim oSheet As sheet
+Dim oTG As TransientGeometry
+Dim oView1 As DrawingView
+
+Dim strFullDocumentName As String
+
+strFullDocumentName = ThisApplication.FileManager.GetFullDocumentName(path_and_name & ".iam", "Master")
+
+oPartDoc = ThisApplication.Documents.Open(strFullDocumentName, False)
+	
+dwgQuery=MsgBox("now making a drawing!!!", vbYesNo,"Drawing Selection")
+
+If dwgQuery = vbYes Then
+	'oPartDoc = "E:\_VAULT WORKING FOLDER\Designs\JTN TEST FILES\ilogic base view test box.iam"
+	oDrawingDoc = ThisApplication.documents.Add(kDrawingDocumentObject, _
+		"E:\_VAULT WORKING FOLDER\Templates\CNC Part Layout.dwg", True)
+	oSheet = oDrawingDoc.Sheets.Item(1)
+	oPoint1 = ThisApplication.TransientGeometry.CreatePoint2d(-25#, 30#)
+                oView1 = oSheet.DrawingViews.AddBaseView(oPartDoc, oPoint1, _
+				1/48#, kIsoTopRightViewOrientation, kHiddenLineRemovedDrawingViewStyle)
+	oDrawingDoc.saveas(path_and_name & "_CNC Part Layout" & ".dwg", False)
+End If
+
+' Set a reference to the drawing document.
+' This assumes a drawing document is active.
+'Dim oDrawDoc As DrawingDocument
+oDrawDoc = ThisApplication.ActiveDocument
+'Set a reference to the active sheet.
+'Dim oSheet As Sheet
+oSheet = oDrawDoc.ActiveSheet
+' Set a reference to the first drawing view on the sheet. This assumes the first drawing view on the sheet is not a draft view.
+Dim oDrawingView As DrawingView
+oDrawingView = oSheet.DrawingViews(1)
+Dim oPlacementPoint As Point2d
+
+oPlacementPoint = ThisApplication.TransientGeometry.CreatePoint2d(-15#, 20#)
+
+' Create the parts list.
+Dim oPartsList As PartsList
+'oDrawDoc.StylesManager.PartsListStyle.Name
+oPartsList = oSheet.PartsLists.Add(oDrawingView, oPlacementPoint, kPartsOnly)	

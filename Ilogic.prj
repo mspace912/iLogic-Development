@@ -1,0 +1,36 @@
+[Project ID]
+Signature=UE Proj: v.1
+Unicode=2
+[Project Information]
+Compilable=1
+Use Relative Directory=1
+Relative to Project File=1
+Include Sub Directories=1
+Project TagfileU=
+Project WordfileU=
+Project TpFileU=
+FilterU=
+Using VCS=0
+Save Account=0
+Create Tagfile=0
+CTags Legacy Support=0
+[uemakeXp]
+ReleaseMode=0
+Compiler=Configs\A386 Assembler\Win32 Application
+[Debug Settings]
+Program Arguments=
+Symbol Paths=
+Working Directory=
+Selected Debugger=0
+Source Paths=
+[Configs\A386 Assembler\Win32 Application]
+OutputDirectory_ReleaseMode=Release
+OutputDirectory_DebugMode=Debug
+Target=Ilogic.EXE
+Working Directory=.
+Command Line Arguments=Ilogic.EXE
+Libraries=A86.LIB COMCTL32.LIB COMDLG32.LIB GDI32.LIB HHCTRL.LIB KERNEL32.LIB OLEAUT32.LIB USER32.LIB WINSPOOL.LIB
+Excluded Files=Excludes
+Compiler Options=
+Linker Options=
+Debugger=D386

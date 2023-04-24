@@ -1,0 +1,72 @@
+﻿Dim oDocAsDrawingDocument
+oDoc=ThisApplication.ActiveDocument
+
+Dim oTitleBlockAsTitleBlock
+Dim oTextBoxAsTextBox
+Dim oBorderAsBorder
+Dim oSheetAsSheet
+
+For Each oSheet In oDoc.Sheets
+oTitleBlock = oSheet.TitleBlock
+oBorder = oSheet.Border
+If oSheet.Name = "INV"
+	Goto Skip1
+	End If
+lPos = InStr(oSheet.Name, ":")
+On Error Goto Skip1
+sSheetName = Left(oSheet.Name, lPos - 1)
+	For Each oTextBox In oBorder.Definition.Sketch.TextBoxes
+        If oTextBox.Text = "PG DESCRIPTION" Then
+			Select Case sSheetName 
+				Case "ELECTRIC"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "GRAPHIC KEY"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "RIGGING"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "LIGHTING"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "START POINTS"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "INTERNET"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "AV EQUIP"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case Else
+            		Call oBorder.SetPromptResultText(oTextBox, sSheetName)
+			End Select
+		End If		
+		'If oTextBox.Text = " " Then
+		'MessageBox.Show("MESSAGE", "NO TITLE BLOCK")
+		'End If
+    Next
+	Skip1:
+	
+	On Error Goto Skip2
+	sSheetName = Left(oSheet.Name, lPos - 1)
+	For Each oTextBox In oTitleBlock.Definition.Sketch.TextBoxes
+        If oTextBox.Text = "PG DESCRIPTION" Then
+			Select Case sSheetName 
+				Case "ELECTRIC"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "GRAPHIC KEY"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "RIGGING"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "LIGHTING"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "START POINTS"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "INTERNET"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case "AV EQUIP"
+					Call oTitleBlock.SetPromptResultText(oTextBox, "")
+				Case Else
+            		Call oTitleBlock.SetPromptResultText(oTextBox, sSheetName)
+			End Select
+		End If
+		Next
+    Next
+	Skip2:
+
+Resume Next

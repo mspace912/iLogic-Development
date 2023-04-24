@@ -1,0 +1,3 @@
+﻿Dim oControlDef as ControlDefinition  = ThisApplication.CommandManager.ControlDefinitions.Item("UpdateCopiedModeliPropertiesCmd")
+
+oControlDef.Execute2(True)

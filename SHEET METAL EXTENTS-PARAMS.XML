@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParamWithValueList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <version>20080502</version>
+  <parameterTypes>
+    <ParamType>
+      <typeName>Inventor</typeName>
+      <typeCode>0</typeCode>
+    </ParamType>
+    <ParamType>
+      <typeName>String</typeName>
+      <typeCode>1</typeCode>
+    </ParamType>
+    <ParamType>
+      <typeName>Boolean</typeName>
+      <typeCode>2</typeCode>
+    </ParamType>
+  </parameterTypes>
+  <parameters>
+    <ParamWithValue>
+      <name>Thickness</name>
+      <typeCode>in</typeCode>
+      <value>0.120 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>BendRadius</name>
+      <typeCode>in</typeCode>
+      <value>0.120 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>BendReliefWidth</name>
+      <typeCode>in</typeCode>
+      <value>0.120 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>BendReliefDepth</name>
+      <typeCode>in</typeCode>
+      <value>0.060 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>CornerReliefSize</name>
+      <typeCode>in</typeCode>
+      <value>0.480 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>MinimumRemnant</name>
+      <typeCode>in</typeCode>
+      <value>0.240 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>TransitionRadius</name>
+      <typeCode>in</typeCode>
+      <value>0.120 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>JacobiRadiusSize</name>
+      <typeCode>in</typeCode>
+      <value>0.120 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>GapSize</name>
+      <typeCode>in</typeCode>
+      <value>0.120 in</value>
+      <comment />
+      <isKey>false</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>LengthExtents</name>
+      <typeCode>in</typeCode>
+      <value>1.0 in</value>
+      <comment />
+      <isKey>true</isKey>
+    </ParamWithValue>
+    <ParamWithValue>
+      <name>WidthExtents</name>
+      <typeCode>in</typeCode>
+      <value>1.0 in</value>
+      <comment />
+      <isKey>true</isKey>
+    </ParamWithValue>
+  </parameters>
+</ParamWithValueList>

@@ -1,0 +1,39 @@
+﻿' Need this for trace messages
+Imports System.Diagnostics
+Trace.WriteLine("iLogic: 'Update' rule start")
+Trace.WriteLine("iLogic: 'User Name' = " + ThisApplication.GeneralOptions.UserName.ToString())
+Trace.WriteLine("iLogic: 'Date' = " + Now.ToShortDateString.ToString())
+Trace.WriteLine("iLogic: 'Time' = " + Now.ToShortTimeString.ToString())
+
+'This sets the Custom iProperties to the appropriate values
+iProperties.Value("Custom", "PS_Name") = ThisApplication.GeneralOptions.UserName
+iProperties.Value("Custom", "PS_Date") = Now.ToShortDateString
+iProperties.Value("Custom", "PS_Time") = Now.ToShortTimeString
+
+
+'This declares a template to pull drawing resources from
+'ThisDrawing.ResourceFileName = "C:\Steve's Files\Classes\MESA U\2011\iLogic\iLogic @ MESAU\Templates\IDW with Plot Stamp.idw"
+
+'This is a loop that replaces the border on all sheets
+NoSheets = ThisApplication.ActiveDocument.Sheets.Count
+
+For i = 1 To NoSheets
+	ThisSheet = "Sheet:" & i
+	ActiveSheet = ThisDrawing.Sheet(ThisSheet)
+	ActiveSheet.Border = "Default Border"
+
+Next i
+
+InventorVb.DocumentUpdate()
+
+'Printing Commands
+Dim oCtrlDef As ControlDefinition
+oCtrlDef = ThisApplication.CommandManager.ControlDefinitions.Item("AppFilePrintCmd")
+oCtrlDef.Execute
+
+'Clears Plot Stamp Values
+iProperties.Value("Custom", "PS_Name") = " "
+iProperties.Value("Custom", "PS_Date") = " "
+iProperties.Value("Custom", "PS_Time") = " " 
+
+iLogicVb.UpdateWhenDone = True 

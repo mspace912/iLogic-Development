@@ -1,0 +1,14 @@
+﻿
+
+
+If Right(ThisDoc.FileName(True), 3) = "ipt"  Then
+sqftArea = iProperties.Area * 0.00694444
+
+iProperties.Value("Project", "Cost Center") = Round(iProperties.Value("Project", "Estimated Cost") * sqftArea, 2)
+
+Else
+MessageBox.Show("You must have a valid Part document open before using this code!", "File Type Mismatch!", MessageBoxButtons.OK)
+End If 
+
+
+

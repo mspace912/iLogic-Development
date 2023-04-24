@@ -1,0 +1,10 @@
+﻿'do this if it is a part
+If Right(ThisDoc.FileName(True), 3) = "ipt"  Then
+	iProperties.Value("Project", "Description") = Mid(ThisDoc.FileName(False), 8)
+'do this is it is an assembly
+ElseIf Right(ThisDoc.FileName(True), 3) = "iam" Then
+	iProperties.Value("Project", "Description") = Mid(ThisDoc.FileName(False), 8)
+'do nothing if the file type is something else
+End If
+
+

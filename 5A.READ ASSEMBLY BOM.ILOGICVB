@@ -1,0 +1,18 @@
+﻿'Gets name of reference assembly from iProperties and identifies the spreadsheet to be read
+BOMFile = "C:\BOMs\" & iProperties.Value("Custom", "Assembly Name") & ".xls"
+
+'Gets the name of the model represented in the oldest view on the drawing
+modelName = IO.Path.GetFileName(ThisDrawing.ModelDocument.FullFileName)
+
+modelName = Strings.Left(modelName, modelName.Length - 4)
+
+'Reads information from the specified spreadsheet and places values in properties
+i = GoExcel.FindRow(BOMFile, "Sheet1", "Part Number", "=", modelName)
+
+iProperties.Value("Custom", "Item") = GoExcel.CurrentRowValue("Item")
+
+iProperties.Value("Custom", "QTY") = GoExcel.CurrentRowValue("QTY")
+
+'Updates the view
+iLogicVb.UpdateWhenDone = True
+

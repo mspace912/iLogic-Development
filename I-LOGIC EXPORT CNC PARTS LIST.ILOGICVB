@@ -1,0 +1,46 @@
+path_and_name = ThisDoc.PathAndFileName(False) ' without extension
+Dim oDoc As Inventor.DrawingDocument
+oDoc = ThisDoc.Document
+
+'specify the drawing sheet
+oSheet = oDoc.Sheets(1) ' first sheet
+
+'check for existing XLS file and delete it if found
+		If Dir(path_and_name & ".xls") <> "" Then
+			Kill (path_and_name & ".xls")
+			Else
+		End If
+
+' say there is a Partslist on the sheet.
+			'Dim oPartslist As PartsList
+			oPartslist = oSheet.PartsLists(1)
+			
+			' create a new NameValueMap object
+			oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+			
+			'specify an existing template file
+			'to use For formatting colors, fonts, etc
+			oOptions.Value("Template") = ""'"E:\_VAULT WORKING FOLDER\Templates\PARTSLISTEXPORT.xls"
+			
+			'specify the columns to export         
+			'oOptions.Value("ExportedColumns") = "SYTELINE#;QTY"
+			
+			'specify the start cell
+			oOptions.Value("StartingCell") = "A1"
+			
+			'specify the XLS tab name
+			'here the file name is used
+			oOptions.Value("TableName") = "Parts List"
+			
+			'choose to include the parts list title row
+			'in this example "Ye Old List of Parts" is written to the StartingCell
+			oOptions.Value("IncludeTitle") =False        
+			
+			'choose to autofit the column width in the xls file
+			oOptions.Value("AutoFitColumnWidth") = False
+				
+			'choose to apply cell formatting in the xls file
+			oOptions.Value("ApplyCellFormatting") = True
+			
+			' export the Partslist to Excel with options
+			oPartslist.Export (path_and_name & ".xls", PartsListFileFormatEnum.kMicrosoftExcel, oOptions)

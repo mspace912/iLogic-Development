@@ -1,0 +1,88 @@
+Imports System.IO
+'open and read a text file
+Dim oRead As New StreamReader("C:\Virtual Part List.txt")
+Dim sLine As String = ""
+Dim MyArrayList As New ArrayList
+
+'build list from text file
+Do
+    sLine = oRead.ReadLine()
+    If Not sLine Is Nothing Then
+        MyArrayList.Add(sLine)
+    End If
+Loop Until sLine Is Nothing
+oRead.Close()
+
+'get user input from list
+sVirtPart = InputListBox("Select a virtual part to add.", _
+MyArrayList, MyArrayList.Item(0), "iLogic", "Standard Virtual Parts")
+
+'check for empty input
+'in the case where the user
+'cancels out of the input box
+If sVirtPart = "" Then
+Return 'end rule
+Else
+End if
+
+'get quantity from user
+iQTY = InputBox("Enter the TOTAL number of:" _
+& vblf & "        ''" & sVirtPart & "''" _
+& vblf & "to place in the assembly." _
+& vblf &  vblf & "Note: Enter 0 to delete all existing instances.", "iLogic", "1")
+
+'check for empty input
+'in the case where the user
+'cancels out of the input box
+If iQTY = "" Then
+Return 'end rule
+Else
+End if
+
+'define assembly
+Dim asmDoc As AssemblyDocument
+asmDoc = ThisApplication.ActiveDocument
+'define assembly Component Definition
+Dim oAsmCompDef As AssemblyComponentDefinition
+oAsmCompDef = ThisApplication.ActiveDocument.ComponentDefinition
+
+'Iterate through all of the occurrences in the assembly
+Dim asmOcc As ComponentOccurrence
+For Each asmOcc  In oAsmCompDef.Occurrences
+                'get name of occurence only (sees only everything left of the colon)
+                Dim oOcc As Object
+            oOcc = asmOcc.name.Split(":")(0)
+            'look at only virtual components
+                If TypeOf asmOcc.Definition Is VirtualComponentDefinition Then
+                        'compare name selected from list to the
+                                'existing virtual parts
+                                If oOcc = sVirtPart Then
+                        'delete existing virtual parts if name matches
+                                asmOcc.delete
+                                Else
+                        End if
+            Else
+            End If
+Next
+  
+Dim occs As ComponentOccurrences
+occs = asmDoc.ComponentDefinition.Occurrences
+  
+Dim identity As Matrix
+identity = ThisApplication.TransientGeometry.CreateMatrix
+ 
+'create first instance of the virtual part
+Dim virtOcc As ComponentOccurrence
+if  iQTY >= 1 Then
+virtOcc = occs.AddVirtual(sVirtPart, identity)
+Else
+Return
+End if
+
+'add next instance starting at instance2 (if applicable)
+Dim index As Integer
+index = 2
+Do While index <= iQTY
+occs.AddByComponentDefinition(virtOcc.Definition, identity)
+index += 1
+Loop

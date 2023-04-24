@@ -1,0 +1,287 @@
+Select Case iProperties.Material
+
+Case "ALM-004"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-1.9d.145wx1.61idx20ft"
+Parameter("OD") = 1.9 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .145 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 20 ft
+MessageBox.Show("raw material is 20 ft length" , "Note")
+
+Case "ALM-005"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-4diax1/8wallx24ft"
+Parameter("OD") = 4 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-006"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-1-1/2diax1/8x24ft"
+Parameter("OD") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-007"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-3-3/4odx1/4x24ft"
+Parameter("OD") = 3.75 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-032"
+iProperties.Value("Project", "Description")="RD TUBE-ANODIZED-2odx12ft EXTRU SEAMLESS"
+Parameter("OD") = 2 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .049 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-033"
+iProperties.Value("Project", "Description")="RD TUBE-1.875odx12ft D SEAMLESS"
+Parameter("OD") = 1.875 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .058 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-035"
+iProperties.Value("Project", "Description")="RD TUBE-ANODIZED-1.5ODX.065WX12-EXTRUDED"
+Parameter("OD") = 1.5 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .065 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-045"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-3DIAX1/8WALLX24FT"
+Parameter("OD") = 3 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-046"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-6DIAX1/8WALLX24FT"
+Parameter("OD") = 6 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-047"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-8DIAX1/8WALLX24FT"
+Parameter("OD") = 8 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-051"
+iProperties.Value("Project", "Description")="TUBE-ANODIZED-1ODX.065WLX12'-EXTRUDED"
+Parameter("OD") = 1 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .065 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-052"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-2.5diax1/8wallx24ft"
+Parameter("OD") = 2.5 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-068"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-2.375dia1/8wallx24ft"
+Parameter("OD") = 2.375 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-077"
+iProperties.Value("Project", "Description")="RD TUBE-1.375ODX.065WX6-EXTRUDED"
+Parameter("OD") = 1.375 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .065 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 6 ft
+MessageBox.Show("raw material is 6 ft length" , "Note")
+
+Case "ALM-080"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE 1.75ODX.125 WALL"
+Parameter("OD") = 1.75 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-082"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-2DIAX.060WALLX12FT"
+Parameter("OD") = 2.0 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .060 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-115"
+iProperties.Value("Project", "Description")="ALUM-RD TUBE-2.75inDIAX.125WALLX24FT"
+Parameter("OD") = 2.75 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "ALM-128"
+iProperties.Value("Project", "Description")="ALUM RD TUBE 2 X 1/8 X 24 FT"
+Parameter("OD") = 2 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "CAP-016"
+iProperties.Value("Project", "Description")="TUBE-CLEAR PLASTIC-5/16in ID x 7/16in OD"
+Parameter("OD") = 0.4375 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .0625 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 8 ft
+MessageBox.Show("raw material is 8 ft length" , "Note")
+
+Case "CARD-004"
+iProperties.Value("Project", "Description")="3in DIA x 36in CARDBOARD TUBE"
+Parameter("OD") = 3.0 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 3 ft
+MessageBox.Show("raw material is 3 ft length" , "Note")
+
+Case "CARD-006"
+iProperties.Value("Project", "Description")="2in DIA x 72in CARDBOARD TUBE"
+Parameter("OD") = 2.16 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .08 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 6 ft
+MessageBox.Show("raw material is 6 ft length" , "Note")
+
+Case "PVC-037"
+iProperties.Value("Project", "Description")="RD TUBE-6in diaX10ft-SCH 40-WHITE PVC"
+Parameter("OD") = 6.625 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .28 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "PVC-038"
+iProperties.Value("Project", "Description")="RD TUBE-2in diaX10ft-SCH 40-ELEC CONDUIT"
+Parameter("OD") = 2.375 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .154 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "PVC-042"
+iProperties.Value("Project", "Description")="RD TUBE-2in diaX10ft-WHITE GLOSS FURNITURE PVC"
+Parameter("OD") = 1.9 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .105 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "PVC-045"
+iProperties.Value("Project", "Description")="RD TUBE-4in diaX10ft-PVC"
+Parameter("OD") = 4.5 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "PVC-046"
+iProperties.Value("Project", "Description")="RD TUBE-1in diaX10ft-PVC"
+Parameter("OD") = 1.315 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .141 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "PVC-047"
+iProperties.Value("Project", "Description")="RD TUBE-2in diaX10ft-PVC"
+Parameter("OD") = 2.375 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .1875 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "STE-016"
+iProperties.Value("Project", "Description")="STEEL-CONDUIT-1 X 1/16 WALL X 10ft"
+Parameter("OD") = 1 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .0625 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "STE-017"
+iProperties.Value("Project", "Description")="STEEL-CONDUIT-1/2 X 1/16 WALL X10ft"
+Parameter("OD") = .5 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .0625 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case "STE-025"
+iProperties.Value("Project", "Description")="STEEL-ROUND TUBE-2 X 1/8 WALL X24ft"
+Parameter("OD") = 2 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 24 ft
+MessageBox.Show("raw material is 24 ft length" , "Note")
+
+Case "STE-026"
+iProperties.Value("Project", "Description")="STEEL TUBE-3/4 X 3/16 WALL X 10' CONDUIT"
+Parameter("OD") = .922 in
+Parameter.UpdateAfterChange = True
+Parameter("WALL") = .125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 10 ft
+MessageBox.Show("raw material is 10 ft length" , "Note")
+
+Case Else
+iProperties.Value("Project", "Description")="need description"
+
+MessageBox.Show("not round tube material, description not updated" , "Warning")
+
+End Select

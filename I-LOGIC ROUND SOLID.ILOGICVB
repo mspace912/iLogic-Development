@@ -1,0 +1,93 @@
+Select Case iProperties.Material
+
+Case "ALM-008"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-1/4x12ft"
+Parameter("SOLIDDIA") = 0.25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-009"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-3/8x12ft"
+Parameter("SOLIDDIA") = 0.375 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-010"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-1/2x12ft"
+Parameter("SOLIDDIA") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-011"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-3/4x12ft"
+Parameter("SOLIDDIA") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-012"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-1x12ft"
+Parameter("SOLIDDIA") = 1.0 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-013"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-1-1/4x12ft"
+Parameter("SOLIDDIA") = 1.25 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-014"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-1-3/8x12ft"
+Parameter("SOLIDDIA") = 1.375 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "ALM-040"
+iProperties.Value("Project", "Description")="ALUM-ROUND SOLID-1-1/8x12ft"
+Parameter("SOLIDDIA") = 1.125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "PLX-057"
+iProperties.Value("Project", "Description")="CLEAR ACRYLIC ROD-1/2 X 4 FT"
+Parameter("SOLIDDIA") = 0.5 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 4 ft
+MessageBox.Show("raw material is 4 ft length" , "Note")
+
+Case "PLX-066"
+iProperties.Value("Project", "Description")="CLEAR ACRYLIC ROD-2in X 6 FT"
+Parameter("SOLIDDIA") = 2 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 6 ft
+MessageBox.Show("raw material is 6 ft length" , "Note")
+
+Case "STE-014"
+iProperties.Value("Project", "Description")="STEEL-ROUND SOLID-3/4 X 12 FT"
+Parameter("SOLIDDIA") = 0.75 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 12 ft
+MessageBox.Show("raw material is 12 ft length" , "Note")
+
+Case "STE-031"
+iProperties.Value("Project", "Description")="STAINLESS STEEL 5/16-18 THREADED ROD X 4FT"
+Parameter("SOLIDDIA") = 0.3125 in
+Parameter.UpdateAfterChange = True
+Parameter("RAWLENGTH") = 4 ft
+MessageBox.Show("raw material is 4 ft length" , "Note")
+
+
+Case Else
+iProperties.Value("Project", "Description")="need description"
+
+MessageBox.Show("not round solid material, description not updated" , "Warning")
+
+End Select

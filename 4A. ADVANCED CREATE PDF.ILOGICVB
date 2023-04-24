@@ -1,0 +1,42 @@
+﻿Sub Main ()
+	FileName = ThisDoc.FileName(True) 'with extension
+
+	FileExtension = Right(FileName, 3)
+
+	If FileExtension = "idw" Then
+		Save_As_PDF
+	Else If FileExtension = "dwg" Then
+		Save_As_PDF
+	Else
+		ErrorMessage
+	End If
+End Sub
+
+Sub Save_As_PDF
+	'Gets the Workspace Path
+	WorkspacePath= ThisDoc.WorkspacePath()
+
+	'Gets the Length of the WorkspacePath String
+	WorkspacePathLength = Len(WorkspacePath)
+
+	'Gets just the Path of the file
+	PathOnly = ThisDoc.Path
+
+	'Removes the Workspace Path from FullPath
+	DirectoryPath = Strings.Right(PathOnly, PathOnly.Length-WorkspacePathLength)
+
+	'Sets the Dirctory that the PDF should be saved in
+	PDFPath = "C:\PDFs\"  & DirectoryPath
+
+	'Checks to see if that directory exists, if not, it is created
+	If(Not System.IO.Directory.Exists(PDFPath)) Then
+		System.IO.Directory.CreateDirectory(PDFPath)
+	End If
+
+	'Saves the PDF in the desired location
+	ThisDoc.Document.SaveAs(PDFPath & "\" & ThisDoc.FileName(False) & (".pdf") , True)
+End Sub
+
+Sub ErrorMessage
+	i = MessageBox.Show("This is not a drawing file.  No PDF will be created.", "Create PDF", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+End Sub

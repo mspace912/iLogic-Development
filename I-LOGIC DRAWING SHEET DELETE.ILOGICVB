@@ -1,0 +1,26 @@
+RangeStart = InputBox("Enter first sheet in range", "Delete Sheets", "1")
+RangeEnd = InputBox("Enter last sheet in range", "Delete Sheets", "1")
+On Error Goto Skip
+
+Dim oDocAsDrawingDocument
+oDoc=ThisApplication.ActiveDocument
+
+Dim oTitleBlockAsTitleBlock
+Dim oTextBoxAsTextBox
+Dim oBorderAsBorder
+Dim oSheetAsSheet
+
+Counter = 0
+
+For Each oSheet In oDoc.Sheets 
+	Counter = Counter + 1
+	oTitleBlock = oSheet.TitleBlock
+	oBorder = oSheet.Border
+
+	If Counter >=RangeStart And Counter <= RangeEnd
+		oSheet.Delete
+	End If
+
+Next
+
+Skip:

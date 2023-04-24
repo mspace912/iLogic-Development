@@ -1,0 +1,216 @@
+﻿Sub Main()
+paramselect()    
+End Sub
+
+Function tryDoc()
+'function determines and defines part or assembly document parameters
+odoc = ThisDoc.Document
+Dim oParams As Parameters
+    If odoc.documenttype=Inventor.DocumentTypeEnum.kPartDocumentObject  Then
+    Dim oPartDoc as PartDocument = odoc
+    Dim oPartCompDef As PartComponentDefinition = oPartdoc.ComponentDefinition
+    oParams = oPartCompDef.Parameters
+	ElseIf odoc.documenttype=Inventor.DocumentTypeEnum.kPartDocumentObject Then
+    Dim oSMdoc As PartDocument= odoc
+    Dim oSMCompDef As SheetMetalComponentDefinition = oSMdoc.ComponentDefinition
+    oParams = oSMCompDef.Parameters    
+    ElseIf odoc.documenttype=Inventor.DocumentTypeEnum.kAssemblyDocumentObject Then
+    Dim oAssdoc as AssemblyDocument= odoc
+    Dim oAssCompDef As AssemblyComponentDefinition = oAssdoc.ComponentDefinition
+    oParams = oAssCompDef.Parameters
+	ElseIf odoc.documenttype=Inventor.DocumentTypeEnum.kAssemblyDocumentObject Then
+    Dim oWMdoc as AssemblyDocument= odoc
+    Dim oWMCompDef As WeldmentComponentDefinition = oWMdoc.ComponentDefinition
+    oParams = oWMCompDef.Parameters
+	End If
+    Return oParams
+End Function
+    
+Function textfix(oBVName As String)
+' function modifies text to fit confines of inventor parameter names. 
+    oBVName = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(oBVName)' Capitalise all starting letters
+    Dim returntext As String = oBVName.Replace(" ", "_") ' remove spaces and replace with underscore    
+    For Each illegalChar As Char In returntext
+        Select Case illegalChar
+            Case "!","$","%","^","&","*","(",")","+","{","}","@","<",">","?","|","=","[","]",";","'",",",".","/","\","`"
+            returntext = returntext.Replace(illegalChar, "")
+        End Select
+    Next
+    Return returntext
+End Function
+
+Function MathFunction()
+			question1 = MessageBox.Show("Add a value to the parameter?", "iLogic",MessageBoxButtons.YesNo)
+				If question1 = vbYes Then
+				Line2:
+				oBoxParamVal = InputBox("Add a Value then", "iLogic", oBoxParamVal)
+'---------------------------------------------------------------------------------------------------------------
+				'Removes math characters to check if entered value is a number.	 
+					If oBoxParamVal = "" Then
+					oBoxParamVal = 1
+					Else 'Removes Math characters
+					oBoxMathVal = oBoxParamVal
+						For Each oMathChar As Char In oBoxParamVal
+        				Select Case oMathChar
+            			Case "+","-","*","/","(",")"
+            			oBoxMathVal = oBoxMathVal.Replace(oMathChar, "")
+						End Select
+						Next
+						Dim oBoxMathValAsdouble As Double
+						'Check numeric is actually numeric
+							If Double.TryParse(oBoxMathVal,oBoxMathValAsdouble)Then
+							Else
+							MessageBox.Show("That's not a valid Input", "iLogic Error")
+							Goto Line2
+							End If		
+					End If 
+'---------------------------------------------------------------------------------------------------------------	
+                ElseIf question1 = vbNo Then
+                oBoxParamVal = 1
+                End If 
+				Return oBoxParamVal
+End Function
+
+Sub paramselect()
+'create a list parameter that displays in selection window, used to add the type of parameter required
+Dim iparamname As String = "iParameters" ' the created parameter name (Change it here to what ever you like)
+Dim iUnits As String = "iUnits" ' the created units parameter name (Change it here to what ever you like)
+oParams = tryDoc()
+Dim oUserParams As UserParameters = oParams.UserParameters
+    'test for exsisting multivalue parameter, if not, creates it and populates it.
+Dim oDimStyle As String        
+    Try
+    oparamselect = oParams(iparamname)	
+    Catch	
+    Dim newParam As UserParameter = oUserParams.AddByValue(iparamname, "Numerical", UnitsTypeEnum.kTextUnits)
+    MultiValue.SetList(iparamname, "Numerical","Angular","Unitless","Mass", "Text", "Boolean")
+    End Try 
+	
+	Try
+	oUnitselect = oParams(iUnits)
+	Catch
+	    oStandards= InputRadioBox("Select metric or Imperial", "Metric", "Imperial", True, Title :="iLogic")
+        If oStandards = True Then
+        oDimStyle = "mm"            
+        ElseIf oStandards = False Then
+        oDimStyle = "in"
+		Else
+        End If 
+	Dim newParam As UserParameter = oUserParams.AddByValue(iUnits, oDimStyle, "Text")
+    End Try        
+    'display window for selecting values from the created multivalue parameter above.
+oSelection = InputListBox("Select one:", MultiValue.List(iparamname), _
+Parameter(iparamname), "iLogic", "Pick a parameter Type:")
+
+	oUnits = Parameter(iUnits)
+
+    If oSelection = "" Then
+    Return ' Exits on window close
+    Else
+    oBoxValues(oSelection,oUnits) 'Trigger input boxes
+    End If
+End Sub
+
+Sub oBoxValues(oSelection As String,oUnits As String)
+'Define Values for Input boxes: parameter names and values
+Line1:    Dim oBVNameFix As String
+Dim oBVName As String = InputBox("Enter a parameter name", "Custom Parameter", oBVName)
+    'Test for empty boxes and strings starting with numbers
+    If oBVName = "" Then
+    MessageBox.Show("Nothing was entered. Operation Cancelled", "Error")
+    Return
+    Else
+    'Test first character for numeric character
+    Dim oBVNameAsArray = oBVName.ToCharArray()    
+        If IsNumeric(oBVNameAsArray(0)) Then
+        MessageBox.Show("Parameters must start with text", "Error")
+        Goto Line1 'If starts with number, re-enter value in box
+        Else
+        oBVNameFix = textfix(oBVName) 'String is sent to be corrected to inventor acceptable format  
+        'Defines Conditions for Adding a value to the parameter
+            If oSelection = "Text" Then
+            question1 = MessageBox.Show("Add a value to the parameter?", "iLogic",MessageBoxButtons.YesNo)
+                If question1 = vbYes Then
+                oBoxParamVal = InputBox("Add a Value then", "iLogic", "")
+                ElseIf question1 = vbNo Then
+                oBoxParamVal = "Empty"
+                End If
+			ElseIf oSelection = "Boolean" Then
+            Else 
+			oBoxParamVal = MathFunction()  
+            End If
+        End If
+    End If
+    'Triggers correct subroutine and passes parameters through 
+    If oSelection = "Numerical" Then
+    numparam(oBVNameFix,oBoxParamVal, oUnits)
+    ElseIf oSelection = "Angular" Then
+    angleparam(oBVNameFix,oBoxParamVal)
+    ElseIf oSelection = "Unitless" Then
+    ulparam(oBVNameFix,oBoxParamVal)
+	ElseIf oSelection = "Mass" Then
+	Massparam(oBVNameFix,oBoxParamVal, oUnits)
+    ElseIf oSelection = "Text" Then
+    textparam(oBVNameFix,oBoxParamVal)
+    ElseIf oSelection = "Boolean" Then
+    booleanparam(oBVNameFix)    
+    End If
+End Sub
+
+Sub numparam(oBVNameFix As String,oBoxParamVal As String,oUnits As String)
+oParams = tryDoc() 'Identifies ipt or iam
+Dim oUserParams As UserParameters = oParams.UserParameters    'Identifies user parameters in doc
+Dim newParam As UserParameter = oUserParams.AddByExpression(oBVNameFix, oBoxParamVal, oUnits) ' Creates Custom parameter
+orepeat()    
+End Sub
+
+Sub angleparam(oBVNameFix As String,oBoxParamVal As String)
+oParams = tryDoc() 'Identifies ipt or iam
+Dim oUserParams As UserParameters = oParams.UserParameters    'Identifies user parameters in doc
+Dim newParam As UserParameter = oUserParams.AddByExpression(oBVNameFix, oBoxParamVal, "deg") ' Creates Custom parameter
+orepeat()    
+End Sub
+
+Sub ulparam(oBVNameFix As String,oBoxParamVal As String)
+oParams = tryDoc() 'Identifies ipt or iam
+Dim oUserParams As UserParameters = oParams.UserParameters    'Identifies user parameters in doc
+Dim newParam As UserParameter = oUserParams.AddByExpression(oBVNameFix, oBoxParamVal, "ul") ' Creates Custom parameter
+orepeat()    
+End Sub
+
+Sub Massparam(oBVNameFix As String,oBoxParamVal As String,oUnits As String)
+oParams = tryDoc() 'Identifies ipt or iam
+	Dim oMassUnits As String
+	If oUnits = "mm" Then
+	oMassUnits = "g"
+	Else
+	oMassUnits = "lbmass"
+	End If
+Dim oUserParams As UserParameters = oParams.UserParameters    'Identifies user parameters in doc
+Dim newParam As UserParameter = oUserParams.AddByExpression(oBVNameFix, oBoxParamVal, oMassUnits) ' Creates Custom parameter
+orepeat()    
+End Sub
+
+Sub textparam(oBVNameFix As String,oBoxParamVal As String)
+oParams = tryDoc()'Identifies ipt or iam
+Dim oUserParams As UserParameters = oParams.UserParameters 'Identifies user parameters in doc
+Dim newParam As UserParameter = oUserParams.AddByValue(oBVNameFix, oBoxParamVal, "Text") ' Creates Custom parameter
+orepeat()    
+End Sub
+
+Sub booleanparam(oBVNameFix As String)
+oParams = tryDoc()'Identifies ipt or iam
+Dim oUserParams As UserParameters = oParams.UserParameters 'Identifies user parameters in doc
+Dim newParam As UserParameter = oUserParams.AddByValue(oBVNameFix,True,"BOOLEAN") ' Creates Custom parameter
+orepeat()
+End Sub
+
+Sub orepeat()
+'repeat add parameters
+questionAdd = MessageBox.Show("Create another parameter?", "iLogic",MessageBoxButtons.YesNo)    
+    If questionAdd = vbYes Then
+    paramselect() ' Go back to selecting a parameter 
+    ElseIf questionAdd = vbNo Then
+    Return
+    End If
+End Sub
