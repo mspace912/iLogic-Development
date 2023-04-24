@@ -1,0 +1,56 @@
+﻿Sub Main()
+
+'[ Set this Document as the Active Assembly
+Dim oAsmDoc As AssemblyDocument
+oAsmDoc = ThisDoc.Document
+
+' Get the Definition of the Assembly.
+Dim oAsmCompDef As AssemblyComponentDefinition
+oAsmCompDef = oAsmDoc.ComponentDefinition
+']
+Logger.Debug("Assembly Defined")
+
+Dim map As Inventor.NameValueMap = ThisApplication.TransientObjects.CreateNameValueMap()
+'[ Create List of Assemblies	
+' Pass Variables to External Rule
+Dim MyArrayList As New ArrayList
+map.Add("Doc", oAsmDoc)
+map.Add("List", MyArrayList)
+
+' Run External Rule
+iLogicVb.RunExternalRule("CollectAssemblyNames", map)
+']
+Logger.Debug("Assembly List Complied")
+
+For Each doc In oAsmDoc.AllReferencedDocuments
+
+	' Collect Name of Each Indexed Part From File Name 
+	Try
+		pos = InStrRev(doc.DisplayName, ".", -1) -1
+		c1Name = Left(doc.DisplayName, pos)
+	Catch
+		c1Name = doc.DisplayName
+		Logger.Debug(c1Name & " document Display Name is missing file extension")
+	End Try
+	Logger.Debug(c1Name)
+	Logger.Debug(doc.DisplayName)
+
+	'[ Count Componet in Assembly
+
+	' Pass Variables to External Rule
+	SharedVariable("doc") = doc
+	SharedVariable("CompDef") = oAsmCompDef
+
+	' Run External Rule
+	iLogicVb.RunExternalRule("CountComponent", map)
+	cnt = SharedVariable("cnt")
+	']
+	Logger.Debug("Qty Gathered")
+
+
+Next
+
+
+End Sub
+
+

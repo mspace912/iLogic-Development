@@ -1,0 +1,428 @@
+﻿Imports Inventor.ViewOrientationTypeEnum
+Imports Inventor.DrawingViewStyleEnum
+Sub Main()
+
+	'Change this value to determine if the projected view should be included or not.
+	'Higher value means longer views will be kept
+	Dim ProjectedViewMaxWidth = 15 
+	
+	
+
+	' standard drawing template file
+'	Dim oDoc As Inventor.Documents
+'	oDoc = ThisApplication.Document
+
+	'FSJ 03FEB2023
+	'First see if the drawing already exists; if so, we don't want to create it again, we just want to update it with job-specific info
+	If System.IO.File.Exists(SharedVariable("IDWFILE")) Then
+		Dim oDrawDoc As DrawingDocument
+		oDrawDoc = ThisApplication.Documents.Open(SharedVariable("IDWFILE"), True)
+		SharedVariable("NewDwg") = False
+	
+	Else
+		SharedVariable("NewDwg") = True
+		Dim oFileOp As FileOptions
+		oFileOp = ThisApplication.FileOptions
+	
+		Dim oFilePath, oFile As String
+		oFilePath = oFileOp.TemplatesPath
+		'MsgBox oFilePath
+		oFile = oFilePath & "Benda.idw"
+		
+		Dim sTemplateFile As String
+		sTemplateFile = oFile
+		Debug.Write(sTempateFile)
+		Dim oDrawDoc As DrawingDocument
+		oDrawDoc = ThisApplication.Documents.Add(DocumentTypeEnum.kDrawingDocumentObject, sTemplateFile)
+		Dim oSheet As Sheet = oDrawDoc.Sheets.Item(1)
+	'FSJ 01FEB2023 
+		'[
+			'THIS SECTION DEFINES VIEW PLACEMENT AREAS. ADJUST THESE VALUES TO CHANGE VIEW LAYOUT BEHAVIOR
+			Dim FlatPatternViewSheetWidth = oSheet.Width * 0.3
+			Dim FlatPatternViewSheetHeight = oSheet.Height * 0.3
+			
+			Dim FoldedBaseViewSheetWidth = oSheet.Width * 0.28
+			Dim FoldedBaseViewSheetHeight = oSheet.Height * 0.28
+			
+			Dim IsoViewSheetWidth = oSheet.Width * 0.1875
+			Dim IsoViewSheetHeight = oSheet.Height * 0.1875
+	
+			Dim oBaseFoldedViewPoint As Point2d = ThisApplication.TransientGeometry.CreatePoint2d(19, 19)
+			Dim oProjFoldedViewPoint As Point2d = ThisApplication.TransientGeometry.CreatePoint2d(36.0, 19)
+			Dim oIsoViewPoint As Point2d = ThisApplication.TransientGeometry.CreatePoint2d(6.0, 19)
+			Dim oFlatPatternViewPoint As Point2d = ThisApplication.TransientGeometry.CreatePoint2d(17.5, 10.5)
+			
+		']
+	
+	
+		' The drawing is created with a single sheet,
+		' so we'll add our views to it.
+	
+		
+		' Define the view scales that we need.
+		'[
+		'FSJ 01FEB2023 - View Scales will be based on making the necessary view fit into a predefined area of the sheet
+		
+		'Start with 1/4 scale to start with
+		Dim ViewScale1 As Double
+		Dim ViewScale2 As Double
+		ViewScale1 = .25
+		ViewScale2 = .25
+		']
+	
+		' define the view orientation for each view
+		'[
+		
+		'FSJ 01FEB2023 use FindEdgeOnOrientation function to determine initial folded view direction
+		Dim ViewOrientation1 As ViewOrientationTypeEnum
+		Dim EdgeOnDir As String = FindEdgeOnOrientation(SharedVariable("SMFile"))
+		Select Case EdgeOnDir
+			Case "Front"
+				ViewOrientation1 = ViewOrientationTypeEnum.kFrontViewOrientation
+			Case "Top"
+				ViewOrientation1 = ViewOrientationTypeEnum.kTopViewOrientation
+			Case "Right"
+				ViewOrientation1 = ViewOrientationTypeEnum.kRightViewOrientation
+		End Select
+	
+		Dim ViewOrientation2 As ViewOrientationTypeEnum = ViewOrientationTypeEnum.kRightViewOrientation
+		Dim ViewOrientation3 As ViewOrientationTypeEnum = ViewOrientationTypeEnum.kIsoTopRightViewOrientation
+		Dim ViewOrientation4 As ViewOrientationTypeEnum = ViewOrientationTypeEnum.kDefaultViewOrientation
+	
+		' define the view style for each view
+		'[
+		Dim ViewStyle1 As DrawingViewStyleEnum = DrawingViewStyleEnum.kHiddenLineDrawingViewStyle
+	
+		Dim ViewStyle2 As DrawingViewStyleEnum = DrawingViewStyleEnum.kShadedDrawingViewStyle
+
+		Dim ViewStyle3 As DrawingViewStyleEnum = DrawingViewStyleEnum.kHiddenLineRemovedDrawingViewStyle
+
+		']
+	
+		'Dim sPartPath As String = Left(SharedVariable("SMFile"), Len(sharedvariable("SMFile")-4)
+		' now create the 3 views
+		'[
+		Dim oView As DrawingView
+	
+		oView = oSheet.DrawingViews.AddBaseView(SharedVariable("SMFile"), oBaseFoldedViewPoint, ViewScale1, ViewOrientation1, ViewStyle1)
+		'Dim NewViewScale As Double = OptimizeViewScale(oView, FoldedBaseViewSheetWidth, FoldedBaseViewSheetHeight)
+		'Logger.Debug("Optimal Base View Scale: " & NewViewScale.ToString() & " vs current scale: " & oView.Scale.ToString())
+		'If the view is taller than it is wide, rotate it to optimize space
+		If oView.Height > oView.Width Then
+			oView.RotateByAngle(Math.PI / 2, False)
+		End If
+		'Wrap all view scale attempts in Try/Catch as testing as found that Inventor crashes or returns unreliable information
+		'At times when querying View properties Width and Height
+		Try
+			oView.Scale = OptimizeViewScale(oView,FoldedBaseViewSheetWidth,FoldedBaseViewSheetHeight)
+		Catch Ex As System.Exception
+			Logger.Info("Failed to scale base view. Exception: " & Ex.Message )
+		End Try
+		
+		
+		'FSJ 01FEB2023 View 2 should be projected from view 1
+		oView2 = oSheet.DrawingViews.AddProjectedView(oView, oProjFoldedViewPoint, ViewStyle1)
+		
+		'FSJ 28FEB2023
+		'If the projected view is too large, take it back off
+		If oView2.Width > ProjectedViewMaxWidth Then
+			oView2.Delete
+		End If
+		
+		'oView = oSheet.DrawingViews.AddBaseView(SharedVariable("SMFile"), oProjFoldedViewPoint, ViewScale2, ViewOrientation2, ViewStyle1)
+		oView3 = oSheet.DrawingViews.AddBaseView(SharedVariable("SMFile"), oIsoViewPoint, ViewScale2, ViewOrientation3, ViewStyle3)
+		'NewViewScale = OptimizeViewScale(oView3, IsoViewSheetWidth, IsoViewSheetHeight)
+		'Logger.Debug("Optimal Iso View Scale: " & NewViewScale.ToString() & " vs current scale: " & oView3.Scale.ToString())
+		Try
+			oView3.Scale = OptimizeViewScale(oView3, IsoViewSheetWidth, IsoViewSheetHeight)
+		Catch Ex As System.Exception
+			Logger.Info("Failed to scale ISO view. Exception: " & Ex.Message )
+		End Try
+		
+		']
+	
+		' creating the flat pattern
+		'[
+		oBaseViewOptions = ThisApplication.TransientObjects.CreateNameValueMap
+	
+		'True = folded view
+		'False = flat pattern view
+		oBaseViewOptions.Add("SheetMetalFoldedModel", False)
+	
+		'oView5 = oSheet.DrawingViews.AddBaseView(oPartDoc,oPoint5, ViewScale,kFlatBacksideViewOrientation, kHiddenLineDrawingViewStyle,,, oBaseViewOptions)
+	
+		oViewFlat = oSheet.DrawingViews.AddBaseView(SharedVariable("SMFile"), oFlatPatternViewPoint, ViewScale2, ViewOrientation4, ViewStyle1, , , oBaseViewOptions)
+		'NewViewScale = OptimizeViewScale(oViewFlat, FlatPatternViewSheetWidth, FlatPatternViewSheetHeight)
+		'Logger.Debug("Optimal Flat Pattern View Scale: " & NewViewScale.ToString() & " vs current scale: " & oViewFlat.Scale.ToString())
+		Try
+			oViewFlat.Scale = OptimizeViewScale(oViewFlat, FlatPatternViewSheetWidth, FlatPatternViewSheetHeight)
+		Catch Ex As System.Exception
+			Logger.Info("Failed to scale flat pattern view. Exception: " & Ex.Message )
+		End Try
+		
+		'See if we need to rotate the flat pattern; need flat edges along the top and left side for the datum
+		Dim FlatPatternRotationAngle As Double = DetermineFlatPatternViewOrientation(oViewFlat)
+
+			
+		']
+	
+		
+	
+		'Call oPartDoc.Close(True)
+		
+	End If
+	
+	iLogicVb.RunExternalRule("2 - Create Parts List")
+
+End Sub
+
+Function FindEdgeOnOrientation(PartDoc As Inventor.PartDocument) As String
+ 'This function will return either Front, Top, or Right based on the following criteria:
+ 'Choose the view orientation with the lowest total surface area of faces that are parallel to that view orientation
+ 'Break
+ Dim FrontViewAxis As Inventor.Vector = ThisApplication.TransientGeometry.CreateVector(0,0,1) 'PartDoc.ComponentDefinition.WorkAxes.Item("Z Axis")
+ Dim RightViewAxis As Inventor.Vector = ThisApplication.TransientGeometry.CreateVector(1,0,0) ' PartDoc.ComponentDefinition.WorkAxes.Item("X Axis")
+ Dim TopViewAxis As Inventor.Vector = ThisApplication.TransientGeometry.CreateVector(0,1,0) ' PartDoc.ComponentDefinition.WorkAxes.Item("Y Axis")
+ 
+ Dim FrontFaceTotalArea As Double = 0.0
+ Dim RightFaceTotalArea As Double = 0.0
+ Dim TopFaceTotalArea As Double = 0.0
+ 
+ For Each Bod As Inventor.SurfaceBody In PartDoc.ComponentDefinition.SurfaceBodies
+	 
+	For Each Fce As Inventor.Face In Bod.Faces
+		'Get the normal for the face
+		Dim Params(1) As Double
+		Params(0) = 0.5
+		Params(1) = 0.5
+		Dim NormalPoints(2) As Double
+		Fce.Evaluator.GetNormal(Params, NormalPoints)
+		
+		Dim NormalVector As Inventor.Vector
+		NormalVector = ThisApplication.TransientGeometry.CreateVector(NormalPoints(0), NormalPoints(1), NormalPoints(2))
+		
+		If NormalVector.IsParallelTo(FrontViewAxis) Then
+			FrontFaceTotalArea = FrontFaceTotalArea + Fce.Evaluator.Area
+		ElseIf NormalVector.IsParallelTo(RightViewAxis) Then
+			RightFaceTotalArea = RightFaceTotalArea + Fce.Evaluator.Area
+		ElseIf NormalVector.IsParallelTo(TopViewAxis) Then
+			TopFaceTotalArea = TopFaceTotalArea + Fce.Evaluator.Area
+		End If
+	Next
+ Next
+
+Logger.Debug("Front Area: " & FrontFaceTotalArea.ToString())
+Logger.Debug("Right Area: " & RightFaceTotalArea.ToString())
+Logger.Debug("Top Area: " & TopFaceTotalArea.ToString())
+
+If FrontFaceTotalArea < RightFaceTotalArea Then
+	If FrontFaceTotalArea > TopFaceTotalArea Then
+		Return "Top"
+	Else
+		Return "Front"
+	End If
+Else
+	If RightFaceTotalArea > TopFaceTotalArea Then
+		Return "Top"
+	Else
+		Return "Right"
+	End If
+End If
+
+
+End Function
+
+
+Function OptimizeViewScale(AADwgView As Inventor.DrawingView, ViewMaxWidth As Double, ViewMaxHeight As Double) As Double
+	'Break
+	Dim ViewWidth As Double = AADwgView.Width
+	Dim CurrViewScale As Double = AADwgView.Scale
+	Dim ViewHeight As Double = AADwgView.Height
+	Dim NewViewScale As Double = 1.0
+	
+	If ViewWidth > ViewMaxWidth Or ViewHeight > ViewMaxHeight Then
+		'View is too large in one dimension; we must scale it down
+		If ViewWidth > ViewMaxWidth Then
+			'We have to scale down the width at least; may need both
+			NewViewScale = CurrViewScale * ViewMaxWidth / ViewWidth
+			ViewWidth = ViewWidth / CurrViewScale * NewViewScale
+			ViewHeight = ViewHeight / CurrViewScale * NewViewScale
+			'Now check to see if height fits; if not, scale further
+			If ViewHeight > ViewMaxHeight Then
+				NewViewScale = NewViewScale * ViewMaxHeight / ViewHeight
+				Return NewViewScale
+			End If
+		Else
+			'Only the height is out of bounds; scale and return
+			NewViewScale = CurrViewScale * ViewMaxHeight / ViewHeight
+			Return NewViewScale
+		End If
+	Else
+		'View is smaller in both dimensions; we can scale it up
+		'Scale height first
+		NewViewScale = CurrViewScale * ViewMaxHeight / ViewHeight
+		ViewWidth = ViewWidth / CurrViewScale * NewViewScale
+		ViewHeight = ViewHeight / CurrViewScale * NewViewScale
+		'See if the width is now too big; if so scale back down
+		If ViewWidth > ViewMaxWidth Then
+			NewViewScale = NewViewScale * ViewMaxWidth/ViewWidth
+		End If
+		
+		Return NewViewScale
+	End If
+
+End Function
+
+
+Function DetermineFlatPatternViewOrientation(FlatPatternView As Inventor.DrawingView) As Double
+	Dim TG As Inventor.TransientGeometry = ThisApplication.TransientGeometry
+
+	'Reference the sheet this drawing view is on
+	Dim ThisSheet As Inventor.Sheet = FlatPatternView.Parent
+
+
+
+	'[Find top and left edges
+	' FSJ Update 06FEB2023 Put this in a While loop; the purpose of the loop
+	' Is to rotate the view if necessary, CW in 90 deg increments
+	' If the current upper left corner is not suitable - i.e. there are any arc segements
+	' beyond Ymax and Xmi
+	Dim XAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(1, 0)
+	Dim YAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(0, 1)
+	
+	Dim FinalAngle As Boolean = False
+	Dim TimesRotated As Integer = 0
+	Dim Breakout As Integer = 0
+	'iterate through edges to find the upper left most point of the view
+	'Keep track of the top and left most edges. 
+	Dim TopEdge As Inventor.DrawingCurve = Nothing
+	Dim LeftEdge As Inventor.DrawingCurve = Nothing
+	While (FinalAngle = False And TimesRotated < 3) And Breakout < 3
+		'Break
+		Breakout = Breakout + 1
+		For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+			'Logger.Debug("Curve type: " & Curve.CurveType.ToString())
+			If Curve.CurveType = Inventor.CurveTypeEnum.kLineCurve Or Curve.CurveType = Inventor.CurveTypeEnum.kLineSegmentCurve Then
+				Try
+					'Break
+					'Get vector of the curve to check horizontal or vertical
+					Dim CurveVector As Inventor.Vector2d = Curve.StartPoint.VectorTo(Curve.EndPoint)
+					If CurveVector.IsParallelTo(XAxis) Then
+						If TopEdge Is Nothing Then
+							Break
+							'May be a zero length Curve, can't assume every curve is valid. CHeck by using try/catch with YMax
+							Try
+								GetSegmentYMax(Curve)
+								TopEdge = Curve
+								Continue For
+							Catch
+							End Try
+						ElseIf TopEdge.StartPoint Is Nothing Then
+							TopEdge = Curve
+						Else
+							If GetSegmentYMax(Curve) > GetSegmentYMax(TopEdge) Then
+								TopEdge = Curve
+							End If
+						End If
+					ElseIf CurveVector.IsParallelTo(YAxis) Then
+						If LeftEdge Is Nothing Then
+							Try
+								GetSegmentXMin(Curve)
+								LeftEdge = Curve
+								Continue For
+							Catch
+							End Try
+						ElseIf LeftEdge.StartPoint Is Nothing Then
+							LeftEdge = Curve
+						Else
+							
+							If GetSegmentXMin(Curve) < GetSegmentXMin(LeftEdge) Then
+								LeftEdge = Curve
+							End If
+						End If
+					End If
+			Catch Ex As System.Exception
+				Logger.Debug("Failed to evaluate curve for edge extents")
+			End Try
+			
+			End If
+		Next
+		
+		'Now that we have the *current* top and leftmost edges, see if any arc segments are outside these. If so, rotate and try again; otherwise continue
+		
+		Dim CurrentMaxY As Double = TopEdge.StartPoint.Y
+		Dim CurrentMinX As Double = LeftEdge.StartPoint.X
+		
+		For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+			If Curve.CurveType = Inventor.CurveTypeEnum.kCircleCurve Or Curve.CurveType = Inventor.CurveTypeEnum.kCircularArcCurve Then
+				'Check if any of the curves are above current MaxY or left of current MinX
+				Dim CurrentCurveMinX As Double = 0.0
+				Dim CurrentCurveMaxY As Double = 0.0
+				If Curve.Evaluator2D.RangeBox.MinPoint.X < Curve.Evaluator2D.RangeBox.MaxPoint.X Then
+					CurrentCurveMinX = Curve.Evaluator2D.RangeBox.MinPoint.X
+				Else
+					CurrentCurveMinX = Curve.Evaluator2D.RangeBox.MaxPoint.X
+				End If
+				If Curve.Evaluator2D.RangeBox.MinPoint.Y > Curve.Evaluator2D.RangeBox.MaxPoint.Y Then
+					CurrentCurveMaxY = Curve.Evaluator2D.RangeBox.MinPoint.Y
+				Else
+					CurrentCurveMaxY = Curve.Evaluator2D.RangeBox.MaxPoint.Y
+				End If
+				Logger.Debug("Rangebox of curve: " & Curve.Evaluator2D.RangeBox.MinPoint.X.ToString() & "," & Curve.Evaluator2D.RangeBox.MinPoint.Y.ToString() & " | " & Curve.Evaluator2D.RangeBox.MaxPoint.X.ToString() & "," & Curve.Evaluator2D.RangeBox.MaxPoint.Y.ToString())
+				Logger.Debug("Current curve min/max: " & CurrentCurveMinX & " , " & CurrentCurveMaxY & " vs current Linear Min/Max" & CurrentMinX & " , " & CurrentMaxY)
+				If CurrentCurveMinX < CurrentMinX Or CurrentCurveMaxY > CurrentMaxY Then
+					'We have an arc segment outside the boundary; rotate and try again
+					Logger.Debug("Failed to find corner; rotating")
+					FlatPatternView.RotateByAngle(Math.PI / 2, True)
+					TimesRotated = TimesRotated + 1
+				Else
+					'We have a valid corner; exit the loop
+					FinalAngle = True
+					Exit While
+				End If
+			End If
+		Next
+		
+	End While
+	If TimesRotated < 3 Then
+		Return (Math.PI / 2) * TimesRotated
+	Else
+		Return 0.0
+	End If
+End Function
+
+'Returns the lowest X value For a drawing curve
+Function GetSegmentXMin(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.X < Curve.EndPoint.X Then
+		Return Curve.StartPoint.X
+	Else
+		Return Curve.EndPoint.X
+	End If
+End Function
+
+Function GetSegmentXMax(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.X > Curve.EndPoint.X Then
+		Return Curve.StartPoint.X
+	Else
+		Return Curve.EndPoint.X
+	End If
+End Function
+
+'Returns the highest Y value for a drawing curve
+Function GetSegmentYMax(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.Y > Curve.EndPoint.Y Then
+		Return Curve.StartPoint.Y
+	Else
+		Return Curve.EndPoint.Y
+	End If
+End Function
+
+Function GetSegmentYMin(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.Y < Curve.EndPoint.Y Then
+		Return Curve.StartPoint.Y
+	Else
+		Return Curve.EndPoint.Y
+	End If
+End Function
+
+' drawing document isn't saved

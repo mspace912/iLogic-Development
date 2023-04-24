@@ -1,0 +1,54 @@
+﻿Sub Main()
+
+Dim oDrawingDoc As Inventor.DrawingDocument = ThisApplication.ActiveEditDocument
+
+For Each DwgView As Inventor.DrawingView In oDrawingDoc.Sheets(1).DrawingViews
+	If DwgView.Name = "VIEW1" Then
+		DwgView.Scale = ViewScale(DwgView)
+		DwgView.ShowLabel = True
+	ElseIf DwgView.Name = "VIEW2" Then
+		DwgView.Scale = ViewScale(DwgView)
+		DwgView.ShowLabel = True
+	ElseIf DwgView.Name = "VIEW3" Then
+		DwgView.Scale = ViewScale(DwgView)
+		DwgView.ShowLabel = True
+	ElseIf DwgView.Name = "VIEW4" Then
+		DwgView.Scale = ViewScale(DwgView)
+		DwgView.ShowLabel = True
+	End If
+Next
+
+End Sub
+
+
+Function ViewScale(TView As Inventor.DrawingView) As Double
+	Dim Dwg As Inventor.DrawingDocument = ThisApplication.ActiveDocument
+	Dim Sht As Inventor.Sheet = ThisApplication.ActiveDocument.Sheets(1)
+
+	oViewW = TView.Width
+	oViewH = TView.Height
+	SizeChk = oViewW > oViewH
+	Dim TmpScale As Double
+
+	Select Case SizeChk
+		Case "True"
+			TmpScale = 4 / oViewW
+		Case "False"
+			TmpScale = 4 / oViewH
+	End Select
+	i = MessageBox.Show(TmpScale, "My iLogic Dialog", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+	If TmpScale <= .25 Then
+		ViewScale = .25
+	ElseIf TmpScale > .25 AndAlso TmpScale <= .5
+		ViewScale = .5
+	ElseIf TmpScale > .5 AndAlso TmpScale <= 1
+		ViewScale = 1.0
+	Else
+		ViewScale = 2.0
+	End If
+
+
+
+End Function
+

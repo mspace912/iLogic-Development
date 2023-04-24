@@ -1,0 +1,239 @@
+﻿' Assembly DXF Generator
+' Created By : Gabriel Valencia
+' Created On: 10/08/18
+
+' Description:
+' This rule generates DXF files from all sheet metal parts located in an assembly. The rule will prompt you
+' to check the A-Side of each part before saving the DXF. The files are placed within an 
+' "AssemblyName DXF Files" folder on creation.
+
+' Notes:
+' 1. Files will be overwritten everytime the rule is run. If the assembly is run while at a Level of Detail,
+'    the name of the Level of Detail will show up in the name of the folder.
+' 2. Any sheet metal parts associated with the assembly will be closed when the rule is run.
+' 3. Destination folder is opened on completion.
+' 4. All files must have been saved prior to running the rule.
+' 5. File extensions must be visible in Windows. Check here to show them: 
+'    Control Panel>File Explorer Options>View>Uncheck “Hide extensions for known filetypes”
+
+' Change log:
+' 181008: Released
+' 181106: oFile name uses "IO.Path.GetFileName(iptPathName)" instead of "oRefDoc.DisplayName"
+' 181113: Major Overhaul
+' 			- Selectable list added (!!!)
+'			- Does a better job of showing an error if opened outside of an assembly
+' 			- Counts DXFs created
+' 9/19/22 Removed prompt for "Side A"  M.Space - Hagerman & Company
+
+' Known issues/Idea Board:
+' 1. Need to correct the output folder to the formed parts location.
+' 2. File names are incorrect when file extensions are hidden
+' 4. Return to queue after editing file
+' 5. If opened in part file, make DXF for just that part
+'-----------------------------------------------------------------------------------------------------------
+
+Sub Main()
+Dim oRuleTitle As String = "DXF Generator"
+
+Dim oAsmDoc As Inventor.AssemblyDocument
+
+Try
+	oAsmDoc = ThisApplication.ActiveDocument
+Catch
+	MessageBox.Show("Please activate an Assembly document first.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
+	Return
+End Try
+
+oAsmName = ThisDoc.FileName(False)
+
+Dim oSMDocs As New List(Of Inventor.PartDocument) ' This is a list of all sheet metal documents that COULD be exported
+Dim oExportDocs As New List(Of Inventor.PartDocument) ' This is the list of sheet metal documents the user WANTS to export
+
+For Each oRefDoc As Inventor.Document In oAsmDoc.AllReferencedDocuments
+
+	' Determines if the document is a sheet metal part
+	If oRefDoc.SubType = "{9C464203-9BAE-11D3-8BAD-0060B0CE6BB4}" Then
+		IsSheetMetal = True
+	Else
+		IsSheetMetal = False
+	End If
+
+	If IsSheetMetal = True Then
+		oSMDocs.Add(oRefDoc)
+	End If
+Next oRefDoc
+
+oExportDocs.AddRange(oSMDocs) ' Begin by assuming user wants to export all sheet metal documents.
+
+' Ask user to specify which documents to export
+Dim oInput As String
+Dim oIndex As Integer
+Dim oPartDoc As Inventor.PartDocument
+
+Do
+	' Populate list of all documents, with "checks" and numbering
+	oDocList = CreateDocList(oSMDocs, oExportDocs)
+
+	' Display prompt with list and valid inputs
+	oInput = InputBox( _
+	"Below is a list of all Sheet Metal parts in this assembly. Items with an ""X"" will be exported as a DXF." & vbCrLf & _
+	vbCrLf & _
+	"Enter a number below to toggle items for export. Ignore leading zeros. You can also enter a range like ""3-15"" (without quotes)." & vbCrLf & _
+	vbCrLf & _
+	"Enter ""a"" to toggle all." & vbCrLf & _
+	vbCrLf & _
+	oDocList & _
+	vbCrLf & _
+	"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" & vbCrLf & _
+	"To run export, hit Enter or click OK." & vbCrLf & _
+	vbCrLf & _
+	"To cancel, hit Escape or click Cancel." _
+	, oRuleTitle, "INPUT")
+
+	' Rules for User Input
+	If oInput = "" Then
+		Exit Do
+	Else If oInput = "INPUT" Then
+	Exit Do
+	Else
+		DashPos = InStr(oInput, "-")
+
+		If IsNumeric(oInput) Or DashPos > 0 Or oInput.ToLower = "a" Then
+			If IsNumeric(oInput) Then
+				oStartNum = CDblAny(oInput)
+				oEndNum = oStartNum
+			Else If DashPos > 0 Then
+			BeforeDash = Left(oInput, DashPos - 1)
+			AfterDash = Mid(oInput, DashPos + 1)
+
+			Try
+				oStartNum = CDblAny(BeforeDash)
+				oEndNum = CDblAny(AfterDash)
+			Catch
+				oStartNum = -1
+				oEndNum = -1
+			End Try
+		Else If oInput.ToLower = "a" Then
+		oStartNum = 1
+		oEndNum = oSMDocs.Count
+	End If
+
+	Try
+		For i = oStartNum To oEndNum
+			oIndex = i - 1
+
+			oPartDoc = oSMDocs.Item(oIndex)
+
+			If oExportDocs.Contains(oPartDoc) Then
+				oExportDocs.Remove(oPartDoc)
+			Else
+				oExportDocs.Add(oPartDoc)
+			End If
+		Next
+	Catch
+		oAnswer = MessageBox.Show("Please enter a valid number or range.", oRuleTitle, MessageBoxButtons.OKCancel, MessageBoxIcon.Error)
+
+		If oAnswer = vbCancel Then
+			oInput = ""
+			Exit Do
+		End If
+		oValidRange = False
+	End Try
+	Else
+		MessageBox.Show("Please enter a valid input.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
+	End If 'Input is one that toggles some documents
+	End If 'Input is...
+Loop Until oInput = "INPUT" Or oInput = ""
+
+If oInput = "" Then
+	MessageBox.Show(oRuleTitle & " canceled.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+	Return
+End If
+
+' Begin DXF export--------------------------------------------------------------------------------------
+
+oPath = ThisDoc.Path
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+Dim oExportCount As Integer
+oExportCount = 0
+
+' Folder Location
+oFolder = oPath & "\" & oAsmName & " DXF Files"
+' Create DXF Folder
+If Not System.IO.Directory.Exists(oFolder) Then
+	System.IO.Directory.CreateDirectory(oFolder)
+End If
+
+' Dev Mode
+Dim bEMD As Boolean = False
+
+For Each oPartDoc In oExportDocs
+	iptPathName = Left(oPartDoc.FullDocumentName, Len(oPartDoc.FullDocumentName) -3) & "ipt"
+	If (System.IO.File.Exists(iptPathName)) Then
+		Dim oDrawDoc As PartDocument
+		oDrawDoc = ThisApplication.Documents.Open(iptPathName, Not bEMD)
+		'oFileName = Left(oPartDoc.DisplayName, Len(oPartDoc.DisplayName) -4)
+		oFileName = Left(IO.Path.GetFileName(iptPathName), Len(IO.Path.GetFileName(iptPathName)) -4)
+		Try
+
+			oDataMedium.FileName = oFolder & "\" & oFileName & ".dxf"
+
+			Dim oCompDef As SheetMetalComponentDefinition
+			oCompDef = oDrawDoc.ComponentDefinition
+
+			If oCompDef.HasFlatPattern = False Then
+				oCompDef.Unfold
+			Else
+				oCompDef.FlatPattern.Edit
+			End If
+
+			Dim sOut As String
+			' Useful reference: http://adndevblog.typepad.com/manufacturing/2012/05/exporting-flat-pattern-as-dwgdxf.html
+			' Parameters found in WriteDataToFile page in Inventor API Help
+			sOut = "FLAT PATTERN DXF?AcadVersion=2000&OuterProfileLayer=IV_OUTER_PROFILE&InvisibleLayers=IV_Tangent;IV_Bend;IV_Bend_Down;IV_Bend_Up;IV_Arc_Centers;IV_TOOL_CENTER;IV_TOOL_CENTER_DOWN;IV_FEATURE_PROFILES;IV_FEATURE_PROFILES_DOWN;IV_ALTREP_FRONT;IV_ALTREP_BACK;IV_ALTREP_BACK;IV_ROLL_TANGENT;IV_ROLL&RebaseGeometry=TRUE&SimplifySplines=TRUE&SplineTolerance=0.01"
+
+			oCompDef.DataIO.WriteDataToFile(sOut, oDataMedium.FileName)
+			oCompDef.FlatPattern.ExitEdit
+			oExportCount = oExportCount + 1
+		Catch
+		End Try
+		oDrawDoc.Close
+	Else
+	End If
+Next
+'-------------------------------------------------------------------------------------------------------
+
+' Display final message
+MessageBox.Show("Finished exporting (" & oExportCount & ") sheet metal parts to DXF!", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+Try
+	System.Diagnostics.Process.Start(oFolder)
+Catch
+	MessageBox.Show("Could Not Open Page", "iLogic")
+End Try
+
+End Sub
+
+Function CreateDocList(oSMDocs As List(Of Inventor.PartDocument), oExportDocs As List(Of Inventor.PartDocument)) As String
+	Dim oListText As String = ""
+	Dim oItem As Integer = 0
+
+	For Each oPartDoc As Inventor.PartDocument In oSMDocs
+		oItem = oItem + 1
+
+		If oExportDocs.Contains(oPartDoc) Then
+			oCheckmark = "X"
+		Else
+			oCheckmark = "  "
+		End If
+
+		oFilename = System.IO.Path.GetFileNameWithoutExtension(oPartDoc.FullFileName)
+
+		oListText = oListText & "[" & oCheckmark & "] " & oItem.ToString("000.") & "    " & oFilename & vbCrLf
+	Next
+
+	Return oListText
+End Function

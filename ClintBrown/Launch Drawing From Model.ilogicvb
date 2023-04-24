@@ -1,0 +1,16 @@
+Try
+	oDWG = ThisDoc.FileName(False) & ".dwg"
+	ThisDoc.Launch(oDWG)
+Catch
+	GoTo IDW
+End Try
+
+Return
+
+IDW :
+Try
+	oDWG = ThisDoc.FileName(False) & ".idw"
+	ThisDoc.Launch(oDWG)
+Catch
+	MessageBox.Show("No Drawing Found", "@ClintBrown3D")
+End Try

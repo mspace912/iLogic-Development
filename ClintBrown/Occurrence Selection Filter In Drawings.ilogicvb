@@ -1,0 +1,76 @@
+Sub Main
+	'iLogic Code by Jhoel Forshav - originally posted at https://clintbrown.co.uk/ilogic-occurrence-selection-filter-in-drawings/
+	Dim oSelect As New SelectClass
+	Dim oOcc As ComponentOccurrence = oSelect.SelectOccurrence(ThisApplication)
+	oSelect = Nothing
+	If IsNothing(oOcc) Then Exit Sub
+	MessageBox.Show("You have picked: " & oOcc.Name, "Pick part", MessageBoxButtons.OK, _
+	MessageBoxIcon.Information)
+End Sub
+
+
+Class SelectClass
+
+	Private WithEvents oInteractEvents As InteractionEvents
+	Private WithEvents oSelectEvents As SelectEvents
+	Private bTooltipEnabled As Boolean
+	Private ThisApplication As Inventor.Application
+	Private SelectedOcc As ComponentOccurrence
+	Private stillSelecting As Boolean = True
+
+	Public Function SelectOccurrence(oApp As Inventor.Application)
+		ThisApplication = oApp
+		oInteractEvents = ThisApplication.CommandManager.CreateInteractionEvents
+		oInteractEvents.InteractionDisabled = False
+		oSelectEvents = oInteractEvents.SelectEvents
+		oSelectEvents.AddSelectionFilter(SelectionFilterEnum.kDrawingCurveSegmentFilter)
+		oSelectEvents.WindowSelectEnabled = False
+		bTooltipEnabled = ThisApplication.GeneralOptions.ShowCommandPromptTooltips
+		ThisApplication.GeneralOptions.ShowCommandPromptTooltips = True
+		oInteractEvents.StatusBarText = "Pick part occurrence."
+		oInteractEvents.Start()
+		AppActivate(ThisApplication.Caption)
+		While stillSelecting
+			ThisApplication.UserInterfaceManager.DoEvents()
+		End While
+		Return SelectedOcc
+	End Function
+
+	Private Sub oInteractEvents_OnTerminate() Handles oInteractEvents.OnTerminate
+		ThisApplication.GeneralOptions.ShowCommandPromptTooltips = bTooltipEnabled
+		oSelectEvents = Nothing
+		oInteractEvents = Nothing
+		stillSelecting = False
+	End Sub
+
+	Private Sub oSelectEvents_OnPreselect(ByRef PreSelectEntity As Object, ByRef DoHighlight As Boolean, _
+		ByRef MorePreSelectEntities As ObjectCollection, ByVal SelectionDevice As SelectionDeviceEnum, _
+		ByVal ModelPosition As Point, ByVal ViewPosition As Inventor.Point2d, _
+		ByVal View As Inventor.View) Handles oSelectEvents.OnPreselect
+		Try
+			Dim oCurves As DrawingCurvesEnumerator = DirectCast(PreSelectEntity, DrawingCurveSegment) _
+			.Parent.Parent.DrawingCurves(DirectCast(PreSelectEntity, DrawingCurveSegment) _
+			.Parent.ModelGeometry.Parent.Parent)
+			Dim oCol As ObjectCollection = ThisApplication.TransientObjects.CreateObjectCollection
+			For Each oCurve As DrawingCurve In oCurves
+				For Each oSeg As DrawingCurveSegment In oCurve.Segments
+					If oSeg IsNot PreSelectEntity Then oCol.Add(oSeg)
+				Next
+			Next
+			MorePreSelectEntities = oCol
+			DoHighlight = True
+		Catch
+			DoHighlight = False
+		End Try
+
+	End Sub
+
+	Private Sub oSelectEvents_OnSelect(ByVal JustSelectedEntities As ObjectsEnumerator, _
+		ByVal SelectionDevice As SelectionDeviceEnum, ByVal ModelPosition As Point, _
+		ByVal ViewPosition As Point2d, ByVal View As Inventor.View) Handles oSelectEvents.OnSelect
+		SelectedOcc = DirectCast(JustSelectedEntities.Item(1), DrawingCurveSegment) _
+		.Parent.ModelGeometry.Parent.Parent
+		ThisApplication.CommandManager.StopActiveCommand
+	End Sub
+
+End Class

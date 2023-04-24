@@ -1,0 +1,57 @@
+'Code by @ClintBrown3D
+'Originally posted at https://clintbrown.co.uk/mirror-part-and-drawing-with-ilogic
+On Error GoTo Messager
+i = MessageBox.Show("This rule will close ALL open documents WITHOUT saving them" & vbNewLine & vbNewLine & "Make sure you have saved everything that needs saving BEFORE Continuing" & vbNewLine & vbNewLine & "If you need to go back and save files, Click No" & vbNewLine & vbNewLine & "If you are ready to create a mirrored part, Click YES", "@ClintBrown3D", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1)
+If i = vbYes Then : GoTo ClintBrown3D : Else : GoTo ClintBrown1 : End If
+ 
+'Get file Names
+ClintBrown3D:
+	oNaam = ThisDoc.PathAndFileName(False)
+	oNaam1 = ThisDoc.PathAndFileName(True)
+
+' Check if mirrored part exists - If it does, opening existing part
+	If System.IO.File.Exists(oNaam + "_Mirror" + ".ipt") Then
+	MessageBox.Show("Mirrored Part Already Exists > Opening Existing Mirrored Part", "@ClintBrown3D")
+	ThisDoc.Launch(oNaam + "_Mirror" + ".ipt")
+	Return
+	End If
+
+'Save a copy of the file
+ThisDoc.Document.SaveAs(oNaam + "_Mirror" + ".ipt", False)
+
+'Count the Solid bodies in the part file
+oNaam3 = ThisApplication.ActiveDocument
+oSolidBodyCounter = oNaam3.ComponentDefinition.SurfaceBodies.Count
+'MsgBox(oSolidBodyCounter)
+
+'Mirror Part: 	'This piece of the code adapted from the VBA sample by Rocky Zhang of Autodesk
+'https://forums.autodesk.com/t5/inventor-customization/vba-mirror-solids-in-part-file/td-p/2980968
+	Dim oDoc As PartDocument
+	oDoc = ThisApplication.ActiveDocument
+	Dim oCol As ObjectCollection
+	oCol = ThisApplication.TransientObjects.CreateObjectCollection
+	oCol.Add (oDoc.ComponentDefinition.SurfaceBodies(oSolidBodyCounter))
+	Dim oPlane As WorkPlane
+	oPlane = oDoc.ComponentDefinition.WorkPlanes(1)
+	Dim oMirror As MirrorFeature
+	oMirror = oDoc.ComponentDefinition.Features.MirrorFeatures.Add(oCol, oPlane, True, kOptimizedCompute)
+	oMirror.Name = "@ClintBrown3D"
+
+'Save the new Mirrored Part File
+	ThisDoc.Document.Save
+	MessageBox.Show("Success - the model has been mirrored", "@ClintBrown3D")
+
+'Close Copy and Launch Original
+	ThisDoc.Launch(oNaam1)
+
+'Close all open documents
+ThisApplication.Documents.CloseAll(False) 'This ensures that the links are not changed in any open Assemblies or drawings
+'https://adndevblog.typepad.com/manufacturing/inventor/page/64/
+Return
+
+ClintBrown1 :
+	MessageBox.Show("Exititing Rule - No changes made", "@ClintBrown3D")
+Return
+
+Messager :
+	MessageBox.Show("SOMETHING HAS GONE WRONG !!!"& vbNewLine & vbNewLine & "You can only run this rule from a part file", "@ClintBrown3D")

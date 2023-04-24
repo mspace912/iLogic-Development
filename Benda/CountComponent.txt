@@ -1,0 +1,87 @@
+﻿' Component Counter
+' Created By : Jacob Yager
+' Date Created: 5/27/2020
+
+' Description:
+' This Rule is given an inventor document, definitation of the assembly, and a list of all sub-assemblies
+' and counts how many instances there are. The count is then sharded back with the main routine
+
+' Notes:
+
+' 1. 
+
+
+' Change log:
+'XXXXXX - 
+
+' ***************************************************************************************************************************************
+	
+'Collect Assembly Document and List from Main Rule
+doc = SharedVariable("doc")
+oAsmCompDef = SharedVariable("CompDef")
+MyArrayList = RuleArguments("List")
+
+' Format Document File Name 
+	Try
+		pos = InStrRev(doc.DisplayName, ".", - 1) - 1
+    	c1Name = Left(doc.DisplayName, pos)
+	Catch
+		c1Name = doc.DisplayName
+		Logger.Debug(c1Name & " document Display Name is missing file extension")
+	End Try
+
+	' If Document is a Part Begin Qty Calculations
+	If doc.DocumentType = kPartDocumentObject Then
+		Logger.Debug("Im a Part")
+		
+		cnt = 0
+		' Compare Document with All Part Occurences in the Assembly
+		Dim oOccNew As ComponentOccurrence
+		For Each oOccNew In oAsmCompDef.Occurrences.AllLeafOccurrences
+			
+			' Format Occurrence File Name 
+				Try
+					pos = InStrRev(oOccNew.Definition.Document.DisplayName, ".", - 1) - 1
+    				c2Name = Left(oOccNew.Definition.Document.DisplayName, pos)				
+				Catch
+					' Error due occurence missing extension (:##)
+       				c2Name = oOccNew.Name
+					Logger.Debug(c2Name & " Name Error")
+				End Try
+
+				' Count if File Names Match
+				If c2Name = c1Name Then
+						cnt = cnt + 1 
+						
+				End If
+		Next
+		
+	' Indexed Document must be an Assembly, Begin Qty Calculations
+	Else If doc.DocumentType = kAssemblyDocumentObject Then
+		Logger.Debug("Im an Assembly")
+
+		' Covert Assembly to Master LOD - Needed to Access Document Properties
+		Break
+		doc.ComponentDefinition.RepresentationsManager.LevelOfDetailRepresentations("Master").activate
+		
+		cnt = 0
+		' Compare Indexed Document with All Other Assemblys
+		Dim i As Long
+		For i = 0 To MyArrayList.Count - 1
+		
+			c3Name = MyArrayList.Item(i)
+			
+			If c3Name = c1Name Then
+				cnt = cnt + 1 
+			End If
+		Next i
+	Else
+	Logger.Debug(c1Name &"Not a Part or Assembly Document")
+	End If
+
+' Share Count with Main Code
+'Logger.Debug(cnt)	
+SharedVariable("cnt") = cnt
+break
+
+		Logger.Debug("CNT = " & cnt)

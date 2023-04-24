@@ -1,0 +1,346 @@
+﻿
+Imports System.Windows.Forms ''**iLogic system**
+
+''**iLogic system code start**
+Imports Inventor
+''**iLogic system code end**
+
+' Assembly IDW Generator
+' Created By : Gabriel Valencia
+' Created On: 10/08/18
+
+' Description:
+' This rule generates DXF files from all sheet metal parts located in an assembly. The rule will prompt you
+' to check the A-Side of each part before saving the DXF. The files are placed within an 
+' "AssemblyName DXF Files" folder on creation.
+
+' Notes:
+' 1. Files will be overwritten everytime the rule is run. If the assembly is run while at a Level of Detail,
+'    the name of the Level of Detail will show up in the name of the folder.
+' 2. Any sheet metal parts associated with the assembly will be closed when the rule is run.
+' 3. Destination folder is opened on completion.
+' 4. All files must have been saved prior to running the rule.
+' 5. File extensions must be visible in Windows. Check here to show them: 
+'    Control Panel>File Explorer Options>View>Uncheck "Hide extensions for known filetypes"
+
+' Change log:
+' 181008: Released
+' 181106: oFile name uses "IO.Path.GetFileName(iptPathName)" instead of "oRefDoc.DisplayName"
+' 181113: Major Overhaul
+' 			- Selectable list added (!!!)
+'			- Does a better job of showing an error if opened outside of an assembly
+' 			- Counts DXFs created
+' 9/19/22 Removed prompt for "Side A"  M.Space - Hagerman & Company
+
+' Known issues/Idea Board:
+' 1. Need to correct the output folder to the formed parts location.
+' 2. File names are incorrect when file extensions are hidden
+' 4. Return to queue after editing file
+' 5. If opened in part file, make DXF for just that part
+'-----------------------------------------------------------------------------------------------------------
+
+
+Public Sub Main() Implements IRuleInterface.Main ''**iLogic system**
+		Dim oRuleTitle As String = "IDW Generator"
+
+		SharedVariable("BCSJOB") = Parameter("BCSJOB")
+		SharedVariable("CUSTOMER") = Parameter("CUSTOMER")
+		SharedVariable("BCSITEM") = Parameter("BCSITEM")
+
+
+		Dim oAsmDoc As Inventor.AssemblyDocument
+
+		Try
+			oAsmDoc = ThisApplication.ActiveDocument
+		Catch
+			MessageBox.Show("Please activate an Assembly document first.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
+			Return
+		End Try
+
+		oAsmName = ThisDoc.FileName(False)
+
+		'FSJ 28FEB2023 Generate assembly quantities
+		Dim AssyQtys As Dictionary(Of String, Integer) = BuildComponentQuantities(oAsmDoc.ComponentDefinition)
+		SharedVariable("AssemblyQuantities") = AssyQtys
+		Dim Time As DateTime = DateTime.Now
+		Dim Format As String = "yyyyMdHHmm"
+		Dim TmpPath As String = System.Environment.GetEnvironmentVariable("TEMP")
+		Dim OutPath As String = TmpPath & "\" & ThisDoc.FileName(False) & "_" & Time.ToString(Format) & ".csv"
+
+		'FOR DEBUG ONLY - WRITE QTYS TO FILE
+		Using BOMTestOutput As System.IO.StreamWriter = New System.IO.StreamWriter(OutPath)
+			BOMTestOutput.AutoFlush = True
+			
+			For Each PN As KeyValuePair(Of String, Integer) In AssyQtys
+				BOMTestOutput.WriteLine(PN.Key.ToString() + "," + PN.Value.ToString())	
+			Next
+			
+			BOMTestOutput.Flush()
+			BOMTestOutput.Close()
+		End Using
+
+
+		Dim oSMDocs As New List(Of Inventor.PartDocument)
+		Dim oExportDocs As New List(Of Inventor.PartDocument)
+
+		For Each oRefDoc As Inventor.Document In oAsmDoc.AllReferencedDocuments
+
+			' Determines if the document is a sheet metal part
+			If oRefDoc.SubType = "{9C464203-9BAE-11D3-8BAD-0060B0CE6BB4}" Then
+				IsSheetMetal = True
+			Else
+				IsSheetMetal = False
+			End If
+
+			If IsSheetMetal = True Then
+				oSMDocs.Add(oRefDoc)
+			End If
+		Next oRefDoc
+
+		oExportDocs.AddRange(oSMDocs)
+
+		' Ask user to specify which documents to export
+		Dim oInput As String
+		Dim oIndex As Integer
+		Dim oPartDoc As Inventor.PartDocument
+
+		Do
+			' Populate list of all documents, with "checks" and numbering
+			oDocList = CreateDocList(oSMDocs, oExportDocs)
+
+			' Display prompt with list and valid inputs
+			oInput = InputBox( _
+			"Below is a list of all Sheet Metal parts in this assembly. Items with an ""X"" will be exported as a IDW." & vbCrLf & _
+			vbCrLf & _
+			"Enter a number below to toggle items for export. Ignore leading zeros. You can also enter a range like ""3-15"" (without quotes)." & vbCrLf & _
+			vbCrLf & _
+			"Enter ""a"" to toggle all." & vbCrLf & _
+			vbCrLf & _
+			oDocList & _
+			vbCrLf & _
+			"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" & vbCrLf & _
+			"To run export, hit Enter or click OK." & vbCrLf & _
+			vbCrLf & _
+			"To cancel, hit Escape or click Cancel." _
+			, oRuleTitle, "INPUT")
+
+			' Rules for User Input
+			If oInput = "" Then
+				Exit Do
+			Else If oInput = "INPUT" Then
+			Exit Do
+			Else
+				DashPos = InStr(oInput, "-")
+
+				If IsNumeric(oInput) Or DashPos > 0 Or oInput.ToLower = "a" Then
+					If IsNumeric(oInput) Then
+						oStartNum = CDblAny(oInput)
+						oEndNum = oStartNum
+					Else If DashPos > 0 Then
+					BeforeDash = Left(oInput, DashPos - 1)
+					AfterDash = Mid(oInput, DashPos + 1)
+
+					Try
+						oStartNum = CDblAny(BeforeDash)
+						oEndNum = CDblAny(AfterDash)
+					Catch
+						oStartNum = -1
+						oEndNum = -1
+					End Try
+				Else If oInput.ToLower = "a" Then
+				oStartNum = 1
+				oEndNum = oSMDocs.Count
+			End If
+
+			Try
+				For i = oStartNum To oEndNum
+					oIndex = i - 1
+
+					oPartDoc = oSMDocs.Item(oIndex)
+
+					If oExportDocs.Contains(oPartDoc) Then
+						oExportDocs.Remove(oPartDoc)
+					Else
+						oExportDocs.Add(oPartDoc)
+					End If
+				Next
+			Catch
+				oAnswer = MessageBox.Show("Please enter a valid number or range.", oRuleTitle, MessageBoxButtons.OKCancel, MessageBoxIcon.Error)
+
+				If oAnswer = vbCancel Then
+					oInput = ""
+					Exit Do
+				End If
+				oValidRange = False
+			End Try
+			Else
+				MessageBox.Show("Please enter a valid input.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
+			End If
+			End If
+		Loop Until oInput = "INPUT" Or oInput = ""
+
+		If oInput = "" Then
+			MessageBox.Show(oRuleTitle & " canceled.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+			Return
+		End If
+
+		' Begin IDW export--------------------------------------------------------------------------------------
+
+		oPath = ThisDoc.Path
+		oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+		oContext = ThisApplication.TransientObjects.CreateTranslationContext
+		oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+		oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+		Dim oExportCount As Integer
+		oExportCount = 0
+
+		' Folder Location
+		oFolder = oPath & "\" & oAsmName & " IDW Files"
+		' Create IDW Folder
+		If Not System.IO.Directory.Exists(oFolder) Then
+			System.IO.Directory.CreateDirectory(oFolder)
+		End If
+
+		' Dev Mode
+		Dim bEMD As Boolean = False
+
+		For Each oPartDoc In oExportDocs
+
+			iptPathName = Left(oPartDoc.FullDocumentName, Len(oPartDoc.FullDocumentName) -3) & "ipt"
+			If (System.IO.File.Exists(iptPathName)) Then
+				Dim oDrawDoc As PartDocument
+				
+
+				oDrawDoc = ThisApplication.Documents.Open(iptPathName, Not bEMD)
+				Break
+				Try
+					iLogicVb.RunExternalRule("Flat_Extents")
+					Logger.Debug("Flat Extents Updated")
+				Catch ex As Exception
+					Logger.Debug("Failed to run Flat_Extents rule")
+					MessageBox.Show("The Flat Extents Rule has failed", "Flat Extents Error", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+				End Try
+				Break
+
+				Dim oDrawDocDef As PartComponentDefinition = oDrawDoc.ComponentDefinition
+				SharedVariable("SMFile") = oDrawDoc
+				SharedVariable("PartFile") = System.IO.Path.GetFileNameWithoutExtension(oPartDoc.FullFileName)
+				sharedvariable("PartReferenceX")=oDrawDocDef.RangeBox.MaxPoint.X - oDrawDocDef.RangeBox.MinPoint.X
+				sharedvariable("PartReferenceY") = oDrawDocDef.RangeBox.MaxPoint.Y - oDrawDocDef.RangeBox.MinPoint.Y
+				sharedvariable("PartReferenceZ") = oDrawDocDef.RangeBox.MaxPoint.Z - oDrawDocDef.RangeBox.MinPoint.Z
+				Logger.Debug("X value = " & sharedvariable("PartReferenceX"))
+				Logger.Debug("Y value = " & sharedvariable("PartReferenceY"))
+				Logger.Debug("Z value = " & sharedvariable("PartReferenceZ"))
+				SharedVariable("MainAssyPath") = ThisDoc.Path
+
+				Try
+
+					Dim DrawingFileName As String = System.IO.Path.GetFileNameWithoutExtension(oPartDoc.FullFileName) & “.idw”
+
+					Dim DrawingFullPath As String = System.IO.Path.Combine(ThisDoc.Path, “SheetMetalDrawings”, DrawingFileName)
+
+					IDWPath = ThisDoc.Path & "\SheetMetalDrawings"
+
+					SharedVariable("IDWFILE") = DrawingFullPath
+					Break
+					iLogicVb.RunExternalRule("1 - Drawing Creation Test 2")
+				Catch
+				End Try
+				oDrawDoc.Close
+				oExportCount = oExportCount + 1
+				
+			Else
+			End If
+		Next
+		'-------------------------------------------------------------------------------------------------------
+
+		' Display final message
+		MessageBox.Show("Finished exporting (" & oExportCount & ") sheet metal parts into IDWs!", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+		Try
+			System.Diagnostics.Process.Start(IDWPath)
+		Catch
+			MessageBox.Show("Could Not Open Page", "iLogic")
+		End Try
+
+	End Sub
+
+	Function CreateDocList(oSMDocs As List(Of Inventor.PartDocument), oExportDocs As List(Of Inventor.PartDocument)) As String
+		Dim oListText As String = ""
+		Dim oItem As Integer = 0
+
+		For Each oPartDoc As Inventor.PartDocument In oSMDocs
+			oItem = oItem + 1
+
+			If oExportDocs.Contains(oPartDoc) Then
+				oCheckmark = "X"
+			Else
+				oCheckmark = "  "
+			End If
+
+			oFilename = System.IO.Path.GetFileNameWithoutExtension(oPartDoc.FullFileName)
+
+			oListText = oListText & "[" & oCheckmark & "] " & oItem.ToString("000.") & "    " & oFilename & vbCrLf
+		Next
+
+		Return oListText
+	End Function
+
+
+'This function will populated a SharedVariable with a dictionary of part file names and quantities so that other rules
+'Can pull quantity information. Doing this once will improve performance
+Function BuildComponentQuantities(AssyCompDef As Inventor.AssemblyComponentDefinition) As Dictionary(Of String, Integer)
+
+	Dim AssyBom As Inventor.BOM = AssyCompDef.BOM
+	'Make sure the structured view is enabled and showing all levels.
+	AssyBom.StructuredViewEnabled = True
+	AssyBom.StructuredViewFirstLevelOnly = False
+	
+	Dim AssyBomView As Inventor.BOMView = AssyBom.BOMViews.Item("Structured")
+	
+	Dim AllQtys As Dictionary(Of String, Integer) = GenerateBOMDictionary(AssyBomView.BOMRows, 1)
+	
+	Return AllQtys
+
+End Function
+
+Function GenerateBOMDictionary(BOMRows As Inventor.BOMRowsEnumerator, ParentQty As Integer) As Dictionary(Of String, Integer)
+	Dim ThisSubQtys As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)
+	
+	For Each BMRow As Inventor.BOMRow In BOMRows
+    	'Get the Part Number first. If this is a virtual component it will fail, but we're not interested in those anyway
+		Dim ThisPN As String
+		Try
+			ThisPN = BMRow.ComponentDefinitions.Item(1).Document.PropertySets.Item("Design Tracking Properties").Item("Part Number").Value
+		Catch
+			Continue For
+		End Try
+		
+		Dim CurrentQty As Integer = ParentQty * BMRow.ItemQuantity
+		Try
+			ThisSubQtys(ThisPN) = ThisSubQtys(ThisPN) + CurrentQty
+		Catch ex As System.Exception
+			'Add the part number since it doesn't exist
+			ThisSubQtys.Add(ThisPN, CurrentQty)
+		End Try
+		
+		'If this row has children, call this sub recursively
+		If BMRow.ChildRows IsNot Nothing Then
+			Dim ChildParts As Dictionary(Of String, Integer) = GenerateBOMDictionary(BMRow.ChildRows, CurrentQty)
+			'Add this child dictionary to the current one
+			For Each DictEntry As KeyValuePair(Of String, Integer) In ChildParts
+				If ThisSubQtys.ContainsKey(DictEntry.Key) Then
+					ThisSubQtys(DictEntry.Key) = ThisSubQtys(DictEntry.Key) + DictEntry.Value
+				Else
+					ThisSubQtys.Add(DictEntry.Key, DictEntry.Value)
+				End If
+			Next
+		End If
+		
+	Next
+	
+	Return ThisSubQtys
+End Function
+
+

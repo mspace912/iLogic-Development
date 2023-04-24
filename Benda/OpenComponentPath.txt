@@ -1,0 +1,22 @@
+﻿'Selected component must be in an assembly file. Folder path is copied to clipboard.
+
+Dim oEnt = ThisApplication.CommandManager.Pick(
+	SelectionFilterEnum.kAssemblyOccurrenceFilter,
+	"Select a component:")
+
+	If (Not oEnt Is Nothing) And _
+		(TypeOf oEnt Is ComponentOccurrence) Then
+		Dim oDoc = oEnt.Definition.Document
+
+		oPath = System.IO.Path.GetDirectoryName(oDoc.FullFileName)
+		Clipboard.SetText(oPath)
+
+		'open folder
+		Try
+			Process.Start(oPath)
+		Catch
+			MessageBox.Show("Could not open folder.", _
+			"iLogic", MessageBoxButtons.OK, MessageBoxIcon.Information)
+		End Try
+	End If
+

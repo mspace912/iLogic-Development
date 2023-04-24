@@ -1,0 +1,76 @@
+﻿' Assembly Name Collector
+' Created By : Jacob Yager
+' Date Created: 5/14/2020
+
+
+' Description:
+' This rule collects the names of all assembilies in a assembly document, including the active assembly document
+
+' Notes:
+
+' 1. Arg1 (Assembly Document) and Arg2 (ArrayList) need to be supplied from Main Rule
+
+' Change log:
+'200526 - c3Name USES DOCUMENT NAME NOT OCCURENCE NAME
+' *****************************************************************************************
+
+Sub Main
+
+'Collect Assembly Document and List from Main Rule
+oAsmDoc = RuleArguments("Doc")
+MyArrayList = RuleArguments("List")
+
+' Remove File Extension from Document
+Try
+pos = InStrRev(oAsmDoc.DisplayName, ".", -1) -1
+c3Name = Left(oAsmDoc.DisplayName, pos)
+Catch
+	c3Name = oAsmDoc.DisplayName
+Logger.Debug(c3Name & " document Display Name is missing file extension in Assembly Collector")
+End Try
+	
+'Add Current Assembly to List
+MyArrayList.Add(c3Name)
+
+'Collect All Sub-Assemblies in Document
+Call TraverseAssembly(oAsmDoc.ComponentDefinition.Occurrences, MyArrayList)
+
+End Sub
+
+Private Sub TraverseAssembly(Occurrences As ComponentOccurrences, MyArrayList As ArrayList)
+    
+	' Iterate through all of the occurrence in this collection.
+	Dim oOcc As ComponentOccurrence
+    For Each oOcc In Occurrences
+
+		' If Occurence is an Assembly Add to List and Re-Run Sub-Routine
+        If oOcc.DefinitionDocumentType = kAssemblyDocumentObject Then
+			' Remove File Extension from Document
+			Try
+				pos = InStrRev(oOcc.Definition.Document.DisplayName, ".", - 1) - 1
+    			c3Name = Left(oOcc.Definition.Document.DisplayName, pos)	
+			Catch
+			c3Name = oOcc.Definition.Document.DisplayName
+			Logger.Debug(c3Name & " document Display Name is missing occurence in Assembly Collector")
+			End Try
+			
+			'Add Current Assembly to List
+			MyArrayList.Add(c3Name)
+			Logger.Debug(c3Name & " added to Assembly List")
+			
+			'Check if File is Weldment and Remove from List (Weldment files double count)
+			If TypeOf oOcc.Definition Is WeldsComponentDefinition Then
+				MyArrayList.RemoveAt(MyArrayList.Count - 1)
+		
+			End If
+			
+			'Collect All Sub-Assemblies in Document
+			Try
+	           		Call TraverseAssembly(oOcc.SubOccurrences, MyArrayList)
+			Catch
+				Logger.Debug("Could Not Gather Assemblies for " & c3Name)
+			End Try
+			Logger.Debug("Done")
+        End If
+    Next
+End Sub

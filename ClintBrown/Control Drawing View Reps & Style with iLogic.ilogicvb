@@ -1,0 +1,64 @@
+'iLogic code by @ClintBrown3D, originally posted at https://clintbrown.co.uk/control-drawing-view-reps-style-with-ilogic
+On Error GoTo ClintBrown3D
+'------------------------------------------VIEW SELECTION + SETUP ----------------------------------------
+' Iterate through drawing views & add to Array
+Dim oView As DrawingView = Nothing
+Dim oDrawingViews As DrawingViews = ThisApplication.ActiveDocument.Sheets.Item(1).DrawingViews
+Dim NewArrayList As New ArrayList
+For i = 1 To oDrawingViews.Count
+oView = oDrawingViews.Item(i)
+bView = oView.Name
+NewArrayList.Add(bView)
+Next
+ClintBrown3D = InputListBox("Choose a View", NewArrayList, d0, Title := "@ClintBrown3D", ListName := "Select a view to edit from the list below")
+If ClintBrown3D = "" Then : MessageBox.Show("No Selection made, Exiting", "@ClintBrown3D") : Return : End If
+
+'Create Array & Input list box to choose view types
+Dim MyArrayList As New ArrayList
+MyArrayList.Add("Shaded")
+MyArrayList.Add("Hidden Line")
+MyArrayList.Add("Hidden Line Removed")
+MyArrayList.Add("Shaded Hidden Line")
+MyArrayList.Add("From Base Drawing View")
+ViewStyleType1 = InputListBox("Sets the View Style - Default is Hidden Line Removed. You are Editing: " & ClintBrown3D , MyArrayList, d0, Title := "@ClintBrown3D:  " & ClintBrown3D, ListName := "Select a ''View Style'' from the list below")
+
+If ViewStyleType1 = "Shaded" Then : ViewStyleType = 32259 : End If
+If ViewStyleType1 = "Hidden Line" Then : ViewStyleType = 32257 : End If
+If ViewStyleType1 = "Hidden Line Removed" Then : ViewStyleType = 32258 : End If
+If ViewStyleType1 = "Shaded Hidden Line" Then : ViewStyleType = 32261 : End If
+If ViewStyleType1 = "From Base Drawing View" Then : ViewStyleType = 32260 : End If
+If ViewStyleType1 = "" Then : ViewStyleType = 32258 : MessageBox.Show("No selection made - ''View Style'' set to 'Hidden Line Removed'", "@ClintBrown3D") : End If
+'---------------------------------------------------------------- ----------------------------------------
+'------------------------------------------VIEW REP CONTROLS + Curtis ------------------------------------
+'This section of Code adapted to work with drawings, based on code by Curtis Waguespack (original works in .iam files)
+' on this forum >> https://forums.autodesk.com/t5/inventor-forum/ilogic-view-representations-toggling/td-p/6589121
+Dim oAsmCompDef As AssemblyComponentDefinition
+oAsmCompDef = ThisDrawing.ModelDocument.ComponentDefinition
+Dim oViewReps As DesignViewRepresentations
+oViewReps = oAsmCompDef.RepresentationsManager.DesignViewRepresentations
+Dim oViewRep As DesignViewRepresentation
+Dim NameList As New ArrayList()
+For Each oViewRep In oViewReps
+	NameList.Add(oViewRep.Name)
+Next
+'---------------------------------------------------------------------------------------------------------
+NameList.Remove("Master") 'You can't select Master, so it is removed from the array
+If NameList.Count > 0 Then'This is to deal with drawings of parts
+ViewReptoActivate = InputListBox("Sets the View Rep - No selection sets view to ''Default'' View Rep. You are Editing: " & ClintBrown3D , NameList, d0, Title := "@ClintBrown3D:  " & ClintBrown3D, ListName := "Select a View Rep from the list below")
+End If
+If NameList.Count = 0 Then : GoTo ApplyChanges : End If
+	
+'Give user feedback if nothing is selected (this is ignored in part files)
+If ViewReptoActivate = "" Then
+ViewReptoActivate = "Default"
+MessageBox.Show("No Selection made, view rep set to default", "@ClintBrown3D")
+End If
+'------------------------------------------APPLY CHANGES TO DRAWING---------------------------------------
+ApplyChanges:
+ActiveSheet.View(ClintBrown3D).View.ViewStyle = ViewStyleType
+ActiveSheet.View(ClintBrown3D).View.SetDesignViewRepresentation(ViewReptoActivate, True)
+Return
+'---------------------------------------------------------------------------------------------------------
+ClintBrown3D :
+Resume Next
+MessageBox.Show("OH SNAP! Something Has Gone Terribly WRONG :(", "@ClintBrown3D", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)

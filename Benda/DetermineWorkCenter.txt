@@ -1,0 +1,74 @@
+﻿' Determine Work Center
+' Created By : Jacob Yager
+' Date Created: 6/22/2020
+
+
+' Description:
+' This rule determines the work center of a document and shares it with the Main File
+
+' Notes:
+
+' 1. Work Center is read from the Category iProperty of the file 
+' 2. Work Centers are:
+'			 1) ASSEMBLY or WELDMENT
+'			 2) WATERJET
+'			 3) CUT
+'			 4) MACHINED
+'			 5) PURCHASED
+'			 6) UNDETERMINED
+' 3. Syntax matters, ensure the iProperty matches the Case statement for accurate results
+
+' Change log:
+'XXXXXX -
+' ***************************************************************************************************************************************
+	
+'Collect Assembly Document and List from Main Rule
+doc = SharedVariable("doc")
+Logger.Debug("doc Shared Successfully")
+
+Dim WorkCenter As String
+Dim WC As Integer
+Try
+Logger.Debug(doc.DisplayName)
+		WorkCenter = iProperties.Value(doc.DisplayName, "Summary", "Category")
+Logger.Debug("Work Center Determined")
+Catch
+'Logger.Debug(doc.DisplayName)
+		WorkCenter = "Error"
+Logger.Debug("File Name Issue")
+	
+End Try
+
+'[ Determine Work Center
+		Select Case WorkCenter
+		Case "ASSEMBLY", "WELDMENT"
+			Logger.Debug("Work Center is a Weldment/Assembly")
+			WC = 1
+		
+		Case "WATERJET"
+			Logger.Debug("Work Center is Water Jet")
+			WC = 2	
+		
+		Case "CUT"
+			Logger.Debug("Work Center is Saw")
+			WC = 3
+		
+		Case "MACHINED"
+			Logger.Debug("Work Center is Machine Shop")
+			WC = 4
+
+		Case "PURCHASED"
+			Logger.Debug("Work Center is Purchased")
+			WC = 5	
+
+		Case Else
+			Logger.Debug("Work Center is not Established")
+			WC = 6
+
+		End Select
+	']
+		Logger.Debug("Work Center Determined")
+
+' Share Count with Main Code
+'Logger.Debug(WC)	
+SharedVariable("WC") = WC

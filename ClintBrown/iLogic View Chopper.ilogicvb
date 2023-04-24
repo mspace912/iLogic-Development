@@ -1,0 +1,53 @@
+'This iLogic code by @ClintBrown3D, originally posted at https://clintbrown.co.uk/ilogic-view-chopper
+On Error GoTo ClintsErrorTrapper :
+
+Dim ChopType As New ArrayList : ChopType.Add("Horizontal (||)") : ChopType.Add("Vertical (=)")
+ChopSelect = InputListBox("Pick a Type", ChopType, ChopSelect, Title := "@ClintBrown3D", ListName := "Break Types")
+
+Dim SizeOfChop As New ArrayList : SizeOfChop.Add("Small") : SizeOfChop.Add("Medium") : SizeOfChop.Add("Large")
+ChopSize = InputListBox("Pick a Size", SizeOfChop, d0, Title := "@ClintBrown3D", ListName := "Sizes")
+If ChopSize = "Small" Then : ZZZ = 1 : End If : If ChopSize = "Medium" Then : ZZZ = 3 : End If : If ChopSize = "Large" Then : ZZZ = 8 : End If
+If ChopSelect = "Horizontal (||)" Then : GoTo oHorizontal : End If : If ChopSelect = "Vertical (=)" Then : GoTo oVertical : End If
+
+'-------------------------------------------------------------------------------------------------------------------
+Dim oDrawDoc As DrawingDocument ' Set a reference to the drawing document. This assumes a drawing document is active.
+oDrawDoc = ThisApplication.ActiveDocument
+
+Dim oSheet As Sheet 'Set a reference to the active sheet.
+Dim oDrawingView As DrawingView ' Set a reference to the selected drawing. This assumes that the selected view is not a draft view.
+Dim oCenter As Point2d ' Set a reference to the center of the base view.
+Dim oStartPoint As Point2d' Define the start point of the break
+Dim oEndPoint As Point2d' Define the end point of the break
+Dim oBreakOperation As BreakOperation ' Define the end point of the break
+
+'---------------------------------------------------------------------------------------------
+oHorizontal :
+oViewSelect = ThisApplication.CommandManager.Pick(SelectionFilterEnum.kDrawingViewFilter, "Select a view to chop  : @ClintBrown3D")
+oDrawDoc = ThisApplication.ActiveDocument
+oSheet = oDrawDoc.ActiveSheet
+oDrawingView = oViewSelect
+oCenter = oDrawingView.Center
+
+' Define the start point of the break
+oStartPoint = ThisApplication.TransientGeometry.CreatePoint2d(oCenter.X - ZZZ, oCenter.Y)
+
+'Dim oEndPoint As Point2d
+oEndPoint = ThisApplication.TransientGeometry.CreatePoint2d(oCenter.X + ZZZ, oCenter.Y)
+
+'Dim oBreakOperation As BreakOperation
+oBreakOperation = oDrawingView.BreakOperations.Add(kHorizontalBreakOrientation, oStartPoint, oEndPoint, kStructuralBreakStyle, 5) 'kRectangularBreakStyle
+Return
+'---------------------------------------------------------------------------------------------
+oVertical :
+oViewSelect = ThisApplication.CommandManager.Pick(SelectionFilterEnum.kDrawingViewFilter, "Select a view to chop  : @ClintBrown3D")
+oDrawDoc = ThisApplication.ActiveDocument
+oSheet = oDrawDoc.ActiveSheet
+oDrawingView = oViewSelect
+oCenter = oDrawingView.Center
+oStartPoint = ThisApplication.TransientGeometry.CreatePoint2d(oCenter.X, oCenter.Y - ZZZ)
+oEndPoint = ThisApplication.TransientGeometry.CreatePoint2d(oCenter.X, oCenter.Y + ZZZ)
+oBreakOperation = oDrawingView.BreakOperations.Add(kVerticalBreakOrientation, oStartPoint, oEndPoint, kStructuralBreakStyle, 5) 'kRectangularBreakStyle
+Return
+'---------------------------------------------------------------------------------------------
+ClintsErrorTrapper :
+MessageBox.Show("Oops - Something went wrong!" & vbNewLine & vbNewLine & "Make sure you are in a drawing" & vbNewLine & "You cannot use the same chop type twice", "@UNOFFICIAL INVENTOR")

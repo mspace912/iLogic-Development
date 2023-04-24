@@ -1,0 +1,516 @@
+﻿Sub Main()
+
+Dim oDrawingDoc As Inventor.DrawingDocument = ThisApplication.ActiveEditDocument
+Dim oSSDef As SketchedSymbolDefinition = oDrawingDoc.SketchedSymbolDefinitions.Item("GRAIN 3-LINE")
+Dim oTG As TransientGeometry = ThisApplication.TransientGeometry
+Dim oSS As SketchedSymbol
+
+'Some values to set distances for the symbols
+Dim oX As Double, oY As Double, oTopMargin As Double
+For Each DwgView As Inventor.DrawingView In oDrawingDoc.Sheets(1).DrawingViews
+	If DwgView.IsFlatPatternView Then
+		oX = DwgView.Position.X
+		oY = DwgView.Position.Y
+		oSS = oDrawingDoc.ActiveSheet.SketchedSymbols.Add(oSSDef, oTG.CreatePoint2d(oX, oY))
+
+		Dim DimResult As Boolean = OrdinateDimFlatPatternView(DwgView)
+		'Logger.Debug("Dimension Result: " & DimResult.ToString())
+		Exit For
+	End If
+
+
+Next
+
+
+End Sub
+
+
+Function OrdinateDimFlatPatternView(FlatPatternView As Inventor.DrawingView, Optional DimTextOffset As Double = 1.0) As Boolean
+	'This function applies ordinate dimension sets to a flat pattern view
+	'It dimensions bend center lines and the extents of the flat pattern
+	'It chooses as the ordinate dimension origin the upper left corner of the view
+
+	Dim TG As Inventor.TransientGeometry = ThisApplication.TransientGeometry
+
+	'Reference the sheet this drawing view is on
+	Dim ThisSheet As Inventor.Sheet = FlatPatternView.Parent
+
+	'iterate through edges to find the upper left most point of the view
+	'Keep track of the top and left most edges. 
+	Dim TopEdge As Inventor.DrawingCurve = Nothing
+	Dim LeftEdge As Inventor.DrawingCurve = Nothing
+
+	'[Find top and left edges
+	Dim XAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(1, 0)
+	Dim YAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(0, 1)
+	For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+		'Logger.Debug("Curve type: " & Curve.CurveType.ToString())
+		If Curve.CurveType = Inventor.CurveTypeEnum.kLineCurve Or Curve.CurveType = Inventor.CurveTypeEnum.kLineSegmentCurve Then
+
+			'Get vector of the curve to check horizontal or vertical
+			Dim CurveVector As Inventor.Vector2d = Curve.StartPoint.VectorTo(Curve.EndPoint)
+			If CurveVector.IsParallelTo(XAxis) Then
+				If TopEdge Is Nothing Then
+					TopEdge = Curve
+					Continue For
+				Else
+					If GetSegmentYMax(Curve) > GetSegmentYMax(TopEdge) Then
+						TopEdge = Curve
+					End If
+				End If
+			ElseIf CurveVector.IsParallelTo(YAxis) Then
+				If LeftEdge Is Nothing Then
+					LeftEdge = Curve
+					Continue For
+				Else
+					If GetSegmentXMin(Curve) < GetSegmentXMin(LeftEdge) Then
+						LeftEdge = Curve
+					End If
+				End If
+			Else
+			End If
+		End If
+
+	Next
+	']
+
+	'[Place origin indicator if necesary
+	Dim FlatPatternXMin As Double = GetSegmentXMin(LeftEdge)
+	Dim FlatPatternYMax As Double = GetSegmentYMax(TopEdge)
+	Dim FlatPatternOrigin = ThisApplication.TransientGeometry.CreatePoint2d(FlatPatternXMin, FlatPatternYMax)
+	Dim FPOInView = FlatPatternView.SheetToDrawingViewSpace(FlatPatternOrigin)
+	Logger.Debug("Flat pattern sheet origin: " & FlatPatternXMin & "," & FlatPatternYMax)
+	'See if any of the individual edges has a point that corresponds with the upper left corner
+
+	'We need to create a sketch to put some geometry there first, otherwise the datum can't exist if there's no edge end point there
+	Dim DatumLine As Inventor.SketchLine = DrawDatumGeometry(FlatPatternView)
+
+	Dim SingleIntent As DrawingCurve = Nothing
+	Dim OriginIntent As Inventor.GeometryIntent = Nothing
+	For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+		If Curve.CurveType = Inventor.CurveTypeEnum.kLineSegmentCurve Then
+			If DoubleIsEqual(GetSegmentXMin(Curve), FlatPatternXMin) And DoubleIsEqual(GetSegmentYMax(Curve), FlatPatternYMax) Then
+				SingleIntent = Curve
+				'Logger.Debug("Found a single intent. Start Point " & Curve.StartPoint.X & "," & Curve.StartPoint.Y & " and end point" & Curve.EndPoint.X & "," & Curve.EndPoint.Y)
+				Exit For
+			End If
+		End If
+	Next
+
+	Break
+
+	If SingleIntent Is Nothing Then
+		'We didn't find a single intent. Create a geometry intent from the top edge, passing as an Intent the left edge
+		Dim IntersectionIntent As GeometryIntent = ThisSheet.CreateGeometryIntent(TopEdge, LeftEdge)
+		'OriginIntent = ThisSheet.CreateGeometryIntent(TopEdge, LeftEdge.StartPoint)
+		OriginIntent = ThisSheet.CreateGeometryIntent(TopEdge, LeftEdge)
+		'OriginIntent = ThisSheet.CreateGeometryIntent(FPOInView)
+	Else
+		If DoubleIsEqual(SingleIntent.EndPoint.X, FlatPatternXMin) Then
+			OriginIntent = ThisSheet.CreateGeometryIntent(SingleIntent, SingleIntent.EndPoint)
+		Else
+			OriginIntent = ThisSheet.CreateGeometryIntent(SingleIntent, SingleIntent.StartPoint)
+		End If
+
+	End If
+
+
+	Try
+		If Not FlatPatternView.HasOriginIndicator Then
+			FlatPatternView.CreateOriginIndicator(OriginIntent)
+		End If
+	Catch ex As Exception
+		Logger.Debug("Failed to create geometry intent. PointOnSheet: " & OriginIntent.PointOnSheet.X & "," & OriginIntent.PointOnSheet.Y & System.Environment.NewLine() & "Exception message: " & ex.Message)
+	End Try
+
+	']
+
+
+	'[Put dimensions on the origin
+
+
+
+
+	'Set positions for dim text
+	Dim XPos As Double = FlatPatternXMin - DimTextOffset
+	Dim YPos As Double = FlatPatternYMax + DimTextOffset
+
+	'Put dimensions on the origin
+	Dim HZTextOrigin As Inventor.Point2d = TG.CreatePoint2d(FlatPatternXMin, YPos)
+	Dim HorizZeroDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(OriginIntent, HZTextOrigin, Inventor.DimensionTypeEnum.kVerticalDimensionType)
+
+	Dim VTTextOrigin As Inventor.Point2d = TG.CreatePoint2d(XPos, FlatPatternYMax)
+	Dim VertZeroDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(OriginIntent, VTTextOrigin, Inventor.DimensionTypeEnum.kHorizontalDimensionType)
+	']
+
+	'Place dimensions on the extents
+	'Find the bottom and right edges
+
+	Dim RightEdge As Inventor.DrawingCurve
+	Dim BottomEdge As Inventor.DrawingCurve
+	Dim XMax As Double = 0
+	Dim XMin As Double = 0
+	Dim YMax As Double = 0
+	Dim YMin As Double = 0
+
+
+	For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+		If Curve.CurveType = Inventor.CurveTypeEnum.kLineCurve Or Curve.CurveType = Inventor.CurveTypeEnum.kLineSegmentCurve Then
+			'Get vector of the curve to check horizontal or vertical
+			Dim CurveVector As Inventor.Vector2d = Curve.StartPoint.VectorTo(Curve.EndPoint)
+			If CurveVector.IsParallelTo(XAxis) Then
+				If BottomEdge Is Nothing Then
+					BottomEdge = Curve
+					Continue For
+				Else
+					If GetSegmentYMax(Curve) < GetSegmentYMax(BottomEdge) Then
+						BottomEdge = Curve
+					End If
+				End If
+			ElseIf CurveVector.IsParallelTo(YAxis) Then
+				If RightEdge Is Nothing Then
+					RightEdge = Curve
+					Continue For
+				Else
+					If GetSegmentXMin(Curve) > GetSegmentXMin(RightEdge) Then
+						RightEdge = Curve
+					End If
+				End If
+			Else
+			End If
+		
+			'CHeck if this curve sets a new boundary for linear geometry
+			If GetSegmentXMax(Curve) > XMax Then
+				XMax = GetSegmentXMax(Curve)
+			End If
+			If GetSegmentXMin(Curve) < XMin Then
+				XMin = GetSegmentXMin(Curve)
+			End If
+			If GetSegmentYMax(Curve) > YMax Then
+				YMax = GetSegmentYMax(Curve)
+			End If
+			If GetSegmentYMin(Curve) < YMin Then
+				YMin = GetSegmentYMin(Curve)
+			End If
+		End If
+		
+		
+		
+
+	Next
+	
+	Dim ArcDimXPoints As List(Of Object) = New List(Of Object)
+	Dim ArcDimYPoints As List(Of Object) = New List(Of Object)
+	For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+		If Curve.CurveType = Inventor.CurveTypeEnum.kCircleCurve Or Curve.CurveType = Inventor.CurveTypeEnum.kCircularArcCurve Then
+			'Check to see if the rangebox of the curve is outside the area of straight edges. If so, tag its midpoint for a dimension
+			If CheckArcExtentX(Curve, XMax, XMin) Then
+				ArcDimXPoints.Add(Curve)
+			End If
+			If CheckArcExtentY(Curve, YMax, YMin) Then
+				ArcDimYPoints.Add(Curve)
+			End If
+		End If
+	Next
+	'Dimension the bottom edge with a horizontal dim
+	Dim OverallGeomIntent As Inventor.GeometryIntent
+	Dim OverallTextOrigin As Inventor.Point2d
+	If BottomEdge.StartPoint.X < BottomEdge.EndPoint.X Then
+		OverallGeomIntent = ThisSheet.CreateGeometryIntent(BottomEdge, Inventor.PointIntentEnum.kStartPointIntent)
+	Else
+		OverallGeomIntent = ThisSheet.CreateGeometryIntent(BottomEdge, Inventor.PointIntentEnum.kEndPointIntent)
+	End If
+	OverallTextOrigin = TG.CreatePoint2d(XPos, BottomEdge.StartPoint.Y)
+	Dim BottomOrdDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(OverallGeomIntent, OverallTextOrigin, Inventor.DimensionTypeEnum.kHorizontalDimensionType)
+
+	If RightEdge.StartPoint.Y > RightEdge.EndPoint.X Then
+		OverallGeomIntent = ThisSheet.CreateGeometryIntent(RightEdge, Inventor.PointIntentEnum.kStartPointIntent)
+	Else
+		OverallGeomIntent = ThisSheet.CreateGeometryIntent(RightEdge, Inventor.PointIntentEnum.kEndPointIntent)
+	End If
+	OverallTextOrigin = TG.CreatePoint2d(RightEdge.StartPoint.X, YPos)
+	Dim RightOrdDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(OverallGeomIntent, OverallTextOrigin, Inventor.DimensionTypeEnum.kVerticalDimensionType)
+
+	'[Iterate through bend edges on the view, placing dims
+	'Create X and Y axis vectors to check horizontal vs vertical or angled
+	For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+		If Curve.EdgeType = Inventor.DrawingEdgeTypeEnum.kBendUpEdge Or Curve.EdgeType = Inventor.DrawingEdgeTypeEnum.kBendDownEdge Then
+			'Add in the bend note
+			Dim ThisNote = ThisSheet.DrawingNotes.BendNotes.Add(Curve)
+			'Check orientation of edge 
+			Dim CurveVector As Inventor.Vector2d = Curve.StartPoint.VectorTo(Curve.EndPoint)
+			Dim DimType As Inventor.DimensionTypeEnum
+			If CurveVector.IsParallelTo(XAxis) Then
+				'Horizontal dimension
+				DimType = Inventor.DimensionTypeEnum.kHorizontalDimensionType
+				Dim DimTextYPos As Double = Curve.StartPoint.Y
+				Dim DimGeomIntent As Inventor.GeometryIntent
+				If Curve.StartPoint.X < Curve.EndPoint.X Then
+					DimGeomIntent = ThisSheet.CreateGeometryIntent(Curve, Inventor.PointIntentEnum.kStartPointIntent)
+				Else
+					DimGeomIntent = ThisSheet.CreateGeometryIntent(Curve, Inventor.PointIntentEnum.kEndPointIntent)
+				End If
+
+				'Place the dimension
+				Dim TextOrigin As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(XPos, DimTextYPos)
+				'Logger.Debug("Dimension Geometry Intent point: " & DimGeomIntent.PointOnSheet.X & "," & DimGeomIntent.PointOnSheet.Y)
+				Logger.Debug("Placing an ordinate dimension for edge type " & Curve.EdgeType.ToString() & "at location: " & XPos & "," & DimTextYPos)
+				Dim ThisOrdDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(DimGeomIntent, TextOrigin, DimType)
+
+			ElseIf CurveVector.IsParallelTo(YAxis) Then
+				'Vertical dimension
+				DimType = Inventor.DimensionTypeEnum.kVerticalDimensionType
+				Dim DimTextXPos As Double = Curve.StartPoint.X
+				Dim DimGeomIntent As Inventor.GeometryIntent
+				If Curve.StartPoint.Y > Curve.EndPoint.Y Then
+					DimGeomIntent = ThisSheet.CreateGeometryIntent(Curve, Inventor.PointIntentEnum.kStartPointIntent)
+				Else
+					DimGeomIntent = ThisSheet.CreateGeometryIntent(Curve, Inventor.PointIntentEnum.kEndPointIntent)
+				End If
+
+				'Place the dimension
+				Dim TextOrigin As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(DimTextXPos, YPos)
+				'Logger.Debug("Dimension Geometry Intent point: " & DimGeomIntent.PointOnSheet.X & "," & DimGeomIntent.PointOnSheet.Y)
+				Logger.Debug("Placing an ordinate dimension for edge type " & Curve.EdgeType.ToString() & "at location: " & DimTextXPos & "," & YPos)
+				Dim ThisOrdDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(DimGeomIntent, TextOrigin, DimType)
+			Else
+				Logger.Debug("Found angled bend line")
+			End If
+		End If
+
+	Next
+	']
+
+
+	'Place any necessary dims on arc segments; keep track of placed dimensions to avoid duplicates
+	Dim ArcDimXLocations As List(Of Double) = New List(Of Double)
+	Dim ArcDimYLocations As List(Of Double) = New List(Of Double)
+	For Each Curve As Inventor.DrawingCurve In ArcDimXPoints
+		Dim SkipDim As Boolean = False
+		For Each PlacedDim As Double In ArcDimXLocations
+			If DoubleIsEqual(PlacedDim, Curve.MidPoint.X) Then
+				SkipDim = True
+				Exit For
+			End If
+		Next
+		If SkipDim Then
+			Continue For
+		End If
+		Dim ThisCurveTextOrigin As Inventor.Point2d = TG.CreatePoint2d(Curve.MidPoint.X, YPos)
+		Dim ThisCurveIntent = ThisSheet.CreateGeometryIntent(Curve, Inventor.PointIntentEnum.kMidPointIntent)
+		Dim ThisCurveOrdDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(ThisCurveIntent, ThisCurveTextOrigin, Inventor.DimensionTypeEnum.kVerticalDimensionType)
+	Next
+	
+	For Each Curve As Inventor.DrawingCurve In ArcDimYPoints
+		Dim SkipDim As Boolean = False
+		For Each PlacedDim As Double In ArcDimYLocations
+			If DoubleIsEqual(PlacedDim, Curve.MidPoint.Y) Then
+				SkipDim = True
+				Exit For
+			End If
+		Next
+		If SkipDim Then
+			Continue For
+		End If
+		Dim ThisCurveTextOrigin As Inventor.Point2d = TG.CreatePoint2d(XPos, Curve.MidPoint.Y)
+		Dim ThisCurveIntent = ThisSheet.CreateGeometryIntent(Curve, Inventor.PointIntentEnum.kMidPointIntent)
+		Dim ThisCurveOrdDim As Inventor.OrdinateDimension = ThisSheet.DrawingDimensions.OrdinateDimensions.Add(ThisCurveIntent, ThisCurveTextOrigin, Inventor.DimensionTypeEnum.kHorizontalDimensionType)
+	Next
+		
+		
+
+	Return True
+
+End Function
+
+
+'Returns the lowest X value for a drawing curve
+Function GetSegmentXMin(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.X < Curve.EndPoint.X Then
+		Return Curve.StartPoint.X
+	Else
+		Return Curve.EndPoint.X
+	End If
+End Function
+
+Function GetSegmentXMax(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.X > Curve.EndPoint.X Then
+		Return Curve.StartPoint.X
+	Else
+		Return Curve.EndPoint.X
+	End If
+End Function
+
+'Returns the highest Y value for a drawing curve
+Function GetSegmentYMax(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.Y > Curve.EndPoint.Y Then
+		Return Curve.StartPoint.Y
+	Else
+		Return Curve.EndPoint.Y
+	End If
+End Function
+
+Function GetSegmentYMin(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.Y < Curve.EndPoint.Y Then
+		Return Curve.StartPoint.Y
+	Else
+		Return Curve.EndPoint.Y
+	End If
+End Function
+
+Function DoubleIsEqual(Val1 As Double, Val2 As Double, Optional Precision As Integer = 5) As Boolean
+	If Math.Round(Val1, Precision) = Math.Round(Val2, Precision) Then
+		Return True
+	Else
+		Return False
+	End If
+End Function
+
+
+Function DrawDatumGeometry(FlatPatternView As Inventor.DrawingView) As Inventor.SketchLine
+
+
+	Dim Sktch As Inventor.DrawingSketch = FlatPatternView.Sketches.Add()
+	Sktch.Edit
+
+
+	Dim TopEdge As Inventor.DrawingCurve = Nothing
+	Dim LeftEdge As Inventor.DrawingCurve = Nothing
+
+	'Keep track of whether or not the top and left most points of the top and left most edges are the minimum points
+
+	Dim XAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(1, 0)
+	Dim YAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(0, 1)
+	For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+		'Logger.Debug("Curve type: " & Curve.CurveType.ToString())
+		If Curve.CurveType = Inventor.CurveTypeEnum.kLineCurve Or Curve.CurveType = Inventor.CurveTypeEnum.kLineSegmentCurve Then
+
+			'Get vector of the curve to check horizontal or vertical
+			Dim CurveVector As Inventor.Vector2d = Curve.StartPoint.VectorTo(Curve.EndPoint)
+			If CurveVector.IsParallelTo(XAxis) Then
+				If TopEdge Is Nothing Then
+					TopEdge = Curve
+					Continue For
+				Else
+					If GetSegmentYMax(Curve) > GetSegmentYMax(TopEdge) Then
+						TopEdge = Curve
+					End If
+				End If
+			ElseIf CurveVector.IsParallelTo(YAxis) Then
+				If LeftEdge Is Nothing Then
+					LeftEdge = Curve
+					Continue For
+				Else
+					If GetSegmentXMin(Curve) < GetSegmentXMin(LeftEdge) Then
+						LeftEdge = Curve
+					End If
+				End If
+			Else
+			End If
+		End If
+
+	Next
+
+	'Dim FlatPatternXMin As Double = GetSegmentXMin(LeftEdge)
+	'Dim FlatPatternYMax As Double = GetSegmentYMax(TopEdge)
+	Dim TopEdgeEnt As Inventor.SketchLine = Sktch.AddByProjectingEntity(TopEdge)
+	Dim LeftEdgeEnt As Inventor.SketchLine = Sktch.AddByProjectingEntity(LeftEdge)
+
+	'Draw a new sketch edge with its start at the datum point
+	Dim DEStartPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(LeftEdgeEnt.StartSketchPoint.Geometry.X, TopEdgeEnt.StartSketchPoint.Geometry.Y)
+	Dim DEEndPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(DEStartPoint.X + .001, DEStartPoint.Y)
+	Dim DatumEdge As Inventor.SketchLine = Sktch.SketchLines.AddByTwoPoints(DEStartPoint, DEEndPoint)
+	DatumEdge.SketchOnly = False
+
+	Sktch.Name = "DatumGeometrySketch"
+	Sktch.ExitEdit
+	Return DatumEdge
+
+
+
+
+End Function
+
+
+
+Function DrawClientGraphicsPoint(ThePoint As Inventor.Point2d) As Inventor.GraphicsNode
+
+	'	Dim CompDef As Inventor.ComponentDefinition = ThisApplication.ActiveDocument.ComponentDefinition
+	'	Dim TG As Inventor.TransientGeometry = ThisApplication.TransientGeometry
+	'	'Delete any existing graphics
+	'	Dim ExistingGfxData As Inventor.GraphicsDataSets
+	'	Try
+	'		ExistingGfxData = ThisApplication.ActiveDocument.GraphicsDataSetsCollection.Item("DatumGfx")
+	'		CompDef.ClientGraphicsCollection.Item("DatumGfx").Delete
+	'		ExistingGfxData.Delete
+	'		ThisApplication.ActiveView.Update
+	'	Catch ex As Exception
+
+	'	End Try
+
+	'	Dim LG As Inventor.LineGraphics
+	'	Dim CG As Inventor.ClientGraphics
+	'	Dim CGNode As Inventor.GraphicsNode
+	'	Dim GD As Inventor.GraphicsDataSets = ThisApplication.ActiveDocument.GraphicsDataSetsCollection.Item("DatumGfx")
+	'	Dim CoordSet As Inventor.GraphicsCoordinateSet = ThisApplication.ActiveDocument.GrahpicsDataSetsCollection.Add("DatumGfx")
+	'	CG = CompDef.ClientGraphicsCollection.Add("DatumGfx")
+	'	CGNode = CG.AddNode(1)
+	'	CGNode.Selectable = False
+	'	LG = CGNode.AddCurveGraphics
+	'	LG.CoordinateSet = CoordSet
+
+	'	Dim Circ As Inventor.Circle
+	'	Circ = TG.CreateCircle(ThePoint, )
+
+
+
+
+
+
+End Function
+
+Function PlaceSS(ThePoint As Inventor.Point2d, SSName As String) As Inventor.SketchedSymbol
+
+	Dim Dwg As Inventor.DrawingDocument = ThisApplication.ActiveDocument
+	Dim Sht As Inventor.Sheet = ThisApplication.ActiveDocument.Sheets(1)
+	Return Sht.SketchedSymbols.Add(Dwg.SketchedSymbolDefinitions.Item(SSName), ThePoint)
+
+End Function
+
+
+Function CheckArcExtentX(Curve As Inventor.DrawingCurve, XMax As Double, XMin As Double) As Boolean
+	
+	Dim NeedToDim As Boolean = False
+	Dim CurveXmax As Double = Curve.Evaluator2D.RangeBox.MaxPoint.X
+	Dim CurveXmin As Double = Curve.Evaluator2D.RangeBox.MinPoint.X
+	
+	If CurveXmin > XMax Or CurveXmax > XMax Then
+		NeedToDim = True
+	End If
+	
+	If CurveXmin < XMin Or CurveXmax < XMin Then
+		NeedToDim = True
+	End If
+			
+	Return NeedToDim
+	
+End Function
+
+Function CheckArcExtentY(Curve As Inventor.DrawingCurve, YMax As Double, YMin As Double) As Boolean
+	
+	Dim NeedToDim As Boolean = False
+	Dim CurveYmax As Double = Curve.Evaluator2D.RangeBox.MaxPoint.Y
+	Dim CurveYmin As Double = Curve.Evaluator2D.RangeBox.MinPoint.Y
+	
+	If CurveYmin > YMax Or CurveYmax > YMax Then
+		NeedToDim = True
+	End If
+	
+	If CurveYmin < YMin Or CurveYmax < YMin Then
+		NeedToDim = True
+	End If
+			
+	Return NeedToDim
+	
+End Function
+

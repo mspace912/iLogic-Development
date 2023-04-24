@@ -1,0 +1,29 @@
+﻿INFO| 1: >>---------------------------
+DEBUG|X value = 12.7
+DEBUG|Y value = 32.4243388401761
+DEBUG|Z value = 4.81341728089308
+DEBUG|Writing PDF to C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\13352 Layout Pack and Go\PDF\M17015A.pdf
+DEBUG|X value = 3.4925
+DEBUG|Y value = 2.83845
+DEBUG|Z value = 0.9525
+DEBUG|Writing PDF to C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\13352 Layout Pack and Go\PDF\13345-031.pdf
+DEBUG|X value = 3.4925
+DEBUG|Y value = 2.83862106665575
+DEBUG|Z value = 0.9525
+DEBUG|Writing PDF to C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\13352 Layout Pack and Go\PDF\13345-031-SS.pdf
+DEBUG|X value = 11.43
+DEBUG|Y value = 2.2225
+DEBUG|Z value = 0.3175
+DEBUG|Writing PDF to C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\13352 Layout Pack and Go\PDF\13352-211-FLAT.pdf
+DEBUG|X value = 12.85875
+DEBUG|Y value = 2.2225
+DEBUG|Z value = 0.3175
+DEBUG|Writing PDF to C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\13352 Layout Pack and Go\PDF\13352-211-FLAT-2.pdf
+DEBUG|X value = 87.9475
+DEBUG|Y value = 3.17500000000001
+DEBUG|Z value = 13.49375
+DEBUG|Front Area: 470.722916629987
+DEBUG|Right Area: 115.539815141968
+DEBUG|Top Area: 1162.92262444528
+DEBUG|Optimal Base View Scale: 0.895999998671978 vs current scale: 0.25
+DEBUG|Optimal Iso View Scale: 0 vs current scale: 0.25

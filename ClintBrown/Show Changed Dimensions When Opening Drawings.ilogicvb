@@ -1,0 +1,43 @@
+'iLogic code by Jelte de Jong - > https://clintbrown.co.uk/tag/Jelte
+'Originally Published at https://clintbrown.co.uk/show-changed-dimensions-when-opening-drawings
+'https://www.linkedin.com/in/jeltedejong/
+
+'Get file name
+Dim oDLG As Inventor.FileDialog = Nothing
+ThisApplication.CreateFileDialog(oDLG)
+oDLG.Filter = "Inventor Files (*.idw;*.dwg)|*.idw;*.dwg"
+oDLG.OptionsEnabled = False
+oDLG.ShowOpen()
+
+' Defer updates while opening file
+Dim oNVM As NameValueMap = ThisApplication.TransientObjects.CreateNameValueMap
+oNVM.Add("DeferUpdates", True)
+ThisApplication.SilentOperation = True
+Dim doc As DrawingDocument = 
+	ThisApplication.Documents.OpenWithOptions(oDLG.FileName, oNVM)
+ThisApplication.SilentOperation = False
+
+' create a dictionary with the original values
+Dim dims As Dictionary(Of DrawingDimension, String) = 
+	New Dictionary(Of DrawingDimension, String)()
+For Each drawingDim As DrawingDimension In doc.ActiveSheet.DrawingDimensions
+    dims.Add(drawingDim, drawingDim.Text.Text)
+Next
+
+' update the drawing
+ThisApplication.CommandManager.ControlDefinitions.Item("AppZoomallCmd").Execute
+MsgBox("Going to update drawing now.")
+doc.DrawingSettings.DeferUpdates = False
+
+' Check all dimension and add text if it changed
+For Each item As KeyValuePair(Of DrawingDimension, String) In dims
+	Try
+		Dim drawingDim = item.Key
+	    If (drawingDim.Text.Text.Equals(item.Value) = False) Then
+	        Dim text = drawingDim.Text.FormattedText
+	        drawingDim.Text.FormattedText = String.Format(
+		"{0} <StyleOverride>(Original: {1})</StyleOverride>",
+	            text, item.Value)
+	    End If
+	Catch ex As Exception
+	End Try

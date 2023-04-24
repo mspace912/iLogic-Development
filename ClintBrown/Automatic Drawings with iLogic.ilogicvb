@@ -1,0 +1,90 @@
+'Code By @ClintBrown3D
+'Originally posted at https://clintbrown.co.uk/automatic-drawings-With-ilogic/
+'Check if this is a drawing file
+Dim doc = ThisDoc.Document
+If doc.DocumentType = kDrawingDocumentObject Then
+GoTo DRAWINGcode :
+End If
+
+'In parts & asemblies - Write file name and path to temp text file
+oWrite = System.IO.File.CreateText("C:\TEMP\part.txt")
+oWrite.WriteLine(ThisDoc.PathAndFileName(True))
+oWrite.Close()
+oFilePather = ThisDoc.Path & "\"
+
+'In parts & asemblies - Write new drawing name to temp text file
+oWrite = System.IO.File.CreateText("C:\TEMP\partno.txt")
+oWrite.WriteLine(oFilePather & iProperties.Value("Project", "Part Number") & ".dwg")
+oWrite.Close()
+
+'Read Drawing name from text file
+oRead = System.IO.File.OpenText("C:\TEMP\partno.txt")
+EntireFile1 = oRead.ReadLine()
+oRead.Close()
+oDrawingName = EntireFile1
+
+'Copy the Template file > keep templates saved in your project workspace, you need a separate part and assembly template
+Dim oCopyFiler As String = "www.clintbrown.co.uk"
+If doc.DocumentType = kAssemblyDocumentObject Then
+oCopyFiler = "C:\Users\Clint\Workspace\ASSEMBLY_TEMPLATE.dwg"
+Else If doc.DocumentType = kPartDocumentObject Then
+oCopyFiler = "C:\Users\Clint\Workspace\PART_TEMPLATE.dwg"
+End If
+
+' Check if drawing exists - If it does, opening existing drawing
+If System.IO.File.Exists(oDrawingName & DWGType) Then
+MessageBox.Show("Drawing already exists > Opening Existing Drawing", "@ClintBrown3D")
+ThisDoc.Launch(oDrawingName & DWGType)
+Return
+End If
+
+'Launch New drawing
+Dim oNewFiler As String = EntireFile1
+System.IO.File.Copy(oCopyFiler,oNewFiler,(True))
+ThisDoc.Launch(oNewFiler)
+
+DRAWINGcode :
+On Error GoTo Exiter
+'Check if we have replaced the reference and scaled the drawing already
+oNumbero = Parameter("Opened")
+Parameter("Opened") = oNumbero + 1
+'MsgBox(Parameter("Opened"))
+If Parameter("Opened") > 2 Then
+Return
+End If
+
+'Read in File name - For reference
+oRead = System.IO.File.OpenText("C:\TEMP\part.txt")
+EntireFile = oRead.ReadLine()
+oRead.Close()
+oPartPath = EntireFile
+
+'Replace Drawing Reference
+doc = ThisDoc.Document
+Dim oFileDesc As FileDescriptor
+oFileDesc = doc.ReferencedFileDescriptors(1).DocumentDescriptor.ReferencedFileDescriptor
+oFileDesc.ReplaceReference(oPartPath)
+doc.Update()
+
+'Read in new name for Drawing
+oRead = System.IO.File.OpenText("C:\TEMP\partno.txt")
+EntireFile1 = oRead.ReadLine()
+oRead.Close()
+oDrawingName = EntireFile1
+
+'Save this drawing
+ThisDoc.Save
+
+'Scale the Drawing - Note your drawing views names("VIEW1")&("VIEW4") must match the template
+On Error GoTo Exiter
+oMyParameter = ThisDrawing.Document.Parameters.UserParameters
+oParameter = oMyParameter.AddByValue("Scaler", "1:5", UnitsTypeEnum.kTextUnits)
+MultiValue.SetList("Scaler","1:1", "1:2", "1:4", "1:5", "1:10", "1:20", "1:25", "1:50", "1:100")
+
+Scaler = InputListBox("Set Drawing Scale", MultiValue.List("Scaler"), Scaler, Title := "Scale = " & ActiveSheet.View("VIEW1").ScaleString, ListName := "List")
+ActiveSheet.View("VIEW1").ScaleString = Scaler
+ActiveSheet.View("VIEW4").ScaleString = Scaler
+Parameter.Param("Scaler").Delete
+
+Exiter :
+'Msgbox("Scale not Changed")

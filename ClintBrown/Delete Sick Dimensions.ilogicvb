@@ -1,0 +1,20 @@
+'This version of iLogic code by @ClintBrown3D, Adpated from the Inventor API samples : https://clintbrown.co.uk/2020/10/28/ilogic-quick-tip-delete-sick-dimensions/
+'This code deletes unattached dimensions
+
+    ' Set a reference to the active drawing document
+    Dim oDoc As DrawingDocument
+    oDoc = ThisDoc.Document 'ThisServer.ActiveDocument
+    
+    ' Set a reference to the active sheet
+'    Dim oSheet As Sheet
+    oSheet = oDoc.ActiveSheet
+    
+  
+    ' Iterate over all dimensions in the drawing
+    ' and delete unattached (sick) dimensions.
+    
+    For Each oDrawingDim In oSheet.DrawingDimensions
+        If oDrawingDim.Attached = False Then
+            Call oDrawingDim.Delete
+        End If
+		Next

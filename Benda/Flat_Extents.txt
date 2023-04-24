@@ -1,0 +1,178 @@
+﻿' Flat Extents Generator
+' Created By : Rich Grazioli
+' Date Created:10/10/2017
+
+
+' Description:
+' This Rule creates and formats the material dimensions for a sheet metal part and populates the iProperties
+
+' Notes:
+' 1. Needs to be run for sheet metal parts only
+
+' Change Log:
+'180427 - GPV - ADDED UPDATING ENGINEER AND AUTHORITY iPROPERTY
+'190127 - GPV - ADDED ASKING TO FILL OUT DESCRIPTION iPROPERTY IF BLANK USE EXTERNAL RULE TO GATHER QTY, REORDERED IF STATEMENTS FOR PROPER ERROR COMPILING
+'210211 - JY - ADDED FORMATING OF CUSTOM PROPERTY FORMAT AND DEBUG LOG
+'210212 - JY - ADDED CHECK IF DOCUMENT IS SHEET METAL PART
+
+' ***************************************************************************************************************************************
+Sub Main
+
+	Dim curDoc = ThisApplication.ActiveEditDocument
+	If curDoc.DocumentType = kPartDocumentObject Then
+		Logger.Debug("Document is a Part File")
+	Else
+		MessageBox.Show("This document is not a Sheet Metal Document and can not be run in this document ", "Ope Sorry!")
+		Logger.Debug("Document is not a Sheet Metal Part")
+		Exit Sub
+	End If
+
+	Dim oDoc As PartDocument
+	oDoc = ThisApplication.ActiveEditDocument
+
+
+
+	' Check if Document is a Sheet Metal Part
+	If oDoc.SubType = "{9C464203-9BAE-11D3-8BAD-0060B0CE6BB4}" Then
+		Logger.Debug("Document is a Sheet Metal Part")
+	Else
+		MessageBox.Show("This document is not a Sheet Metal Document and can not be run in this document ", "Ope Sorry!")
+		Logger.Debug("Document is not aSheet Metal Part")
+		Exit Sub
+	End If
+	
+		Dim oDef As SheetMetalComponentDefinition
+	oDef = oDoc.ComponentDefinition
+	Logger.Debug("Document and Component Defined")
+	
+	Break
+	Dim oparams As Parameters
+	Dim oparam As Parameter
+	oparams = curDoc.ComponentDefinition.Parameters
+	Logger.Debug("Parameters Defined")
+
+	Dim ExtentsLengthExists As Boolean = False
+	Dim ExtentsWidthExists As Boolean = False
+	Break
+
+	'Find out if parameter exists
+	For Each oparam In oparams
+		If oparam.Name = "ExtentsLength" Then ExtentsLengthExists = True
+		If oparam.Name = "ExtentsWidth" Then ExtentsWidthExists = True
+	Next oparam
+	Break
+	'Change the value if the parameter exists otherwise add the parameter
+	'NOTE: Values are read in cm's and corrected to inches by "* 2.54"
+	If ExtentsLengthExists Then
+		oparams.Item("ExtentsLength").Value = oDef.FlatPattern.Length ' / 2.54
+		Logger.Debug("Extents Length Parameter already exsists, Value recalculated")
+	Else
+		oparams.UserParameters.AddByValue("ExtentsLength", oDef.FlatPattern.Length , "in")
+		Logger.Debug("Extents Length Parameter added")
+	End If
+'''MessageBox.Show("Extents Length = " & Parameter("ExtentsLength"), "My iLogic Dialog", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+
+	If ExtentsWidthExists Then
+		oparams.Item("ExtentsWidth").Value = oDef.FlatPattern.Width '/ 2.54
+		Logger.Debug("Extents Width Parameter already exsists, Value recalculated")
+	Else
+		oparams.UserParameters.AddByValue("ExtentsWidth", oDef.FlatPattern.Width , "in")
+		Logger.Debug("Extents Width Parameter added")
+	End If
+'''MessageBox.Show("Extents Width = " & Parameter("ExtentsWidth"), "My iLogic Dialog", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+Break
+
+	'Thickness Parameter
+	Dim oSheetMetalCompDef As SheetMetalComponentDefinition
+	oSheetMetalCompDef = oDoc.ComponentDefinition
+
+	' Override the thickness for the document
+	oSheetMetalCompDef.UseSheetMetalStyleThickness = False
+
+	' Get a reference to the parameter controlling the thickness.
+	Dim oThicknessParam As Parameter
+	oThicknessParam = oSheetMetalCompDef.Thickness
+
+	' Change the value of the parameter. (*2.54 to convert from cm to inches)
+	' oThicknessParam.Value = .18 * 2.54
+	Logger.Debug("Thickness Parameter Set")
+
+	' Export Parameters
+	oparams.Item("ExtentsWidth").ExposedAsProperty = True
+	oparams.Item("ExtentsLength").ExposedAsProperty = True
+	oSheetMetalCompDef.Thickness.ExposedAsProperty = True
+	Logger.Debug("Setting Changed to Export Parameter")
+
+	Dim oParameter As Parameter
+	For Each oParameter In oDoc.ComponentDefinition.Parameters.UserParameters
+		'Break
+		Try
+			Dim oFormat As CustomPropertyFormat
+			oFormat = oParameter.CustomPropertyFormat
+			oFormat.ShowUnitsString = False
+			oFormat.ShowLeadingZeros = False
+			oFormat.ShowTrailingZeros = False
+			oFormat.Precision = kThreeDecimalPlacesPrecision
+			Logger.Debug(oParameter.Name & " Property Set")
+		Catch
+			Logger.Debug(oParameter.Name & " Property Not Set")
+		End Try
+	Next oParameter
+	Logger.Debug("Custom Property Format Changed per BMI Standards")
+
+	iProperties.Value("Summary", "Company") = "BCS"
+	iProperties.Value("Summary", "Category") = "WATERJET"
+	Logger.Debug("Summary Tab iProperties Set")
+
+	Logger.Debug("Check If Description iProperty Exsists")
+	Dim description As String
+	If iProperties.Value("Project", "Description") = ""
+		description = InputBox("There is no description entered. Please enter one now. This message box will only appear if the Description field in iProperties is empty.", "Enter Description", "Description")
+		iProperties.Value("Project", "Description") = description
+		Logger.Debug("Users Description Added to iProperty")
+	End If
+	Logger.Debug("Part Description Determined")
+
+	Dim MaterialFinish As New ArrayList
+	MaterialFinish.Add("SS SHEET 304 #4")
+	MaterialFinish.Add("SS SHEET 304 2B")
+	MaterialFinish.Add("SS FLAT")
+	MaterialFinish.Add("SS PLATE")
+	MaterialFinish.Add("DIAMOND PLATE")
+	MaterialFinish.Add("PEBBLE TOP SHEET")
+
+	If Right(oDoc.DisplayName, 3) = "iam"
+		Dim InvDoc As Document = ThisApplication.ActiveEditDocument
+		Dim InvDocName As String = InvDoc.DisplayName
+		If iProperties.Value("Project", "Project") = ""
+			Finish = InputListBox("Select the Material Finish", MaterialFinish, "SS SHEET 304 #4", Title := "Material Finish", ListName := "List")
+			iProperties.Value("Project", "Project") = Finish
+			Logger.Debug("Material Added to iProperty")
+		End If
+	Else
+		If iProperties.Value("Project", "Project") = ""
+			Finish = InputListBox("Select the Material Finish", MaterialFinish, "SS SHEET 304 #4", Title := "Material Finish", ListName := "List")
+			iProperties.Value("Project", "Project") = Finish
+			Logger.Debug("Material Added to iProperty")
+		End If
+	End If
+
+	Break
+
+	'	If iProperties.Value("Project", "Project") = ""
+	'		Finish = InputListBox("Select the Material Finish", MaterialFinish, "SS SHEET 304 #4", Title := "Material Finish", ListName := "List")
+	'		iProperties.Value("Project", "Project") = Finish
+	'		Logger.Debug("Material Added to iProperty")
+	'	End If
+	iProperties.Value("Project", "Designer") = ""
+	iProperties.Value("Project", "Designer") = "=<Thickness> X <ExtentsWidth> X <ExtentsLength> LG."
+	iProperties.Value("Project", "Engineer") = "=<Part Number>"
+	iProperties.Value("Project", "Authority") = "=<Description>"
+	Logger.Debug("Project Tab iProperties Set")
+
+	oDoc.Update
+	iLogicVb.UpdateWhenDone = True
+	Logger.Debug("Document Updated and Program Complete")
+End Sub

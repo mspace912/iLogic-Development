@@ -1,0 +1,94 @@
+﻿' Thisapplication is a global variable of Inventor.Application
+
+Sub Main()
+
+Dim doc As DrawingDocument = ThisApplication.ActiveDocument
+Dim oPname As String = doc.DisplayName
+
+'FSJ 28FEB2023
+'Use SharedVariable AssemblyQuantities (A Dictionary of String, Int) to get quantity. Key is PartNumber iProperty, Value is total quantity
+Dim PNProp As String = doc.PropertySets.Item("Design Tracking Properties").Item("Part Number").Value
+
+
+'Dim tb As TextBox
+
+Dim i As Integer = 1
+
+Dim border As Border = doc.ActiveSheet.Border
+Dim titleblock As TitleBlock = doc.ActiveSheet.TitleBlock
+Dim borderDef As BorderDefinition = border.Definition
+Dim titleblockdef As TitleBlockDefinition = titleblock.Definition
+
+'CNT = GetQty(oPname)
+Dim AssyQtys As Dictionary(Of String, Integer) = SharedVariable("AssemblyQuantities")
+Try
+	CNT = AssyQtys(PNProp).ToString
+
+Catch ex As Exception
+	CNT = "Unknown"
+End Try
+
+For Each tb In titleblockdef.Sketch.TextBoxes
+Break
+
+	If tb.Text = "BMI WORK ORDER NUMBER" Then
+		titleblock.SetPromptResultText(titleblockdef.Sketch.TextBoxes.Item(i), Parameter("BCSJOB"))
+	ElseIf tb.Text = "CUSTOMER" Then
+		titleblock.SetPromptResultText(titleblockdef.Sketch.TextBoxes.Item(i), Parameter("CUSTOMER"))
+	ElseIf tb.Text = "ITEM NUMBER" Then
+		titleblock.SetPromptResultText(titleblockdef.Sketch.TextBoxes.Item(i), Parameter("BCSITEM"))
+	ElseIf tb.Text = "QUANTITY" Then
+		titleblock.SetPromptResultText(titleblockdef.Sketch.TextBoxes.Item(i), CNT)
+		
+	End If
+
+''' add code to fill in  Material and QTY in title block entries but not at the top
+''' 
+	i = i + 1
+
+Next
+
+End Sub
+
+Function GetQty (PartDoc As String) As String
+
+Dim oAsm As AssemblyDocument = ThisDoc.Document
+Dim Pnr As String = InputBox("Enter partnumber: ", "Search for partnumber", "000000")
+Dim oList As New Dictionary(Of String, Integer)
+Dim Msg As String = "Component count in Assembly/Subassemblies: " & vbCrLf
+Dim pNrExists As Boolean = False
+For Each oDoc As Document In oAsm.AllReferencedDocuments
+	If oDoc.DocumentType = DocumentTypeEnum.kPartDocumentObject Or _
+		oDoc.DocumentType = DocumentTypeEnum.kAssemblyDocumentObject
+		If oDoc.PropertySets.Item("Design Tracking Properties") _
+			.Item("Part Number").Value = Pnr
+			For Each oOcc As ComponentOccurrence In oAsm.ComponentDefinition.Occurrences.AllReferencedOccurrences(oDoc)
+				pNrExists = True
+				Try
+					If oList.ContainsKey(oOcc.ParentOccurrence.Name)
+						oList.Item(oOcc.ParentOccurrence.Name) += 1
+					Else
+						oList.Add(oOcc.ParentOccurrence.Name, 1)
+					End If
+				Catch
+					If oList.ContainsKey("Top level assembly")
+						oList.Item("Top level assembly") += 1
+					Else
+						oList.Add("Top level assembly", 1)
+					End If
+				End Try
+			Next
+		End If
+	End If
+Next
+For Each oKey As String In oList.Keys
+	Msg = Msg & oKey & " - " & oList.Item(oKey) & " st" & vbCrLf
+	GetQty = oList.Item(oKey)
+Next
+If pNrExists
+	MessageBox.Show(Msg, "Found components", MessageBoxButtons.OK)
+Else
+	MessageBox.Show("None!", "Found components", MessageBoxButtons.OK)
+End If
+
+End Function

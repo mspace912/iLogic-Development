@@ -1,0 +1,153 @@
+﻿'[ Assembly PDF Generator
+' Created By : Gabriel Valencia
+' Created On: 10/09/18
+
+' Description:
+' This rule generates PDF files from all associated .idw files in the assembly. The files are placed within an 
+' "AssemblyName PDF Files" folder on creation.
+
+' Notes:
+' 1. Files will be overwritten everytime the rule is run. If the assembly is run while at a Level of Detail,
+'    the name of the Level of Detail will show up in the name of the folder.
+' 2. Any drawing files associated with the assembly will be closed when the rule is run.
+' 3. Destination folder is opened on completion.
+' 4. All files must be saved prior to running the rule.
+' 5. PDF files that are open will not be overwritten. Close all PDFs before running.
+
+' Change log:
+' 181115: Released
+' Known issues/Idea Board:
+' 1. Initial error handling incorrect
+' 2. Add selection prompt
+' 3. Display list of parts without Drawings
+'
+
+']-----------------------------------------------------------------------------------------------------------
+
+Sub Main()
+
+'[ Initilization
+Dim oAsmDoc As Inventor.AssemblyDocument
+oAsmDoc = ThisApplication.ActiveDocument
+oAsmName = Left(oAsmDoc.DisplayName, Len(oAsmDoc.DisplayName) -4)
+
+
+Dim oRuleTitle As String = "PDF Generator"
+
+Try
+	oAsmDoc = ThisApplication.ActiveDocument
+Catch
+	MessageBox.Show("Please activate an Assembly document first.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
+	Return
+End Try
+']
+
+'[ Check that user wants to run the rule
+InitialMB = MessageBox.Show( _
+"Do you want generate PDFs from all drawings associated with " & oAsmName & "." _
+& vbLf & " " _
+& vbLf & "Do you want to create Standard PDF's also?" _
+, "PDF Generator", MessageBoxButtons.YesNoCancel)
+If InitialMB = vbNo Then
+	Return
+Else
+End If
+']
+
+'[ PDF Settings
+oPath = ThisDoc.Path
+PDFAddIn = ThisApplication.ApplicationAddIns.ItemById("{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}")
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+
+oOptions.Value("Remove_Line_Weights") = 1
+oOptions.Value("Vector_Resolution") = 1200
+oOptions.Value("Sheet_Range") = Inventor.PrintRangeEnum.kPrintAllSheets
+
+' Folder Location
+oFolder = oPath & "\" & oAsmName & " PDF Files"
+' Create PDF Folder
+If Not System.IO.Directory.Exists(oFolder) Then
+	System.IO.Directory.CreateDirectory(oFolder)
+End If
+
+Dim oRefDocs As DocumentsEnumerator
+oRefDocs = oAsmDoc.AllReferencedDocuments
+'oRefDocs = oAsmDoc.ReferencingDocuments
+Dim oRefDoc As Document
+']
+
+'[ Find documents and generate PDFs
+
+'Progress Bar
+Dim PDFOutCount As Integer = 1 'Starts at one to include Top Level Drawing
+
+For Each oRefDoc In oRefDocs
+	idwPathName = Left(oRefDoc.FullDocumentName, Len(oRefDoc.FullDocumentName) -3) & "idw"
+	If (System.IO.File.Exists(idwPathName)) Then
+		PDFOutCount += 1
+	End If
+Next
+
+Dim oMessage As String = "Generating PDF files...."
+Dim oProgressBar As Inventor.ProgressBar
+oProgressBar = ThisApplication.CreateProgressBar(False, PDFOutCount - 1, oMessage)
+'AddHandler oProgressBar.OnCancel, AddressOf oProgressBarOnCancel
+Dim iPDFFile As Integer = 0
+
+For Each oRefDoc In oRefDocs
+
+	idwPathName = Left(oRefDoc.FullDocumentName, Len(oRefDoc.FullDocumentName) -3) & "idw"
+	If (System.IO.File.Exists(idwPathName)) Then
+
+		' Update the progress bar to reflect which part is being operated on
+		iPDFFile += 1
+		oProgressBar.Message = ("Processing file " & iPDFFile & " of " & PDFOutCount & "...")
+		oProgressBar.UpdateProgress
+
+		Dim oDrawDoc As DrawingDocument
+		oDrawDoc = ThisApplication.Documents.Open(idwPathName, False)
+		oFileName = Left(IO.Path.GetFileName(idwPathName), Len(IO.Path.GetFileName(idwPathName)) -4)
+		oDataMedium.FileName = oFolder & "\" & oFileName & ".pdf"
+
+		Call PDFAddIn.SaveCopyAs(oDrawDoc, oContext, oOptions, oDataMedium)
+
+		oDrawDoc.Close
+	Else
+		'If there is no matching .idw file, no PDF is made
+	End If
+Next
+
+' Update the progress bar for top level
+iPDFFile += 1
+oProgressBar.Message = ("Processing file " & iPDFFile & " of " & PDFOutCount & "...")
+oProgressBar.UpdateProgress
+
+'Generates top level PDF
+oAsmDrawing = ThisDoc.ChangeExtension(".idw")
+oAsmDrawingDoc = ThisApplication.Documents.Open(oAsmDrawing, False)
+oAsmDrawingName = iProperties.Value("Project", "Part Number")
+
+'On Error Resume Next 'Resumes if PDF is open or read-only
+oDataMedium.FileName = oFolder & "\" & oAsmDrawingName & ".pdf"
+Call PDFAddIn.SaveCopyAs(oAsmDrawingDoc, oContext, oOptions, oDataMedium)
+oAsmDrawingDoc.Close
+
+' Close the progress bar
+oProgressBar.Close
+
+']
+
+
+MessageBox.Show("PDF Generation Complete!", "PDF Generator")
+
+Try
+	System.Diagnostics.Process.Start(oFolder)
+Catch
+	MessageBox.Show("Could Not Open Page", "iLogic")
+End Try
+End Sub
+
+

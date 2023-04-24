@@ -1,0 +1,239 @@
+﻿Sub Main()
+Dim oRuleTitle As String = "Drawing Generator"
+
+Dim oAsmDoc As Inventor.AssemblyDocument
+
+Try
+	oAsmDoc = ThisApplication.ActiveDocument
+Catch
+	MessageBox.Show("Please activate an Assembly document first.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
+	Return
+End Try
+
+oAsmName = ThisDoc.FileName(False)
+
+Dim oSMDocs As New List(Of Inventor.PartDocument) ' This is a list of all sheet metal documents that COULD be exported
+Dim oExportDocs As New List(Of Inventor.PartDocument) ' This is the list of sheet metal documents the user WANTS to export
+
+For Each oRefDoc As Inventor.Document In oAsmDoc.AllReferencedDocuments
+
+	' Determines if the document is a sheet metal part
+	If oRefDoc.SubType = "{9C464203-9BAE-11D3-8BAD-0060B0CE6BB4}" Then
+		IsSheetMetal = True
+	Else
+		IsSheetMetal = False
+	End If
+
+	If IsSheetMetal = True Then
+		oSMDocs.Add(oRefDoc)
+	End If
+Next oRefDoc
+
+oExportDocs.AddRange(oSMDocs) ' Begin by assuming user wants to export all sheet metal documents.
+
+' Ask user to specify which documents to export
+Dim oInput As String
+Dim oIndex As Integer
+Dim oPartDoc As Inventor.PartDocument
+
+Do
+	' Populate list of all documents, with "checks" and numbering
+	oDocList = CreateDocList(oSMDocs, oExportDocs)
+
+	' Display prompt with list and valid inputs
+	oInput = InputBox( _
+	"Below is a list of all Sheet Metal parts in this assembly. Items with an ""X"" will have a drawing created." & vbCrLf & _
+	vbCrLf & _
+	"Enter a number below to toggle items for export. Ignore leading zeros. You can also enter a range like ""3-15"" (without quotes)." & vbCrLf & _
+	vbCrLf & _
+	"Enter ""a"" to toggle all." & vbCrLf & _
+	vbCrLf & _
+	oDocList & _
+	vbCrLf & _
+	"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" & vbCrLf & _
+	"To run drawing creation, hit Enter or click OK." & vbCrLf & _
+	vbCrLf & _
+	"To cancel, hit Escape or click Cancel." _
+	, oRuleTitle, "INPUT")
+
+	' Rules for User Input
+	If oInput = "" Then
+		Exit Do
+	Else If oInput = "INPUT" Then
+	Exit Do
+	Else
+		DashPos = InStr(oInput, "-")
+
+		If IsNumeric(oInput) Or DashPos > 0 Or oInput.ToLower = "a" Then
+			If IsNumeric(oInput) Then
+				oStartNum = CDblAny(oInput)
+				oEndNum = oStartNum
+			Else If DashPos > 0 Then
+			BeforeDash = Left(oInput, DashPos - 1)
+			AfterDash = Mid(oInput, DashPos + 1)
+
+			Try
+				oStartNum = CDblAny(BeforeDash)
+				oEndNum = CDblAny(AfterDash)
+			Catch
+				oStartNum = -1
+				oEndNum = -1
+			End Try
+		Else If oInput.ToLower = "a" Then
+		oStartNum = 1
+		oEndNum = oSMDocs.Count
+	End If
+
+	Try
+		For i = oStartNum To oEndNum
+			oIndex = i - 1
+
+			oPartDoc = oSMDocs.Item(oIndex)
+
+			If oExportDocs.Contains(oPartDoc) Then
+				oExportDocs.Remove(oPartDoc)
+			Else
+				oExportDocs.Add(oPartDoc)
+			End If
+		Next
+	Catch
+		oAnswer = MessageBox.Show("Please enter a valid number or range.", oRuleTitle, MessageBoxButtons.OKCancel, MessageBoxIcon.Error)
+
+		If oAnswer = vbCancel Then
+			oInput = ""
+			Exit Do
+		End If
+		oValidRange = False
+	End Try
+	Else
+		MessageBox.Show("Please enter a valid input.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
+	End If 'Input is one that toggles some documents
+	End If 'Input is...
+Loop Until oInput = "INPUT" Or oInput = ""
+
+If oInput = "" Then
+	MessageBox.Show(oRuleTitle & " canceled.", oRuleTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
+	Return
+End If
+
+Dim doc = ThisDoc.Document
+If doc.DocumentType = kDrawingDocumentObject Then
+	GoTo DRAWINGcode :
+End If
+
+'In parts & asemblies - Write file name and path to temp text file
+oWrite = System.IO.File.CreateText("C:\TEMP\part.txt")
+oWrite.WriteLine(ThisDoc.PathAndFileName(True))
+oWrite.Close()
+oFilePather = ThisDoc.Path & "\"
+
+'In parts & asemblies - Write new drawing name to temp text file
+oWrite = System.IO.File.CreateText("C:\TEMP\partno.txt")
+oWrite.WriteLine(oFilePather & iProperties.Value("Project", "Part Number") & ".idw")
+oWrite.Close()
+
+'Read Drawing name from text file
+oRead = System.IO.File.OpenText("C:\TEMP\partno.txt")
+EntireFile1 = oRead.ReadLine()
+oRead.Close()
+oDrawingName = EntireFile1
+
+'Copy the Template file > keep templates saved in your project workspace, you need a separate part and assembly template
+Dim oCopyFiler As String = "www.clintbrown.co.uk"
+If doc.DocumentType = kAssemblyDocumentObject Then
+	'oCopyFiler = "C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\I-logic\ASSEMBLY_TEMPLATE.dwg"
+	oCopyFiler = "C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\I-logic\TestDWG.idw"
+Else If doc.DocumentType = kPartDocumentObject Then
+'oCopyFiler = "C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\I-logic\PART_TEMPLATE.dwg"
+oCopyFiler = "C:\Users\MikeSpace\OneDrive - hagerman.com\Autodesk\Benda Conveyor\I-logic\TestDWG.idw"
+End If
+
+' Check if drawing exists - If it does, opening existing drawing
+If System.IO.File.Exists(oDrawingName & DWGType) Then
+	MessageBox.Show("Drawing already exists > Opening Existing Drawing", "@ClintBrown3D")
+	ThisDoc.Launch(oDrawingName & DWGType)
+	Return
+End If
+Break
+
+'Launch New drawing
+Dim oNewFiler As String = EntireFile1
+System.IO.File.Copy(oCopyFiler, oNewFiler, (True))
+ThisDoc.Launch(oNewFiler)
+
+DRAWINGcode :
+Try
+	'Check if we have replaced the reference and scaled the drawing already
+	oNumbero = Parameter("Opened")
+	Parameter("Opened") = oNumbero + 1
+	'MsgBox(Parameter("Opened"))
+	If Parameter("Opened") > 2 Then
+		Return
+	End If
+	'Read in File name - For reference
+	oRead = System.IO.File.OpenText("C:\TEMP\part.txt")
+	EntireFile = oRead.ReadLine()
+	oRead.Close()
+	oPartPath = EntireFile
+
+	'Replace Drawing Reference
+	doc = ThisDoc.Document
+	Dim oFileDesc As FileDescriptor
+	oFileDesc = doc.ReferencedFileDescriptors(1).DocumentDescriptor.ReferencedFileDescriptor
+	oFileDesc.ReplaceReference(oPartPath)
+	doc.Update()
+
+	'Read in new name for Drawing
+	oRead = System.IO.File.OpenText("C:\TEMP\partno.txt")
+	EntireFile1 = oRead.ReadLine()
+	oRead.Close()
+	oDrawingName = EntireFile1
+
+	'Save this drawing
+	ThisDoc.Save
+
+	'Scale the Drawing - Note your drawing views names("VIEW1")&("VIEW4") must match the template
+	Try
+		oMyParameter = ThisDrawing.Document.Parameters.UserParameters
+		oParameter = oMyParameter.AddByValue("Scaler", "1:5", UnitsTypeEnum.kTextUnits)
+		MultiValue.SetList("Scaler", "1:1", "1:2", "1:4", "1:5", "1:10", "1:20", "1:25", "1:50", "1:100")
+
+		Scaler = InputListBox("Set Drawing Scale", MultiValue.List("Scaler"), Scaler, Title := "Scale = " & ActiveSheet.View("VIEW1").ScaleString, ListName := "List")
+		ActiveSheet.View("VIEW1").ScaleString = Scaler
+		ActiveSheet.View("VIEW4").ScaleString = Scaler
+		Parameter.Param("Scaler").Delete
+	Catch
+		GoTo Exiter
+		Return
+	End Try
+Catch
+	GoTo Exiter
+	Return
+End Try
+
+Exiter :
+'Msgbox("Scale not Changed")
+
+End Sub
+
+
+Function CreateDocList(oSMDocs As List(Of Inventor.PartDocument), oExportDocs As List(Of Inventor.PartDocument)) As String
+	Dim oListText As String = ""
+	Dim oItem As Integer = 0
+
+	For Each oPartDoc As Inventor.PartDocument In oSMDocs
+		oItem = oItem + 1
+
+		If oExportDocs.Contains(oPartDoc) Then
+			oCheckmark = "X"
+		Else
+			oCheckmark = "  "
+		End If
+
+		oFilename = System.IO.Path.GetFileNameWithoutExtension(oPartDoc.FullFileName)
+
+		oListText = oListText & "[" & oCheckmark & "] " & oItem.ToString("000.") & "    " & oFilename & vbCrLf
+	Next
+
+	Return oListText
+End Function

@@ -1,0 +1,71 @@
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap' create a new NameValueMap object
+
+'iLogic Utility by @ClintBrown3D originally posted here --> https://clintbrown.co.uk/export-formatted-parts-list-with-ilogic
+'Parts list placement from Autodesk Inventor API samples
+'Parts list export based on Curtis Waguespack's blog post --> https://inventortrenches.blogspot.com/2011/06/ilogic-export-parts-list-with-options.html
+
+
+'XLS SETUP--------------------------------------------------------------XLS SETUP---------------------------------------------------------------------------XLS SETUP
+oOptions.Value("Template") = "C:\Temp\PartListExport.xlsx" 'specify an existing template file  'to use For formatting colors, fonts, etc
+oExcelSaveLocation = "C:\Temp\Parts Lists\" ' Make sure path has "\" at end -> eg C:\Temp\Parts Lists\
+If(Not System.IO.Directory.Exists(oExcelSaveLocation)) Then: System.IO.Directory.CreateDirectory(oExcelSaveLocation):End If 'Create XLS Parts List folder
+ 
+'specify the columns to export         
+oOptions.Value("ExportedColumns") = "ITEM;QTY;PART NUMBER;DESCRIPTION;MATERIAL;MASS" 'These Must match what is shown on the drawing!!!
+ 
+'specify the start cell
+oOptions.Value("StartingCell") = "A2"
+'XLS SETUP--------------------------------------------------------------XLS SETUP---------------------------------------------------------------------------XLS SETUP
+
+
+
+On Error GoTo ClintsErrorTrap
+Dim oDrawDoc As DrawingDocument ' Set a reference to the drawing document.' This assumes a drawing document is active
+oDrawDoc = ThisApplication.ActiveDocument
+
+Dim oSheet As Sheet 'Set a reference to the active sheet.
+oSheet = oDrawDoc.ActiveSheet
+
+Dim oDrawingView As DrawingView ' Set a reference to the first drawing view on' the sheet. This assumes the first drawing' view on the sheet is not a draft view.
+oDrawingView = oSheet.DrawingViews(1)
+
+Dim oBorder As Border ' Set a reference to th sheet's border
+oBorder = oSheet.Border
+
+Dim oPlacementPoint As Point2d
+
+If Not oBorder Is Nothing Then ' A border exists. The placement point' is the top-right corner of the border
+oPlacementPoint = oBorder.RangeBox.MaxPoint
+Else' There is no border. The placement point' is the top-right corner of the sheet.
+oPlacementPoint = ThisApplication.TransientGeometry.CreatePoint2d(oSheet.Width, oSheet.Height)
+End If
+
+Dim oPartsList As PartsList ' Create the parts list.
+oPartsList = oSheet.PartsLists.Add(oDrawingView, oPlacementPoint)
+
+ThisDoc.Document.SaveAs("C:\Temp\DeleteMe2.dwg" , False)
+oRead = System.IO.File.OpenText("C:\TEMP\part1.txt") 'Get Original Assembly file name
+EntireFile1 = oRead.ReadLine()
+oRead.Close()
+oDrawingName = EntireFile1
+
+oDoc = ThisDoc.Document'define oDoc
+path_and_name = oExcelSaveLocation + oDrawingName
+
+'specify the drawing sheet
+oSheet = oDoc.Sheets("Sheet:1") ' sheet by name
+oPartsList = oSheet.PartsLists(1) ' say there is a Partslist on the sheet.
+oOptions.Value("IncludeTitle") = True    'choose to include the parts list title row      
+oOptions.Value("AutoFitColumnWidth") = True 'choose to autofit the column width in the xls file
+
+If Dir(path_and_name & ".xlsx") <> "" Then : Kill (path_and_name & ".xlsx"): End If 'check for existing XLS file and delete it if found
+oPartsList.Export(path_and_name & ".xlsx",PartsListFileFormatEnum.kMicrosoftExcel, oOptions) ' export the Partslist to Excel with options
+
+ThisDoc.Launch(path_and_name & ".xlsx")	 'Open Parts List
+ThisDoc.Document.Close(True)
+	
+Return
+	
+	ClintsErrorTrap :
+	MsgBox("We've encountered a mystery")
+	ThisDoc.Document.Close(True)

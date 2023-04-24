@@ -1,0 +1,29 @@
+'iLogic code By Dutt Thakar 'Originally posted on https://clintbrown.co.uk/ilogic-show-overridden-dimensions
+
+oDoc = ThisDoc.Document
+oNamer = "Highlight Dimension Overrides"
+Dim UNDO As Transaction 
+UNDO = ThisApplication.TransactionManager.StartTransaction(oDoc, oNamer)
+' Undo Wrapper -------------------------------------------------------------------------------------
+Dim oSheet As Sheet = oDoc.ActiveSheet
+Dim oColor As Color
+'Creating a color based On R, G, B values, here I want To highlight In red so kept it As (255,0,0)
+oColor = ThisApplication.TransientObjects.CreateColor(255, 0, 0) 
+Dim oDim As DrawingDimension
+Dim DimCount As Integer = 0
+For Each oDim In oSheet.DrawingDimensions
+        If oDim.OverrideModelValue <> oDim.ModelValue Or oDim.HideValue = True Then
+            oDim.Text.Color = oColor
+			DimCount = DimCount + 1
+        Else
+            oDim.Text.Color = ThisApplication.TransientObjects.CreateColor(0, 0, 0)
+        End If	
+Next
+If DimCount>0
+	MessageBox.Show(DimCount & " Dimensions are overridden")
+Else
+	MessageBox.Show("No Dimensions are overridden")
+End If
+iLogicVb.DocumentUpdate
+' Undo Wrapper -------------------------------------------------------------------------------------
+UNDO.End

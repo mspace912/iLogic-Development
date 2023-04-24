@@ -1,0 +1,36 @@
+﻿' Error Exporter
+' Created By : Jacob Yager
+' Date Created: 5/14/2020
+
+
+' Description:
+' This rule collects Exports the values in 
+
+' Notes:
+
+' 1. Arg1 (Excel Workshet), Arg2 (row to start exporting list - not including header) and Arg3 (The list of errors) need to be supplied from Main Rule
+' 2. Will export a single array into two columns (B and C) by alternating even rows in B, Odd rows in C
+
+' Change log:
+'200622 - Add Error Option of Unknown WorkCenter, noted it Line 24
+' *****************************************************************************************	
+'Collect Assembly Document and List from Main Rule
+excelWorksheet = RuleArguments("Worksheet")
+r = RuleArguments("row")
+ErrorList = RuleArguments("ErrorList")
+
+' Write Header and Description of Errors
+	excelWorksheet.Range("B" & r).Value = "Error List"
+	excelWorksheet.Range("D" & r).Value="If Qty > 0 then document is missing file extension in Document Display Name, 'UnKnown Work Center' indicates Work Center iProperty is not filled out correctly, otherwise document name does not equal occurence name"
+	
+	r = r +1
+	Dim j As Long
+	For j = 0 To ErrorList.Count - 1
+		If j Mod 2 = 0 Then
+			excelWorksheet.Range("B" & r).Value = ErrorList.Item(j)
+			r = r
+		Else
+			excelWorksheet.Range("C" & r).Value = ErrorList.Item(j)
+			r = r + 1
+		End If
+	Next 

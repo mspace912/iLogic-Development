@@ -1,0 +1,61 @@
+﻿Sub Main()
+
+'On Error Resume Next
+
+'  a reference to the drawing document.
+' This assumes a drawing document is active.
+Dim oDrawingDoc As DrawingDocument
+oDrawingDoc = ThisApplication.ActiveEditDocument
+
+' a reference to the active sheet.
+Dim oSheet As Sheet
+oSheet = oDrawingDoc.ActiveSheet
+
+'  a reference to the first drawing view on
+' the sheet. This assumes the first drawing
+' view on the sheet is not a draft view.
+Dim oDrawingView As DrawingView
+oDrawingView = oSheet.DrawingViews(1)
+
+'  a reference to th sheet's border
+Dim oBorder As Border
+oBorder = oSheet.Border
+
+Dim oPlacementPoint As Point2d
+
+If Not oBorder Is Nothing Then
+	' A border exists. The placement point
+	' is the top-right corner of the border.
+	oPlacementPoint = oBorder.RangeBox.MaxPoint
+Else
+	' There is no border. The placement point
+	' is the top-right corner of the sheet.
+	oPlacementPoint = ThisApplication.TransientGeometry.CreatePoint2d(oSheet.Width, oSheet.Height)
+End If
+
+' Create the parts list.
+Dim oPartsList As PartsList
+oPartsList = oSheet.PartsLists.Add(oDrawingView, oPlacementPoint)
+'iLogicVb.RunExternalRule("8 - QTY")
+iLogicVb.RunExternalRule("6 - TBPrompts")
+'iLogicVb.RunExternalRule("7 - Check View Scale")
+
+'FSJ 03FEB2023 Only dimension and save drawings that are new. Check SharedVariable = True for dimensioning 
+If SharedVariable("NewDwg") = True Then
+	iLogicVb.RunExternalRule("5 - Dimensioning")
+	iLogicVb.RunExternalRule("5B - Lin Dims")
+	oDrawingDoc.SaveAs(SharedVariable("IDWFILE"), False)
+Else
+	'Only create PDFs of the drawings that already existed, as new drawings will likely need cleanup
+	iLogicVb.RunExternalRule("9 - Generate PDF")
+End If
+
+
+
+
+
+
+
+
+'oDrawingDoc.close
+End Sub

@@ -1,0 +1,23 @@
+' Close Excel
+' Created By : Jacob Yager
+' Date Created: 5/13/2020
+
+
+' Description:
+' This will count the number of Excel.EXE files and close them. Prior to closing all files a warning message will notify the user. 
+
+' Notes:
+'
+
+' Change log:
+'XXXXXX - NONE
+' *****************************************************************************************
+Logger.Debug("Close Excel Program Started")
+MessageBox.Show("All Open Excel files will be closed at this time, please take a minute to save any work")
+Logger.Debug("Closing Warning Given")
+
+Dim Procs = Process.GetProcessesByName("excel")
+    For X As Integer = 0 To Procs.Count - 1
+        Procs(X).Kill()
+    Next X
+Logger.Debug("Excel Closed")

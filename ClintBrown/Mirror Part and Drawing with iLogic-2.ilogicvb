@@ -1,0 +1,40 @@
+'Code By @ClintBrown3D
+'Originally posted at https://clintbrown.co.uk/mirror-part-and-drawing-with-ilogic 
+
+'Check if this is a drawing file
+Dim doc = ThisDoc.Document
+If doc.DocumentType = kDrawingDocumentObject Then
+	
+On Error GoTo ClintBrown3D
+'Get the name of the model
+	oPartPath1 = IO.Path.GetFullPath(ThisDrawing.ModelDocument.FullFileName)
+	oPartPath2 = Left(oPartPath1, Len(oPartPath1) - 4)
+	oPartPath = oPartPath2 + "_Mirror.ipt"
+	oPartPath3 = oPartPath2 + "_Mirror.dwg"
+
+'Save a copy Of the drawing:
+	ThisDoc.Document.SaveAs(oPartPath3, False)
+	MessageBox.Show("Drawing Copied Successfully", "@ClintBrown3D")
+
+'Replace Drawing Reference
+	doc = ThisDoc.Document
+	Dim oFileDesc As FileDescriptor
+	oFileDesc = doc.ReferencedFileDescriptors(1).DocumentDescriptor.ReferencedFileDescriptor
+	oFileDesc.ReplaceReference(oPartPath)
+	doc.Update()
+
+'Update the title block - with curent date and correct drawing name (from model)
+	oGetTheName = ActiveSheet.View("VIEW1").ModelDocument.DisplayName
+	oGetStringLength = Len(oGetTheName)
+	oName = Mid(oGetTheName,1,(oGetStringLength-4))
+	iProperties.Value("Project", "Part Number") = oName
+	iProperties.Value("Project", "Creation Date") = Now
+	iLogicVb.UpdateWhenDone = True
+
+'Save this drawing
+	ThisDoc.Save
+End If
+Return
+
+ClintBrown3D :
+MessageBox.Show("Model Not found", "@ClintBrown3D")

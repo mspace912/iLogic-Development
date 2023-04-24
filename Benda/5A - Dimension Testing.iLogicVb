@@ -1,0 +1,104 @@
+﻿Sub Main()
+	Dim oSheet As Sheet
+	oSheet = ThisApplication.ActiveDocument.ActiveSheet
+	
+	Dim FPV As Inventor.DrawingView = Nothing
+	For Each DwgView As Inventor.DrawingView In oSheet.DrawingViews
+		If DwgView.IsFlatPatternView Then
+			FPV = DwgView
+			Exit For
+		End If
+	Next
+	
+	'Draw some geometry on a sketch associated to the view for the origin indicator
+	Dim DatumLine As Inventor.SketchLine = DrawDatumGeometry(FPV)
+End Sub
+
+Function DrawDatumGeometry(FlatPatternView As Inventor.DrawingView) As Inventor.SketchLine
+	
+	
+	Dim Sktch As Inventor.DrawingSketch = FlatPatternView.Sketches.Add()
+	Sktch.Edit
+	
+	
+	Dim TopEdge As Inventor.DrawingCurve = Nothing
+	Dim LeftEdge As Inventor.DrawingCurve = Nothing
+
+	'Keep track of whether or not the top and left most points of the top and left most edges are the minimum points
+	
+	Dim XAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(1, 0)
+	Dim YAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(0,1)
+	For Each Curve As Inventor.DrawingCurve In FlatPatternView.DrawingCurves
+		Logger.Debug("Curve type: " & Curve.CurveType.ToString())
+		If Curve.CurveType = Inventor.CurveTypeEnum.kLineCurve Or Curve.CurveType = Inventor.CurveTypeEnum.kLineSegmentCurve Then
+			
+			'Get vector of the curve to check horizontal or vertical
+			Dim CurveVector As Inventor.Vector2d = Curve.StartPoint.VectorTo(Curve.EndPoint)
+			If CurveVector.IsParallelTo(XAxis) Then
+				If TopEdge Is Nothing Then
+					TopEdge = Curve
+					Continue For
+				Else
+					If GetSegmentYMax(Curve) > GetSegmentYMax(TopEdge) Then
+						TopEdge = Curve
+					End If
+				End If
+			ElseIf CurveVector.IsParallelTo(YAxis) Then
+				If LeftEdge Is Nothing Then
+					LeftEdge = Curve
+					Continue For
+				Else
+					If GetSegmentXMin(Curve) < GetSegmentXMin(LeftEdge) Then
+						LeftEdge = Curve	
+					End If
+				End If
+			Else
+			End If
+		End If
+				
+	Next
+	
+	'Dim FlatPatternXMin As Double = GetSegmentXMin(LeftEdge)
+	'Dim FlatPatternYMax As Double = GetSegmentYMax(TopEdge)
+	Dim TopEdgeEnt As Inventor.SketchLine = Sktch.AddByProjectingEntity(TopEdge)
+	Dim LeftEdgeEnt As Inventor.SketchLine = Sktch.AddByProjectingEntity(LeftEdge)
+	
+	'Draw a new sketch edge with its start at the datum point
+	Dim DEStartPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(LeftEdgeEnt.StartSketchPoint.Geometry.X, TopEdgeEnt.StartSketchPoint.Geometry.Y)
+	Dim DEEndPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(DEStartPoint.X + 1, DEStartPoint.Y)
+	Dim DatumEdge As Inventor.SketchLine = Sktch.SketchLines.AddByTwoPoints(DEStartPoint, DEEndPoint)
+	DatumEdge.SketchOnly = False
+	
+	Sktch.ExitEdit
+	Return DatumEdge
+	
+	
+	
+
+End Function
+
+
+Function GetSegmentXMin(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.X < Curve.EndPoint.X Then
+		Return Curve.StartPoint.X
+	Else
+		Return Curve.EndPoint.X
+	End If
+End Function
+
+'Returns the highest Y value for a drawing curve
+Function GetSegmentYMax(Curve As Inventor.DrawingCurve) As Double
+	If Curve.StartPoint.Y > Curve.EndPoint.Y Then
+		Return Curve.StartPoint.Y
+	Else
+		Return Curve.EndPoint.Y
+	End If
+End Function
+
+Function DoubleIsEqual(Val1 As Double, Val2 As Double, Optional Precision As Integer = 5) As Boolean
+	If Math.Round(Val1, Precision) = Math.Round(Val2, Precision) Then
+		Return True
+	Else
+		Return False
+	End If
+End Function

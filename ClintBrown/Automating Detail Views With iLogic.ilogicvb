@@ -1,0 +1,53 @@
+'This version of iLogic code by @ClintBrown3D, based on Inventor API sample
+'Originally Published at https://clintbrown.co.uk/automating-detail-views-with-ilogic
+
+    ' Set a reference to the drawing document - This assumes a drawing document is active.
+    Dim oDrawDoc As DrawingDocument
+    oDrawDoc = ThisApplication.ActiveDocument
+
+    ' Select a drawing view.
+    Dim oDrawingView As DrawingView
+    oDrawingView = ThisApplication.CommandManager.Pick(kDrawingViewFilter, "Select a drawing view.")
+        
+    'Set a reference to the active sheet.
+    Dim oSheet As Sheet
+    oSheet = oDrawingView.Parent
+
+    ' Set a reference to the center of the base view.
+    Dim oPoint As Point2d
+    oPoint = oDrawingView.Center
+    
+    ' Translate point by a distance equal to the width of the view. This will be the placement point of the detail view.
+    oPoint.X = oPoint.X + oDrawingView.Width
+    
+    ' Arbitrarily find an arc within the selected drawing view. The detail view will include this arc.
+    Dim oCurve As DrawingCurve
+    Dim oArcCurve As DrawingCurve
+    For Each oCurve In oDrawingView.DrawingCurves
+        If oCurve.CurveType = kCircularArcCurve Then
+            oArcCurve = oCurve
+            Exit For
+        End If
+    Next
+    
+    If Not oArcCurve Is Nothing Then ' Use the range of the arc in sheet space to calculate the detail view box.
+        Dim oCornerOne As Point2d
+        oCornerOne = oArcCurve.Evaluator2D.RangeBox.MinPoint
+        oCornerOne.X = oCornerOne.X - 1
+        oCornerOne.Y = oCornerOne.Y - 1
+        
+        Dim oCornerTwo As Point2d
+        oCornerTwo = oArcCurve.Evaluator2D.RangeBox.MaxPoint
+        oCornerTwo.X = oCornerTwo.X' + 1
+        oCornerTwo.Y = oCornerTwo.Y' + 1
+
+        Dim oDetailView As DetailDrawingView
+		
+		' Create the detail view with a Circular cutout
+		oDetailView = oSheet.DrawingViews.AddDetailView(oDrawingView, oPoint, kFromBaseDrawingViewStyle, True, oCornerTwo, 1, , oDrawingView.Scale * 2, True,,False)
+
+        ' Create the detail view with a rectangular box.
+'		oDetailView = oSheet.DrawingViews.AddDetailView(oDrawingView, oPoint,kFromBaseDrawingViewStyle, False, oCornerOne, oCornerTwo, , oDrawingView.Scale * 2)
+    Else
+        MsgBox("No arc was found in the selected drawing view.")
+    End If

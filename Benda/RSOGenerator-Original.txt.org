@@ -1,0 +1,310 @@
+﻿' RSO Generator
+' Created By : Jacob Yager
+' Date Created: 5/15/2020
+
+
+' Description:
+' This Rule uses the RSO template to write all parts/assembilies, descriptions and qty into an RSO.
+'The RSO is then saved in the folder where the assembly is located and opened for the user
+
+' Notes:
+
+' 1. Needs to be run for Assemblies only
+
+
+' Change log:
+'200518 - ADDED ERROR LOG
+'200526 - REPLACED OCCURENCE NAME WITH DOCUMENT NAME TO REDUCE ERRORS
+'200603 - USE EXTERNAL RULE TO GATHER QTY, REORDERED IF STATEMENTS FOR PROPER ERROR COMPILING
+'201023 - CHANGED LOGIC TO EXPORT TO A SINGLE SHEET, SORT VALUES IN EXCEL NUMARICALLY, COPY & PASTE INTO RSO TABS, THEN FORMAT CELLS
+'201211 - ADDED EXCEL SAVE POINTS THROUGHOUT CODE
+
+' ***************************************************************************************************************************************
+
+Sub Main
+	
+	' Save assembly information
+	projectNumber = Left(ThisDoc.FileName, 12)
+	'itemNumber = iProperties.Value("Project", "Description")
+	itemNumber = 1
+	
+	'Set Up File Locations
+	Dim RSOTemplateSheet As String
+	RSOtemplate = "N:\Inventor Library\Templates\Benda\Inventor Rules\RSO-Master-XX-.xlsx"
+	RSOTemplateSheet = "RSO"
+	RSOnew = ThisDoc.Path & "\RSO " & projectNumber & " - " & itemNumber & ".xlsx"
+	
+	' Close Open Excel Files
+	iLogicVb.RunExternalRule("CloseExcel") 'Close All Open Excel.Exe Files
+Logger.Debug("Excel Files Closed Successfully")
+
+'[ Open Template and Save Quote Template as RSO
+	excelApp = CreateObject("Excel.Application")
+	excelApp.Visible = False
+	excelApp.DisplayAlerts = True
+Logger.Debug("New Excel File Created")
+	
+	excelWorkbookNew = excelApp.Workbooks.Add
+	excelWorkbookNew.SaveAs(RSOnew)
+Logger.Debug("New Excel File Saved")
+	
+	excelWorkbook = excelApp.Workbooks.Open(RSOtemplate)
+	excelWorkbook.Sheets(RSOTemplateSheet).Select
+	excelWorkbook.Sheets(RSOTemplateSheet).Copy(After := excelWorkbookNew.Sheets(1))
+Logger.Debug("RSO Opened and Initial RSO Page Added")
+	
+	excelWorkbookNew.Sheets("Sheet1").Select
+	excelWorkbookNew.Sheets("Sheet1").Copy(After := excelWorkbookNew.Sheets(2))
+	excelWorkbookNew.Sheets(3).Name = "ErrorList"
+Logger.Debug("Error Tab Added")
+	
+	excelWorkbook.Close
+	'excelApp.Visible = True
+	']
+	
+	Dim sheet As Integer = 1
+	Dim r As Integer = 3
+
+	excelWorksheet = excelWorkbookNew.Worksheets.Item(sheet)
+Logger.Debug("RSO Successfully Created")
+
+	
+'[ Set this Document as the Active Assembly
+    Dim oAsmDoc As AssemblyDocument
+    oAsmDoc = ThisDoc.Document
+	
+	' Get the Definition of the Assembly.
+    Dim oAsmCompDef As AssemblyComponentDefinition
+    oAsmCompDef = oAsmDoc.ComponentDefinition
+	']
+Logger.Debug("Assembly Defined")
+	
+Dim map As Inventor.NameValueMap = ThisApplication.TransientObjects.CreateNameValueMap()	
+'[ Create List of Assemblies	
+	' Pass Variables to External Rule
+	Dim MyArrayList As New ArrayList
+	map.Add("Doc", oAsmDoc)
+	map.Add("List", MyArrayList)
+	
+	' Run External Rule
+	iLogicVb.RunExternalRule("CollectAssemblyNames", map)
+	']
+Logger.Debug("Assembly List Complied")
+	
+'[ Begin RSO Creation
+		Dim ErrorList As New ArrayList
+		excelWorksheet.Range("B" & 2).Value = iProperties.Value("Project", "Part Number")
+		excelWorksheet.Range("C" & 2).Value = iProperties.Value("Project", "Description")
+		excelWorksheet.Range("D" & 2).Value = 1
+Logger.Debug("Active Componet Placed in RSO")
+		
+	For Each doc In oAsmDoc.AllReferencedDocuments
+
+	' Collect Name of Each Indexed Part From File Name 
+	Try
+		pos = InStrRev(doc.DisplayName, ".", - 1) - 1
+    	c1Name = Left(doc.DisplayName, pos)
+	Catch
+       	c1Name = doc.DisplayName
+Logger.Debug(c1Name & " document Display Name is missing file extension")
+	End Try
+Logger.Debug(c1Name)
+Logger.Debug(doc.DisplayName)
+
+'[ Count Componet in Assembly
+		
+	' Pass Variables to External Rule
+	SharedVariable("doc") = doc
+	SharedVariable("CompDef") = oAsmCompDef
+	
+	' Run External Rule
+	iLogicVb.RunExternalRule("CountComponent", map)
+	'iLogicVb.RunRule("CountComponent", map)
+	cnt = SharedVariable("cnt")
+	']
+Logger.Debug("Qty Gathered")
+
+	'[ Dertmine Work Center
+	iLogicVb.RunExternalRule("DetermineWorkCenter", map)
+	WC = SharedVariable("WC")
+	SharedVariable.Remove("doc")
+	']
+
+	' If there was an Error or cnt = 0, Add to Error List and Maintain Current r
+	If cnt = 0 Then
+		ErrorList.Add(c1Name)
+		ErrorList.Add(cnt)
+		r = r
+	Else If WC = 3 OR WC = 5 Or  WC = 6
+Logger.Debug("Part is a Cut Part, Purchased Part, or Unidentifed Workcenter")
+			If WC = 6
+Logger.Debug("Part has Unidentifed Workcenter")
+				' Error due to no Work Center - Fill Out iProperty
+				ErrorList.Add("UnKnown Work Center - " & c1Name)
+				ErrorList.Add(cnt)
+				r = r
+				
+			Else
+Logger.Debug("Part is Cut or Purchased Part, Skip in RSO")
+				r = r
+			End If
+	Else
+		'Place Part Prices, Description, and Part Number in Quote
+		Try
+			excelWorksheet.Range("B" & r).Value = iProperties.Value(doc.DisplayName, "Project", "Part Number")
+Logger.Debug("Part Number Added")
+			excelWorksheet.Range("C" & r).Value = iProperties.Value(doc.DisplayName, "Project", "Description")
+Logger.Debug("Description Added")
+			excelWorksheet.Range("D" & r).Value = cnt
+Logger.Debug("Qty Logged")
+			r = r + 1
+		Catch
+			' Error due to no file extension - can not access doc.DisplayName
+			ErrorList.Add(c1Name)
+			ErrorList.Add(cnt)
+			r = r
+Logger.Debug("Error Logged for doc.DisplayName")
+		End Try
+	End If
+Next
+Logger.Debug("All Components Placed in RSO")
+
+	r=r-1
+Logger.Debug(r)
+	Range = excelWorksheet.Range("B3:D" & r)
+	Range.Sort(Key1 := excelWorksheet.Range("B3"))
+Logger.Debug("All Items Sorted")
+	']
+	
+	' Save Excel Document
+	excelWorkbookNew.Save
+Logger.Debug("Initial Excel Save")
+	
+	'Identify Initial Excel Sheet Location for Pasting
+		sheetnew = 2
+		
+	If r <= 23
+Logger.Debug("There are less than 24 items")
+
+		'Copy Part Number and Description from List in Sheet1 Tab
+		excelWorksheet = excelWorkbookNew.Worksheets.Item(sheet)
+		CopyRSORange = excelWorksheet.Range("B2:C" & r)
+		CopyRSORange.Copy
+Logger.Debug("Part numbers and descriptions are copied")		
+
+		'Paste Part Number and Description from List in RSO Tab
+		PasteRSORange = excelWorkbookNew.Worksheets.Item(sheetnew)
+		PasteRSORange.Range("B19").PasteSpecial
+Logger.Debug("Part numbers and descriptions are pasted")	
+		
+		'Copy Qty from List in Sheet1 Tab
+		excelWorksheet = excelWorkbookNew.Worksheets.Item(sheet)
+		CopyRSORange = excelWorksheet.Range("D2:D" & r)
+		CopyRSORange.Copy
+Logger.Debug("Qtys are copied")
+		
+		'Paste Qty from List in RSO Tab
+		PasteRSORange = excelWorkbookNew.Worksheets.Item(sheetnew)
+		PasteRSORange.Range("G19").PasteSpecial
+Logger.Debug("Qtys are pasted")
+		
+		'Format List in RSO Tab
+		PasteRSORange.Range("C19:F41").Merge(Across :=True)
+		
+		BorderRSORange = excelWorkbookNew.Worksheets.Item(sheetnew)
+		PasteRSORange.Range("B19:G40").Cells.Borders.LineStyle = xlContinuous
+		PasteRSORange.Range("B19:G40").Cells.Borders.Color = vbBlack
+Logger.Debug("Excel cells are formated")
+
+	' Save Excel Document
+	excelWorkbookNew.Save
+Logger.Debug("Excel Save")
+
+	Else
+Logger.Debug("There are more than 24 items")
+		'Initialize Start and End Rows to Copy
+		x1 = 2
+		x = x1 + 21
+		While r-x1 >= 0
+			'Create Part Number and Description from List in RSO Tab
+			excelWorkbookNew.Sheets(sheetnew).Select
+			excelWorkbookNew.Sheets(sheetnew).Copy(After := excelWorkbookNew.Sheets(sheetnew))
+Logger.Debug("New RSO tab created")
+			
+			excelWorksheet = excelWorkbookNew.Worksheets.Item(sheet)
+			CopyRSORange = excelWorksheet.Range("B" & x1, "C" & x)
+			CopyRSORange.Copy
+Logger.Debug("Part numbers and descriptions are copied")
+
+			'Paste Part Number and Description from List in RSO Tab
+			PasteRSORange = excelWorkbookNew.Worksheets.Item(sheetnew)
+			PasteRSORange.Range("B19").PasteSpecial
+Logger.Debug("Part numbers and descriptions are pasted")
+			
+			'Copy Qty from List in Sheet1 Tab
+			excelWorksheet = excelWorkbookNew.Worksheets.Item(sheet)
+			CopyRSORange = excelWorksheet.Range("D" & x1, "D" & x)
+			CopyRSORange.Copy
+Logger.Debug("Qtys are copied")
+			
+			'Paste Qty from List in RSO Tab
+			PasteRSORange = excelWorkbookNew.Worksheets.Item(sheetnew)
+			PasteRSORange.Range("G19").PasteSpecial
+Logger.Debug("Qtys are pasted")
+			
+			'Format List in RSO Tab
+			PasteRSORange.Range("C19:F41").Merge(Across :=True)
+			
+			BorderRSORange = excelWorkbookNew.Worksheets.Item(sheetnew)
+			PasteRSORange.Range("B19:G40").Cells.Borders.LineStyle = xlContinuous
+			PasteRSORange.Range("B19:G40").Cells.Borders.Color = vbBlack
+Logger.Debug("Excel cells are formated")
+			
+			x1 = x + 1
+			x = x1 + 21
+			sheetnew = sheetnew + 1
+		End While
+	' Save Excel Document
+	excelWorkbookNew.Save
+Logger.Debug("Excel Save")
+
+	End If
+	
+'[ Export all the Errors to Excel
+	excelWorksheet = excelWorkbookNew.Worksheets.Item("ErrorList")
+	'sheet = sheet + 2
+	r = 3
+	
+	' Pass Variables to External Rule
+	map.Add("Worksheet", excelWorksheet)
+	map.Add("row", r)
+	map.Add("ErrorList", ErrorList)
+	
+	' Run External Rule
+	iLogicVb.RunExternalRule("ExportErrorList", map)
+	']
+Logger.Debug("Errors Logged and Exported")
+
+	' Save Excel Document
+	excelWorkbookNew.Save
+Logger.Debug("Excel Save")
+
+	' Autofit Columns
+	excelWorksheet.Columns("B:B").EntireColumn.AutoFit
+	excelWorksheet.Columns("C:C").EntireColumn.AutoFit
+	
+'[ Delete Original Excel Tab
+	excelWorksheet = excelWorkbookNew.Worksheets.Item(1)
+	excelWorksheet.visible = xlSheetHidden
+	']
+Logger.Debug("Orignial Tab (Sheet1) Hidden")
+	
+	MessageBox.Show("RSO Generation Complete!")
+
+	' Save and Quit Quote
+	excelWorkbookNew.Save
+	excelApp.Visible = True
+'	excelWorkbook.Close
+'	excelApp.Quit
+Logger.Debug("Final Document Complied and Saved ")
+End Sub

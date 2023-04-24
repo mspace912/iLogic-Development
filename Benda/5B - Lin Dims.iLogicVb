@@ -1,0 +1,444 @@
+﻿Class EdgeSet
+	Public Direction As Inventor.Vector2d
+	Public CurveOne As Inventor.DrawingCurve
+	Public CurveTwo As Inventor.DrawingCurve
+	
+	Public Sub New(FirstCurve As Inventor.DrawingCurve, SecondCurve As Inventor.DrawingCurve)
+		CurveOne = FirstCurve
+		CurveTwo = SecondCurve
+		Direction = FirstCurve.StartPoint.VectorTo(FirstCurve.EndPoint)
+	End Sub
+
+End Class
+
+Class SetPair
+	Public SetOne As EdgeSet
+	Public SetTwo As EdgeSet
+	Public DimOutside As Boolean = True
+	
+	Public Sub New(FirstSet As EdgeSet, SecondSet As EdgeSet)
+		SetOne = FirstSet
+		SetTwo = SecondSet
+	End Sub 
+End Class
+
+Sub Main()
+	
+	Dim Sht As Inventor.Sheet = ThisApplication.ActiveDocument.Sheets(1)
+	Dim Vw As Inventor.DrawingView = Sht.DrawingViews(1)
+	Dim HorizDimresult As Boolean = BendaLinearDimsHorizontal(Vw)
+	Dim doc = ThisApplication.ActiveEditDocument
+	doc.close
+	odoc = ""
+End Sub
+
+Function BendaLinearDimsHorizontal(TargetView As Inventor.DrawingView, Optional DimTextOffset As Double = 1.0, Optional DimTextSpacing As Double = 1.5) As Boolean
+	
+	'Determine part thickness
+	Dim PartCompDef As Inventor.PartComponentDefinition = TargetView.ReferencedDocumentDescriptor.ReferencedDocument.ComponentDefinition
+	PartThickness = PartCompDef.Parameters("Thickness").Value
+	
+	Dim Sht As Inventor.Sheet = TargetView.Parent
+	'Establish X and Y vectors for comparison
+	Dim XAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(1, 0)
+	Dim YAxis As Inventor.Vector2d = ThisApplication.TransientGeometry.CreateVector2d(0, 1)
+	
+	'Keep track of X and Y Max for start of linear dimensions
+	Dim XMax As Double = 0
+	Dim YMax As Double = 0
+	
+	'Keep track of min and max edges for overall dimensions
+	Dim XMinEdge As Inventor.DrawingCurve
+	Dim XMaxEdge As Inventor.DrawingCurve
+	Dim YMinEdge As Inventor.DrawingCurve
+	Dim YMaxEdge As Inventor.DrawingCurve
+	
+	
+	'Find all horizontal and vertical edges
+	Dim HEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+	Dim VEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+	For Each Curve As Inventor.DrawingCurve In TargetView.DrawingCurves
+		Try
+			Dim CurveVector As Inventor.Vector2d = Curve.StartPoint.VectorTo(Curve.EndPoint)
+			If CurveVector.IsParallelTo(XAxis) Then
+				HEdges.Add(Curve)
+				If Curve.StartPoint.Y > YMax Then
+					YMax = Curve.StartPoint.Y
+				End If
+			ElseIf CurveVector.IsParallelTo(YAxis) Then
+				VEdges.Add(Curve)
+				If Curve.StartPoint.X > XMax Then
+					XMax = Curve.StartPoint.X
+				End If
+			End If
+		Catch Ex As Exception
+			Logger.Info("Failed to evaluate a curve for linear dimensions. May be zero-length edge")
+		End Try
+	
+	Next
+	
+	Logger.Debug("XMax: " & XMax.ToString())
+	Logger.Debug("YMax: " & YMax.ToString())
+	
+	
+	'Sort edges
+	HEdges.Sort(Function(x, y) y.StartPoint.Y.CompareTo(x.StartPoint.Y))
+	VEdges.Sort(Function(x, y) y.StartPoint.X.CompareTo(x.StartPoint.X))
+	
+	XMinEdge = VEdges(VEdges.Count - 1)
+	XMaxEdge = VEdges(0)
+	YMinEdge = HEdges(HEdges.Count - 1)
+	YMaxEdge = HEdges(0)
+	
+	Logger.Debug("XminX " & XMinEdge.StartPoint.X)
+	Logger.Debug("XMaxX " & XMaxEdge.StartPoint.X)
+	Logger.Debug("YminY " & YMinEdge.StartPoint.Y)
+	Logger.Debug("YmaxY " & YMaxEdge.StartPoint.Y)
+	
+	
+	'Remove edges on the same X and Y dimensions to remove 'duplicates'
+	Dim HEdgesUnique As List(Of Inventor.DrawingCurve) = HEdges.GroupBy(Function(x) x.StartPoint.Y).Select(Function(x) x.First).ToList()
+	Dim VEdgesUnique As List(Of Inventor.DrawingCurve) = VEdges.GroupBy(Function(x) x.StartPoint.X).Select(Function(x) x.First).ToList()
+	
+'[Logging
+'	For Each Curve As Inventor.DrawingCurve In HEdgesUnique
+'		Logger.Debug("HEdge " & HEdgesUnique.IndexOf(Curve) & " Y value: " & Curve.StartPoint.Y)
+'	Next
+	
+'	For Each Curve As Inventor.DrawingCurve In VEdgesUnique
+'		Logger.Debug("VEdge " & VEdgesUnique.IndexOf(Curve) & " X value: " & Curve.StartPoint.X)
+'	Next
+']
+
+	'Iterate through edges to find sets. Sets are edges that are separated by the material thickness. Only one member of a set should be dimensioned
+	Dim HEdgeSets As List(Of EdgeSet) = New List(Of EdgeSet)
+	For i As Integer = 0 To HEdgesUnique.Count - 2
+		ThisCurve = HEdgesUnique(i)
+		NextCurve = HEdgesUnique(i + 1)
+		Dim SeparationDistance = Abs(NextCurve.StartPoint.Y - ThisCurve.StartPoint.Y) / ThisCurve.Parent.Scale
+		'Logger.Debug("This sep dist: " & SeparationDistance.ToString())
+		If DoubleEquals(SeparationDistance, PartThickness) Then
+			'We have an edge set, create and add to collection
+			HEdgeSets.Add(New EdgeSet(ThisCurve, NextCurve))
+		End If
+	Next
+	
+	Dim VEdgeSets As List(Of EdgeSet) = New List(Of EdgeSet)
+	For i As Integer = 0 To VEdgesUnique.Count - 2
+		ThisCurve = VEdgesUnique(i)
+		NextCurve = VEdgesUnique(i + 1)
+		Dim SeparationDistance = Abs(NextCurve.StartPoint.X - ThisCurve.StartPoint.X) / ThisCurve.Parent.Scale
+		'Logger.Debug("This sep dist: " & SeparationDistance.ToString())
+		If DoubleEquals(SeparationDistance, PartThickness) Then
+			'We have an edge set, create and add to collection
+			VEdgeSets.Add(New EdgeSet(ThisCurve, NextCurve))
+		End If
+	Next
+	
+	Logger.Debug("Total Horizontal Edge Sets: " & HEdgeSets.Count)
+	Logger.Debug("Total Vertical Edge Sets: " & VEdgeSets.Count)
+	
+	'Iterate through edge sets. Create new SetPair objects to use for dimensioning
+	Dim HSetPairs As List(Of SetPair) = New List(Of SetPair)
+	For i As Integer = 0 To HEdgeSets.Count - 2
+		Dim ThisSetPair As SetPair = New SetPair(HEdgeSets(i), HEdgeSets(i+1))
+		HSetPairs.Add(ThisSetPair)
+	Next
+	
+	'Iterate through edge sets. Create new SetPair objects to use for dimensioning
+	Dim VSetPairs As List(Of SetPair) = New List(Of SetPair)
+	For i As Integer = 0 To VEdgeSets.Count - 2
+		Dim ThisSetPair As SetPair = New SetPair(VEdgeSets(i), VEdgeSets(i + 1))
+		VSetPairs.Add(ThisSetPair)
+	Next
+
+	'Logger.Debug("Total Horizontal SetPairs: " & HSetPairs.Count)
+	'Logger.Debug("Total Vertical Setpairs: " & VSetPairs.Count)
+	
+	'Place linear dimensions between each set pair
+	Dim YTextStartPos As Double = YMax + DimTextOffset
+	Dim XTextStartPos As Double = XMax + DimTextOffset
+	
+	'Keep track of the max X and Y dim text positions so we can put the overall dimension texts in the correct position
+	Dim MaxXDimTextPos As Double = XTextStartPos
+	Dim MaxYDimTextPos As Double = YTextStartPos
+	
+	'Keep track of Horizontal and Vertical dimension values to compare later to Overall Horizontal and Vertical
+	Dim HDimVals As List(Of Double) = New List(Of Double)
+	Dim VDimVals As List(Of Double) = New List(Of Double)
+	
+	
+	'Vertical dimension placement
+	For i As Integer = 0 To HSetPairs.Count - 1
+		Dim Intent1 As Inventor.GeometryIntent
+		Dim Intent2 As Inventor.GeometryIntent
+		Dim Pair As SetPair = HSetPairs(i)
+		'Create geometry intents for edges. For outside to outside dims, use first curve of first pair and second curve of second par
+		'Otherwise use the opposite of each pair
+		If Pair.DimOutside Then
+			Intent1 = Sht.CreateGeometryIntent(Pair.SetOne.CurveOne)
+			Intent2 = Sht.CreateGeometryIntent(Pair.SetTwo.CurveTwo)
+		Else
+			Intent1 = Sht.CreateGeometryIntent(Pair.SetOne.CurveTwo)
+			Intent2 = Sht.CreateGeometryIntent(Pair.SetTwo.CurveOne)
+		End If
+		'Determine dim text location
+		Dim DimTextXPos As Double = XTextStartPos + i * DimTextSpacing
+		MaxXDimTextPos = DimTextXPos
+		VDimVals.Add(Abs(Intent1.Geometry.StartPoint.Y - Intent2.Geometry.StartPoint.Y))
+		Dim DimTextYPos As Double = Intent1.Geometry.StartPoint.Y - Abs(Intent1.Geometry.StartPoint.Y - Intent2.Geometry.StartPoint.Y) / 2
+		Dim DimTextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(DimTextXPos, DimTextYPos)
+		'Place dimension
+		Try
+			Dim ThisDim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(DimTextPoint, Intent1, Intent2, Inventor.DimensionTypeEnum.kVerticalDimensionType)
+		Catch Ex As Exception
+			Logger.Debug("Failed to place a vertical linear dimension")
+		End Try
+		
+		
+	Next
+	
+	'Horizontal dimension placement
+	For i As Integer = 0 To VSetPairs.Count - 1
+		Dim Intent1 As Inventor.GeometryIntent
+		Dim Intent2 As Inventor.GeometryIntent
+		Dim Pair As SetPair = VSetPairs(i)
+		'Create geometry intents for edges. For outside to outside dims, use first curve of first pair and second curve of second par
+		'Otherwise use the opposite of each pair
+		If Pair.DimOutside Then
+			Intent1 = Sht.CreateGeometryIntent(Pair.SetOne.CurveOne)
+			Intent2 = Sht.CreateGeometryIntent(Pair.SetTwo.CurveTwo)
+		Else
+			Intent1 = Sht.CreateGeometryIntent(Pair.SetOne.CurveTwo)
+			Intent2 = Sht.CreateGeometryIntent(Pair.SetTwo.CurveOne)
+		End If
+		'Determine dim text location
+		HDimVals.Add(Abs(Intent1.Geometry.StartPoint.X - Intent2.Geometry.StartPoint.X))
+		Dim DimTextXPos As Double = Intent1.Geometry.StartPoint.X + Abs(Intent1.Geometry.StartPoint.X - Intent2.Geometry.StartPoint.X) / 2 
+		Dim DimTextYPos As Double = YTextStartPos + i * DimTextSpacing
+		MaxYDimTextPos = DimTextYPos
+		Dim DimTextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(DimTextXPos, DimTextYPos)
+		'Place dimension
+		Try
+			Dim ThisDim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(DimTextPoint, Intent1, Intent2, Inventor.DimensionTypeEnum.kHorizontalDimensionType)
+		Catch Ex As Exception
+			Logger.Debug("Failed to place a linear horizontal dimension")
+		End Try
+	Next
+	
+	'Now place overall horizontal and vertical dimensions, but only if there's not already an overall dimension of that length in the same dimension
+	'Vertical OAL
+	Dim VOALIntent1 As Inventor.GeometryIntent
+	Dim VOALIntent2 As Inventor.GeometryIntent
+	Dim VOALDistance As Double = Abs(YMaxEdge.StartPoint.Y - YMinEdge.StartPoint.Y)
+	Dim HOALDistance As Double = Abs(XMaxEdge.StartPoint.X - XMinEdge.StartPoint.X)
+	'Iterate through lists of dimension lengths. Can't do straight compare due to possible inaccuracies at extreme decimal places
+	Dim PlaceHOAL As Boolean = True
+	Dim PlaceVOAL As Boolean = True
+	For Each Val As Double In HDimVals
+		If DoubleEquals(Val, HOALDistance) Then
+			PlaceHOAL = False
+			Exit For
+		End If
+	Next
+	For Each Val As Double In VDimVals
+		If DoubleEquals(Val, VOALDistance) Then
+			PlaceVOAL = False
+			Exit For
+		End If
+	Next
+	Break
+	If PlaceHOAL Then
+		Logger.Debug("Need to dimension overall horizontal")
+		
+		'Modified by FSJ 07FEB2023
+		'Try to make these Overall dims more reliable - API is throwing errors for unknown reason
+		'Start by finding all appropriate edges on the extents
+		Dim HOAStartEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		Dim HOAEndEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		
+		For Each Curve As Inventor.DrawingCurve In VEdges
+			If Curve.StartPoint.X = VEdgesUnique(0).StartPoint.X Then
+				HOAStartEdges.Add(Curve)
+			Else If Curve.StartPoint.X = VEdgesUnique((VEdgesUnique.Count - 1)).StartPoint.X Then
+				HOAEndEdges.Add(Curve)
+			End If
+		Next
+		Logger.Debug("Number of start edges: " & HOAStartEdges.Count.ToString())
+		Logger.Debug("Number of end edges: " & HOAEndEdges.Count.ToString())
+
+		Dim PlacedHOAL As Boolean = False
+		For Each Curve As Inventor.DrawingCurve In HOAStartEdges
+			For Each SecondCurve As Inventor.DrawingCurve In HOAEndEdges
+				Dim FirstIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(Curve)
+				Dim SecondIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(SecondCurve)
+				Dim XDimLoc As Double = XMax - Abs(SecondCurve.StartPoint.X - Curve.StartPoint.X) / 2
+				Dim YDimLoc As Double = MaxYDimTextPos + DimTextSpacing
+				Dim TextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(XDimLoc, YDimLoc)
+				Try
+					Dim HOADim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(TextPoint, FirstIntent, SecondIntent, Inventor.DimensionTypeEnum.kHorizontalDimensionType)
+					PlacedHAOL = True
+					Exit For
+				Catch
+					Logger.Debug("failed to place hoal")
+				End Try
+			Next
+			If PlacedHOAL = True Then
+				Exit For
+			End If
+		Next
+	End If
+	
+	If PlaceVOAL Then
+		Logger.Debug("Need to dimension overall vertical")
+
+		'Modified by FSJ 07FEB2023
+		'Try to make these Overall dims more reliable - API is throwing errors for unknown reason
+		'Start by finding all appropriate edges on the extents
+		Dim VOAStartEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		Dim VOAEndEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		
+		For Each Curve As Inventor.DrawingCurve In HEdges
+			If Curve.StartPoint.Y = HEdgesUnique(0).StartPoint.Y Then
+				VOAStartEdges.Add(Curve)
+			Else If Curve.StartPoint.Y = HEdgesUnique((HEdgesUnique.Count - 1)).StartPoint.Y Then
+				VOAEndEdges.Add(Curve)
+			End If
+		Next
+		Logger.Debug("Number of start edges: " & VOAStartEdges.Count.ToString())
+		Logger.Debug("Number of end edges: " & VOAEndEdges.Count.ToString())
+
+		Dim PlacedVOAL As Boolean = False
+		For Each Curve As Inventor.DrawingCurve In VOAStartEdges
+			For Each SecondCurve As Inventor.DrawingCurve In VOAEndEdges
+				Dim FirstIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(Curve)
+				Dim SecondIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(SecondCurve)
+				Dim XDimLoc As Double = MaxXDimTextPos + DimTextSpacing
+				Dim YDimLoc As Double = YMax - Abs(SecondCurve.StartPoint.Y - Curve.StartPoint.Y) / 2
+				Dim TextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(XDimLoc, YDimLoc)
+				Try
+					Dim VOADim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(TextPoint, FirstIntent, SecondIntent, Inventor.DimensionTypeEnum.kVerticalDimensionType)
+					PlacedVAOL = True
+					Exit For
+				Catch
+					Logger.Debug("failed to place hoal")
+				End Try
+			Next
+			If PlacedVOAL = True Then
+				Exit For
+			End If
+		Next
+
+	
+	End If
+	
+	'Add in a single thickness dimension based on either the first horizontal or first vertical edge set
+	Dim PlacedThicknessDim As Boolean = False
+	If HEdgeSets.Count > 0 Then
+		Logger.Debug("Applying thickness dim to horizontal set")
+		Dim HTStartEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		Dim HTEndEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		For Each Curve As Inventor.DrawingCurve In HEdges
+			If Curve.StartPoint.X = HEdgeSets(0).CurveOne.StartPoint.X Then
+				HTStartEdges.Add(Curve)
+			Else If Curve.StartPoint.X = HEdgeSets(0).CurveTwo.StartPoint.X Then
+				HTEndEdges.Add(Curve)
+			End If
+		Next
+		For Each Curve As Inventor.DrawingCurve In HTStartEdges
+			For Each SecondCurve As Inventor.DrawingCurve In HTEndEdges
+				Dim FirstIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(Curve)
+				Dim SecondIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(SecondCurve)
+				Dim XDimLoc As Double = XMax - Abs(SecondCurve.StartPoint.X - Curve.StartPoint.X) / 2
+				Dim YDimLoc As Double = MaxYDimTextPos + DimTextSpacing
+				Dim TextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(XDimLoc, YDimLoc)
+				Try
+					Dim HTDim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(TextPoint, FirstIntent, SecondIntent, Inventor.DimensionTypeEnum.kVerticalDimensionType)
+					PlacedThicknessDim = True
+					Exit For
+				Catch
+					Logger.Debug("failed to place thickness dim")
+				End Try
+			Next
+			If PlacedThicknessDim = True Then
+				Exit For
+			End If
+		Next
+		
+		
+'		Dim ThkIntent1 As Inventor.GeometryIntent = Sht.CreateGeometryIntent(HEdgeSets(0).CurveOne)
+'		Dim ThkIntent2 As Inventor.GeometryIntent = Sht.CreateGeometryIntent(HEdgeSets(0).CurveTwo)
+'		Dim ThkDimXPoint As Double = TargetView.Position.X - TargetView.Width/2 - DimTextOffset
+'		Dim ThkDimYPoint As Double = ThkIntent1.Geometry.StartPoint.Y - Abs(ThkIntent1.Geometry.StartPoint.Y - ThkIntent2.Geometry.StartPoint.Y) / 2
+'		Dim ThkDimTextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(ThkDimXPoint, ThkDimYPoint)
+'		Try
+'			Dim HOALDim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(ThkDimTextPoint, ThkIntent1, ThkIntent2, Inventor.DimensionTypeEnum.kVerticalDimensionType)
+'			PlacedThicknessDim = True
+'		Catch Ex As System.Exception
+'			Logger.Debug("Could not place horizontal thickness dimension. Exception: " & Ex.Message)
+'		End Try
+	End If
+	
+	If VEdgeSets.Count > 0 And PlacedThicknessDim = False Then
+		Logger.Debug("Applying thickness dim to vertical set")
+
+		Dim VTStartEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		Dim VTEndEdges As List(Of Inventor.DrawingCurve) = New List(Of Inventor.DrawingCurve)
+		For Each Curve As Inventor.DrawingCurve In VEdges
+			If Curve.StartPoint.Y = VEdgeSets(0).CurveOne.StartPoint.Y Then
+				VTStartEdges.Add(Curve)
+			Else If Curve.StartPoint.Y = VEdgeSets(0).CurveTwo.StartPoint.Y Then
+				VTEndEdges.Add(Curve)
+			End If
+		Next
+		For Each Curve As Inventor.DrawingCurve In VTStartEdges
+			For Each SecondCurve As Inventor.DrawingCurve In VTEndEdges
+				Dim FirstIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(Curve)
+				Dim SecondIntent As Inventor.GeometryIntent = Sht.CreateGeometryIntent(SecondCurve)
+				Dim XDimLoc As Double = MaxXDimTextPos + DimTextSpacing
+				Dim YDimLoc As Double = YMax - Abs(SecondCurve.StartPoint.Y - Curve.StartPoint.Y) / 2
+				Dim TextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(XDimLoc, YDimLoc)
+				Try
+					Dim VTDim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(TextPoint, FirstIntent, SecondIntent, Inventor.DimensionTypeEnum.kHorizontalDimensionType)
+					PlacedThicknessDim = True
+					Exit For
+				Catch
+					Logger.Debug("failed to place thickness dim")
+				End Try
+			Next
+			If PlacedThicknessDim = True Then
+				Exit For
+			End If
+		Next
+		
+		
+		
+'		Dim ThkIntent1 As Inventor.GeometryIntent = Sht.CreateGeometryIntent(VEdgeSets(0).CurveOne)
+'		Dim ThkIntent2 As Inventor.GeometryIntent = Sht.CreateGeometryIntent(VEdgeSets(0).CurveTwo)
+''		Dim RedColor As Inventor.Color = ThisApplication.TransientObjects.CreateColor(255, 0, 0)
+''		Dim BlueColor As Inventor.Color = ThisApplication.TransientObjects.CreateColor(0, 0, 255)
+''		VEdgeSets(0).CurveOne.Color = RedColor
+''		VEdgeSets(0).CurveTwo.Color = BlueColor
+'		Dim ThkDimXPoint As Double = ThkIntent1.Geometry.StartPoint.X + Abs(ThkIntent1.Geometry.StartPoint.X - ThkIntent2.Geometry.StartPoint.X) / 2
+'		Dim ThkDimYPoint As Double = TargetView.Position.Y - TargetView.Height/2 - DimTextOffset
+'		Dim ThkDimTextPoint As Inventor.Point2d = ThisApplication.TransientGeometry.CreatePoint2d(ThkDimXPoint, ThkDimYPoint)
+'		Try
+'			Dim VOALDim As Inventor.LinearGeneralDimension = Sht.DrawingDimensions.GeneralDimensions.AddLinear(ThkDimTextPoint, ThkIntent1, ThkIntent2, Inventor.DimensionTypeEnum.kHorizontalDimensionType)
+'		Catch Ex As System.Exception
+'			Logger.Debug("Could not place vertical thickness dimension. Exception: " & Ex.Message)
+'		End Try
+		
+	End If
+	
+	
+		
+
+End Function
+
+Function DoubleEquals(Val1 As Double, Val2 As Double, Optional SigDigs As Integer = 5) As Boolean
+	If Math.Round(Val1, SigDigs) = Math.Round(Val2, SigDigs) Then
+		Return True
+	Else
+		Return False
+	End If
+End Function

@@ -1,0 +1,43 @@
+﻿' THis rule expects that the active document in session will be a drawing that needs to be generated to PDF
+' It is designed to be run at the end of the rule set for autodimensioning Sheet Metal files
+
+Dim PDFSubfolderName As String = "PDF"
+
+'PDF output path
+SharedVariable("MainAssyPath") = ThisDoc.Path
+Dim oDocument As Inventor.Document = ThisApplication.ActiveDocument
+Dim PDFFilePath As String = CStr(SharedVariable("MainAssyPath")).TrimEnd("\") & "\" & PDFSubfolderName & "\" & System.IO.Path.GetFileNameWithoutExtension(oDocument.FullFileName) & ".pdf"
+Logger.Debug("Writing PDF to " & PDFFilePath)
+
+
+'Get PDF Addin
+oPDFAddIn = ThisApplication.ApplicationAddIns.ItemById("{0AC6FD96-2F4D-42CE-8BE0-8AEA580399E4}")
+
+'Create PDF export context and options
+oContext = ThisApplication.TransientObjects.CreateTranslationContext
+oContext.Type = IOMechanismEnum.kFileBrowseIOMechanism
+oOptions = ThisApplication.TransientObjects.CreateNameValueMap
+oDataMedium = ThisApplication.TransientObjects.CreateDataMedium
+oFullFileName = oDocument.File.FullFileName
+oPath = Left(oFullFileName, InStrRev(oFullFileName, "\")-1)
+oFileName = Right(oFullFileName, Len(oFullFileName)-InStrRev(oFullFileName, "\"))
+oFilePart = Left(oFileName, InStrRev(oFileName, ".")-1)
+
+oOptions.Value("All_Color_AS_Black") = 0
+oOptions.Value("Remove_Line_Weights") = 0
+oOptions.Value("Vector_Resolution") = 400
+oOptions.Value("Sheet_Range") = Inventor.PrintRangeEnum.kPrintAllSheets
+
+'get PDF target folder path
+oFolder = System.IO.Path.GetDirectoryName(PDFFilePath)
+
+'Check for the PDF folder and create it if it does not exist
+If Not System.IO.Directory.Exists(oFolder) Then
+	System.IO.Directory.CreateDirectory(oFolder)
+End If
+
+'Set the PDF target file name
+oDataMedium.FileName = PDFFilePath
+'Publish document
+oPDFAddIn.SaveCopyAs(oDocument, oContext, oOptions, oDataMedium)'For PDF's
+odocument.Close
